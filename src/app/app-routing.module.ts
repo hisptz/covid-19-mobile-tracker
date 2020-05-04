@@ -11,6 +11,14 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'self-check',
+    loadChildren: () => import('./self-check/self-check.module').then( m => m.SelfCheckPageModule)
+  },
+  {
+    path: 'rumor',
+    loadChildren: () => import('./rumor/rumor.module').then( m => m.RumorPageModule)
+  },
 ];
 
 @NgModule({
