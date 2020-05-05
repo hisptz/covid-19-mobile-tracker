@@ -1,0 +1,25 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar color="primary" class="login-block">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form class="login-form" #f="ngForm" (ngSubmit)="onLogin(f)">
+    <ion-item class="login-input">
+      <ion-label position="floating">Username</ion-label>
+      <ion-input type="text" ngModel name="username" required></ion-input>
+    </ion-item>
+    <ion-item class="login-input">
+      <ion-label position="floating">Password</ion-label>
+      <ion-input type="password" ngModel name="password" required></ion-input>
+    </ion-item>
+    <ion-button color="primary" size="large" class="login-btn" expand="block" type="submit" [disabled]="!f.valid ">
+      <ion-icon slot="start" name="log-in"></ion-icon>
+      <ion-label>Login</ion-label>
+    </ion-button>
+  </form>
+</ion-content>

@@ -19,6 +19,14 @@ const routes: Routes = [
     path: 'rumor',
     loadChildren: () => import('./rumor/rumor.module').then( m => m.RumorPageModule)
   },
+  {
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'chw-home',
+    loadChildren: () => import('./chw-home/chw-home.module').then( m => m.ChwHomePageModule)
+  },
 ];
 
 @NgModule({

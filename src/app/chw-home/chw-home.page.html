@@ -1,0 +1,41 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar color="primary" class="chw-home-block ion-padding-top">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Home</ion-title>
+    <ion-row>
+      <ion-col size="7">
+        <ion-item color="primary" class="selector-item-value">
+          <ion-text>Select Area</ion-text>
+          <ion-icon slot="end" [md]="'caret-down'" [ios]="'caret-down-outline'"></ion-icon>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list class="ion-padding-top">
+    <ion-item>
+      <ion-avatar slot="start" *ngIf="false">
+        <img src="assets/icon/rumor.png">
+      </ion-avatar>
+      <ion-label>
+        <h2 class="ion-padding-bottom">Rumor Tracing</h2>
+        <p>34 Rumors</p>
+      </ion-label>
+      <ion-icon color="success" name="sync"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-avatar slot="start" *ngIf="false">
+        <img src="assets/icon/rumor.png">
+      </ion-avatar>
+      <ion-label>
+        <h2 class="ion-padding-bottom">Suspect followup and contact tracing</h2>
+        <p>34 Suspects, 100 Contacts</p>
+      </ion-label>
+      <ion-icon color="warning" name="alert-circle"></ion-icon>
+    </ion-item>
+  </ion-list>
+</ion-content>
