@@ -11,7 +11,7 @@ import { LanguageListComponent } from '../language-list/language-list.component'
 export class LoginPage implements OnInit {
   constructor(
     private router: Router,
-    public popoverController: PopoverController
+    public popoverController: PopoverController,
   ) {}
 
   ngOnInit() {}
