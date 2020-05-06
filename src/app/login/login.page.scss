@@ -5,14 +5,19 @@
 }
 
 .login-form {
-  margin-top: 20px;
+  margin-top: 20vh;
   padding: 20px;
 }
 
 .login-input {
   margin-left: 2px;
   margin-right: 2px;
-  margin-top: 7px;
-  border: solid thin var(--ion-color-light);
+  margin-top: 10px;
+  // border: solid thin var(--ion-color-light);
+  // --background: solid thin var(--ion-color-primary);
   border-radius: 3px;
+}
+
+.login-btn {
+  margin-top: 10px;
 }
