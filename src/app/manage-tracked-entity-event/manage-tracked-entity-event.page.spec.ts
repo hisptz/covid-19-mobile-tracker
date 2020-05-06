@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { RumorPage } from './rumor.page';
+import { ManageTrackedEntityEventPage } from './manage-tracked-entity-event.page';
 
-describe('RumorPage', () => {
-  let component: RumorPage;
-  let fixture: ComponentFixture<RumorPage>;
+describe('ManageTrackedEntityEventPage', () => {
+  let component: ManageTrackedEntityEventPage;
+  let fixture: ComponentFixture<ManageTrackedEntityEventPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RumorPage ],
+      declarations: [ ManageTrackedEntityEventPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(RumorPage);
+    fixture = TestBed.createComponent(ManageTrackedEntityEventPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

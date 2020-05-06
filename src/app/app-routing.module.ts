@@ -20,11 +20,6 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'rumor',
-    loadChildren: () =>
-      import('./rumor/rumor.module').then((m) => m.RumorPageModule),
-  },
-  {
     path: 'login',
     loadChildren: () =>
       import('./login/login.module').then((m) => m.LoginPageModule),
@@ -47,6 +42,21 @@ const routes: Routes = [
       import('./tracked-entity/tracked-entity.module').then(
         (m) => m.TrackedEntityPageModule
       ),
+  },
+  {
+    path: 'manage-tracked-entity-profile',
+    loadChildren: () =>
+      import(
+        './manage-tracked-entity-profile/manage-tracked-entity-profile.module'
+      ).then((m) => m.ManageTrackedEntityProfilePageModule),
+  },
+
+  {
+    path: 'manage-tracked-entity-event',
+    loadChildren: () =>
+      import(
+        './manage-tracked-entity-event/manage-tracked-entity-event.module'
+      ).then((m) => m.ManageTrackedEntityEventPageModule),
   },
 ];
 
