@@ -26,7 +26,7 @@ const routes: Routes = [
         path: 'stage',
         loadChildren: () =>
           import('../tracked-entity-stage/tracked-entity-stage.module').then(
-            (m) => m.TrackedEntityStagePageModule
+            (m) => m.TrackedEntityStagePageModule,
           ),
       },
       {

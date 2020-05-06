@@ -9,8 +9,8 @@ describe('TrackedEntityPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TrackedEntityPage ],
-      imports: [IonicModule.forRoot()]
+      declarations: [TrackedEntityPage],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TrackedEntityPage);
