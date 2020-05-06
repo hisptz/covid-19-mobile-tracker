@@ -1,25 +1,21 @@
 <ion-header [translucent]="true" class="ion-no-border">
-  <ion-toolbar color="primary" class="chw-home-block ion-padding-top ion-padding-bottom">
-    <ion-row>
-      <ion-col size="12">
-        <ion-buttons slot="start">
-          <ion-menu-button></ion-menu-button>
-        </ion-buttons>
-        <ion-title>Home</ion-title>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col size="10">
-        <ion-item color="primary" class="selector-item-value">
-          <ion-text>Select Area</ion-text>
-          <ion-icon slot="end" name="add-circle"></ion-icon>
-        </ion-item>
-      </ion-col>
-    </ion-row>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Home</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-row class="chw-selection-block">
+    <ion-col size="10">
+      <ion-item color="primary" class="selector-item-value">
+        <ion-text>Select Area</ion-text>
+        <ion-icon slot="end" name="add-circle"></ion-icon>
+      </ion-item>
+    </ion-col>
+  </ion-row>
   <ion-list class="ion-padding-top">
     <ion-item [routerLink]="['/tracked-entity-list']">
       <ion-avatar slot="start" *ngIf="false">
