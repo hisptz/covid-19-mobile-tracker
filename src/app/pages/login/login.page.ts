@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PopoverController } from '@ionic/angular';
-import { LanguageListComponent } from '../language-list/language-list.component';
+import { LanguageListComponent } from '../../components/language-list/language-list.component';
 
 @Component({
   selector: 'app-login',
