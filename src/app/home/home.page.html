@@ -1,47 +1,32 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar color="primary" class="self-check-block">
-    <ion-row>
-      <ion-col>
-        <div class="tracker-title">COVID-19 Tracker</div>
-        <div class="tracker-subtitle">Do your own test</div>
-        <div class="tracker-description">
-          Check if you have any covid-19 symptoms and help slow the outbreak!
-        </div>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-button expand="block" shape="round" color="success" fill="solid" [routerLink]="['/self-check']">
-          <ion-icon slot="start" name="heart"></ion-icon>
-          <ion-label>Self Check now</ion-label>
-        </ion-button>
-      </ion-col>
-    </ion-row>
+  <ion-toolbar color="primary">
+    <ion-title>COVID-19 Tracker</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onShowLanguageList($event)">
+        <ion-icon slot="start" name="globe-outline"></ion-icon>
+        <ion-label>English</ion-label>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content [fullscreen]="true">
-  <div class="tracker-subtitle ion-text-center ion-margin-top">Take step to protect yourself and others</div>
+<ion-content color="primary">
   <ion-row>
     <ion-col>
-      <ion-slides pager="true" [options]="slideOptions">
-        <ion-slide>
-          <div class="protect-slide">
-            <ion-img src="assets/icon/mask.png"></ion-img>
-            <div class="tracker-subtitle">Wear Face mask</div>
-          </div>
-        </ion-slide>
-        <ion-slide class="protect-slide">
-          <ion-img src="assets/icon/wash_hands.png"></ion-img>
-          <div class="tracker-subtitle">Wash your hands</div>
-        </ion-slide>
-        <ion-slide class="protect-slide">
-          <ion-img src="assets/icon/social_distancing.png"></ion-img>
-          <div class="tracker-subtitle">Avoid close contacts</div>
-        </ion-slide>
-      </ion-slides>
+      <div class="tracker-title"></div>
+      <div class="tracker-subtitle">Do your own test</div>
+      <div class="tracker-description">
+        Check if you have any covid-19 symptoms and help slow the outbreak!
+      </div>
     </ion-col>
   </ion-row>
-
+  <ion-row>
+    <ion-col>
+      <ion-button expand="block" shape="round" color="success" fill="solid" [routerLink]="['/self-check']">
+        <ion-icon slot="start" name="heart"></ion-icon>
+        <ion-label>Self Check now</ion-label>
+      </ion-button>
+    </ion-col>
+  </ion-row>
   <div class="chw-block">
     <ion-row>
       <ion-col>
