@@ -1,6 +1,6 @@
 <ion-header class="ion-no-border">
   <ion-toolbar color="primary">
-    <ion-title>COVID-19 Tracker</ion-title>
+    <ion-title>COVID Tracker</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="onShowLanguageList($event)">
         <ion-icon slot="start" name="globe-outline"></ion-icon>
@@ -9,40 +9,26 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content color="primary">
-  <ion-row>
-    <ion-col>
-      <div class="tracker-title"></div>
-      <div class="tracker-subtitle">Do your own test</div>
-      <div class="tracker-description">
-        Check if you have any covid-19 symptoms and help slow the outbreak!
-      </div>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      <ion-button expand="block" shape="round" color="success" fill="solid" [routerLink]="['/self-check']">
+<ion-content>
+  <ion-row class="self-check-block">
+    <ion-col class="ion-padding-start ion-padding-end ion-padding-bottom">
+      <h4>Self Report daily.</h4>
+      <h5 class="ion-text-left">Check if you have covid-19 symptoms and help slow the outbreak!</h5>
+      <ion-button class="ion-margin-top" size="large" expand="block" shape="round" color="success" fill="solid"
+        [routerLink]="['/self-check']">
         <ion-icon slot="start" name="heart"></ion-icon>
         <ion-label>Self Check now</ion-label>
       </ion-button>
     </ion-col>
   </ion-row>
-  <div class="chw-block">
-    <ion-row>
-      <ion-col>
-        <ion-img src="assets/icon/chw.svg"></ion-img>
-      </ion-col>
-      <ion-col>
-        <div class="tracker-subtitle">Are you Health worker?</div>
-        <div class="tracker-description">
-          Track rumors, follow up on patients and their contacts
-        </div>
-        <ion-button fill="solid" color="primary" expand="block" shape="round" [routerLink]="['/login']">
-          <ion-icon slot="start" name="log-in"></ion-icon>
-          <ion-label>Start now</ion-label>
-        </ion-button>
-      </ion-col>
-    </ion-row>
+
+  <div class="chw-block ion-padding">
+    <h5 class="ion-text-center">ARE YOU A COMMUNITY HEALTH WORKER?</h5>
+    <h6 class="ion-text-center">Track rumors, follow up on patients and their contacts</h6>
+    <ion-button size="large" fill="solid" color="primary" expand="block" shape="round" [routerLink]="['/login']">
+      <ion-icon slot="start" name="log-in"></ion-icon>
+      <ion-label>Login</ion-label>
+    </ion-button>
   </div>
 
 </ion-content>
