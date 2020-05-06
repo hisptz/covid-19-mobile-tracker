@@ -9,8 +9,8 @@ describe('LanguageListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LanguageListComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [LanguageListComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(LanguageListComponent);
