@@ -16,7 +16,7 @@ const routes: Routes = [
     path: 'self-check',
     loadChildren: () =>
       import('./self-check/self-check.module').then(
-        (m) => m.SelfCheckPageModule
+        (m) => m.SelfCheckPageModule,
       ),
   },
   {
@@ -33,14 +33,14 @@ const routes: Routes = [
     path: 'tracked-entity-list',
     loadChildren: () =>
       import('./tracked-entity-list/tracked-entity-list.module').then(
-        (m) => m.TrackedEntityListPageModule
+        (m) => m.TrackedEntityListPageModule,
       ),
   },
   {
     path: 'tracked-entity',
     loadChildren: () =>
       import('./tracked-entity/tracked-entity.module').then(
-        (m) => m.TrackedEntityPageModule
+        (m) => m.TrackedEntityPageModule,
       ),
   },
   {

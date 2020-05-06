@@ -6,8 +6,8 @@ import { ChwHomePage } from './chw-home.page';
 const routes: Routes = [
   {
     path: '',
-    component: ChwHomePage
-  }
+    component: ChwHomePage,
+  },
 ];
 
 @NgModule({

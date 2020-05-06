@@ -9,12 +9,7 @@ import { ChwHomePageRoutingModule } from './chw-home-routing.module';
 import { ChwHomePage } from './chw-home.page';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    ChwHomePageRoutingModule
-  ],
-  declarations: [ChwHomePage]
+  imports: [CommonModule, FormsModule, IonicModule, ChwHomePageRoutingModule],
+  declarations: [ChwHomePage],
 })
 export class ChwHomePageModule {}

@@ -13,8 +13,8 @@ import { TrackedEntityStagePage } from './tracked-entity-stage.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    TrackedEntityStagePageRoutingModule
+    TrackedEntityStagePageRoutingModule,
   ],
-  declarations: [TrackedEntityStagePage]
+  declarations: [TrackedEntityStagePage],
 })
 export class TrackedEntityStagePageModule {}

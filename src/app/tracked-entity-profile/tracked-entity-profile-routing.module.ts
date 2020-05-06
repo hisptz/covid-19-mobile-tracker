@@ -6,8 +6,8 @@ import { TrackedEntityProfilePage } from './tracked-entity-profile.page';
 const routes: Routes = [
   {
     path: '',
-    component: TrackedEntityProfilePage
-  }
+    component: TrackedEntityProfilePage,
+  },
 ];
 
 @NgModule({

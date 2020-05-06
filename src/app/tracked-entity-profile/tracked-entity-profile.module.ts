@@ -13,8 +13,8 @@ import { TrackedEntityProfilePage } from './tracked-entity-profile.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    TrackedEntityProfilePageRoutingModule
+    TrackedEntityProfilePageRoutingModule,
   ],
-  declarations: [TrackedEntityProfilePage]
+  declarations: [TrackedEntityProfilePage],
 })
 export class TrackedEntityProfilePageModule {}

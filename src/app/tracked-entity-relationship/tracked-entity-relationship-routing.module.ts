@@ -6,8 +6,8 @@ import { TrackedEntityRelationshipPage } from './tracked-entity-relationship.pag
 const routes: Routes = [
   {
     path: '',
-    component: TrackedEntityRelationshipPage
-  }
+    component: TrackedEntityRelationshipPage,
+  },
 ];
 
 @NgModule({

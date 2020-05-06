@@ -6,8 +6,8 @@ import { SelfCheckPage } from './self-check.page';
 const routes: Routes = [
   {
     path: '',
-    component: SelfCheckPage
-  }
+    component: SelfCheckPage,
+  },
 ];
 
 @NgModule({

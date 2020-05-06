@@ -13,8 +13,8 @@ import { ManageTrackedEntityEventPage } from './manage-tracked-entity-event.page
     CommonModule,
     FormsModule,
     IonicModule,
-    ManageTrackedEntityEventPageRoutingModule
+    ManageTrackedEntityEventPageRoutingModule,
   ],
-  declarations: [ManageTrackedEntityEventPage]
+  declarations: [ManageTrackedEntityEventPage],
 })
 export class ManageTrackedEntityEventPageModule {}
