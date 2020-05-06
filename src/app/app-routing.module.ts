@@ -58,6 +58,34 @@ const routes: Routes = [
         './manage-tracked-entity-event/manage-tracked-entity-event.module'
       ).then((m) => m.ManageTrackedEntityEventPageModule),
   },
+  {
+    path: 'self-check-profile',
+    loadChildren: () =>
+      import('./self-check-profile/self-check-profile.module').then(
+        (m) => m.SelfCheckProfilePageModule,
+      ),
+  },
+  {
+    path: 'manage-self-check-profile',
+    loadChildren: () =>
+      import(
+        './manage-self-check-profile/manage-self-check-profile.module'
+      ).then((m) => m.ManageSelfCheckProfilePageModule),
+  },
+  {
+    path: 'self-check-enrollment',
+    loadChildren: () =>
+      import('./self-check-enrollment/self-check-enrollment.module').then(
+        (m) => m.SelfCheckEnrollmentPageModule,
+      ),
+  },
+  {
+    path: 'manage-self-check',
+    loadChildren: () =>
+      import('./manage-self-check/manage-self-check.module').then(
+        (m) => m.ManageSelfCheckPageModule,
+      ),
+  },
 ];
 
 @NgModule({
