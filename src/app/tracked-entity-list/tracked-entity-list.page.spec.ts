@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { RumorPage } from './rumor.page';
+import { TrackedEntityListPage } from './tracked-entity-list.page';
 
-describe('RumorPage', () => {
-  let component: RumorPage;
-  let fixture: ComponentFixture<RumorPage>;
+describe('TrackedEntityListPage', () => {
+  let component: TrackedEntityListPage;
+  let fixture: ComponentFixture<TrackedEntityListPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RumorPage ],
-      imports: [IonicModule.forRoot()]
+      declarations: [TrackedEntityListPage],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(RumorPage);
+    fixture = TestBed.createComponent(TrackedEntityListPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

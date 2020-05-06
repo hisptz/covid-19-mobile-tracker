@@ -1,34 +1,63 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary" class="self-check-block">
+    <ion-row>
+      <ion-col>
+        <div class="tracker-title">COVID-19 Tracker</div>
+        <div class="tracker-subtitle">Do your own test</div>
+        <div class="tracker-description">
+          Check if you have any covid-19 symptoms and help slow the outbreak!
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-button expand="block" shape="round" color="success" fill="solid" [routerLink]="['/self-check']">
+          <ion-icon slot="start" name="heart"></ion-icon>
+          <ion-label>Self Check now</ion-label>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
 <ion-content [fullscreen]="true">
+  <div class="tracker-subtitle ion-text-center ion-margin-top">Take step to protect yourself and others</div>
   <ion-row>
-    <ion-col size="5" offset="7">
-      <ion-select placeholder="Language">
-        <ion-select-option value="f">Swahili</ion-select-option>
-        <ion-select-option value="m">English</ion-select-option>
-      </ion-select>
+    <ion-col>
+      <ion-slides pager="true" [options]="slideOptions">
+        <ion-slide>
+          <div class="protect-slide">
+            <ion-img src="assets/icon/mask.png"></ion-img>
+            <div class="tracker-subtitle">Wear Face mask</div>
+          </div>
+        </ion-slide>
+        <ion-slide class="protect-slide">
+          <ion-img src="assets/icon/wash_hands.png"></ion-img>
+          <div class="tracker-subtitle">Wash your hands</div>
+        </ion-slide>
+        <ion-slide class="protect-slide">
+          <ion-img src="assets/icon/social_distancing.png"></ion-img>
+          <div class="tracker-subtitle">Avoid close contacts</div>
+        </ion-slide>
+      </ion-slides>
     </ion-col>
   </ion-row>
-  <h4 class="ion-text-center">COVID-19</h4>
-  <ion-card color="primary" [routerLink]="['/self-check']">
-    <ion-card-header>
-      <ion-card-title>
-        Self Check
-      </ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-    </ion-card-content>
-  </ion-card>
-  <ion-card color="warning" [routerLink]="['/rumor']">
-    <ion-card-header>
-      <ion-card-title>
-        Self Assessment
-      </ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-text class="ion-text-justify">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-      </ion-text>
-    </ion-card-content>
-  </ion-card>
-  <ion-button class="login-block" color="light" expand="full" href="#">Are you Health official? LOGIN</ion-button>
+
+  <div class="chw-block">
+    <ion-row>
+      <ion-col>
+        <ion-img src="assets/icon/chw.svg"></ion-img>
+      </ion-col>
+      <ion-col>
+        <div class="tracker-subtitle">Are you Health worker?</div>
+        <div class="tracker-description">
+          Track rumors, follow up on patients and their contacts
+        </div>
+        <ion-button fill="solid" color="primary" expand="block" shape="round" [routerLink]="['/login']">
+          <ion-icon slot="start" name="log-in"></ion-icon>
+          <ion-label>Start now</ion-label>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </div>
+
 </ion-content>

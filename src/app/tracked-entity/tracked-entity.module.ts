@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { RumorPageRoutingModule } from './rumor-routing.module';
+import { TrackedEntityPageRoutingModule } from './tracked-entity-routing.module';
 
-import { RumorPage } from './rumor.page';
+import { TrackedEntityPage } from './tracked-entity.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    RumorPageRoutingModule
+    TrackedEntityPageRoutingModule,
   ],
-  declarations: [RumorPage]
+  declarations: [TrackedEntityPage],
 })
-export class RumorPageModule {}
+export class TrackedEntityPageModule {}

@@ -9,12 +9,7 @@ import { SelfCheckPageRoutingModule } from './self-check-routing.module';
 import { SelfCheckPage } from './self-check.page';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    SelfCheckPageRoutingModule
-  ],
-  declarations: [SelfCheckPage]
+  imports: [CommonModule, FormsModule, IonicModule, SelfCheckPageRoutingModule],
+  declarations: [SelfCheckPage],
 })
 export class SelfCheckPageModule {}
