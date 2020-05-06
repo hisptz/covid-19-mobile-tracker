@@ -1,0 +1,36 @@
+<ion-content>
+  <ion-list class="ion-padding-top">
+    <ion-item [routerLink]="['/manage-tracked-entity-event']">
+      <ion-avatar slot="start" *ngIf="false">
+        <img src="assets/icon/rumor.png">
+      </ion-avatar>
+      <ion-label>
+        <h2 class="ion-padding-bottom">Status: Suspect</h2>
+        <p>26/03/2012</p>
+      </ion-label>
+    </ion-item>
+    <ion-item [routerLink]="['/manage-tracked-entity-event']">
+      <ion-avatar slot="start" *ngIf="false">
+        <img src="assets/icon/rumor.png">
+      </ion-avatar>
+      <ion-label>
+        <h2 class="ion-padding-bottom">Status: Positive</h2>
+        <p>26/03/2012</p>
+      </ion-label>
+    </ion-item>
+    <ion-item [routerLink]="['/manage-tracked-entity-event']">
+      <ion-avatar slot="start" *ngIf="false">
+        <img src="assets/icon/rumor.png">
+      </ion-avatar>
+      <ion-label>
+        <h2 class="ion-padding-bottom">Status: Hospitalized</h2>
+        <p>26/03/2012</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button [routerLink]="['/manage-tracked-entity-event']">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
