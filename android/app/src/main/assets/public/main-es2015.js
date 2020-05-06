@@ -436,7 +436,20 @@ module.exports = webpackAsyncContext;
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-app>\n  <ion-menu side=\"start\" menuId=\"first\" contentId=\"main\" type=\"overlay\">\n    <ion-header>\n      <ion-toolbar>\n        <ion-title>Menu</ion-title>\n      </ion-toolbar>\n    </ion-header>\n    <ion-content>\n      <ion-list>\n        <ion-item lines=\"none\" [routerLink]=\"['self-check']\">Self Check/Assessment</ion-item>\n        <ion-item lines=\"none\" [routerLink]=\"['rumor']\">Report Rumor</ion-item>\n      </ion-list>\n    </ion-content>\n  </ion-menu>\n  <ion-router-outlet id=\"main\"></ion-router-outlet>\n</ion-app>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-app color=\"primary\">\n  <ion-menu side=\"start\" menuId=\"first\" contentId=\"main\" type=\"overlay\">\n    <ion-header>\n      <ion-toolbar>\n        <ion-title>Menu</ion-title>\n      </ion-toolbar>\n    </ion-header>\n    <ion-content>\n      <ion-list>\n        <ion-item lines=\"none\">Profile</ion-item>\n        <ion-item lines=\"none\">Log out</ion-item>\n      </ion-list>\n    </ion-content>\n  </ion-menu>\n  <ion-router-outlet id=\"main\"></ion-router-outlet>\n</ion-app>\n");
+
+/***/ }),
+
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/language-list/language-list.component.html":
+/*!**************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/language-list/language-list.component.html ***!
+  \**************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-list>\n  <ion-item lines=\"none\" button>English</ion-item>\n  <ion-item lines=\"none\" button>Swahili</ion-item>\n</ion-list>\n");
 
 /***/ }),
 
@@ -707,20 +720,56 @@ __webpack_require__.r(__webpack_exports__);
 const routes = [
     {
         path: 'home',
-        loadChildren: () => __webpack_require__.e(/*! import() | home-home-module */ "home-home-module").then(__webpack_require__.bind(null, /*! ./home/home.module */ "./src/app/home/home.module.ts")).then(m => m.HomePageModule)
+        loadChildren: () => __webpack_require__.e(/*! import() | home-home-module */ "home-home-module").then(__webpack_require__.bind(null, /*! ./home/home.module */ "./src/app/home/home.module.ts")).then((m) => m.HomePageModule),
     },
     {
         path: '',
         redirectTo: 'home',
-        pathMatch: 'full'
+        pathMatch: 'full',
     },
     {
         path: 'self-check',
-        loadChildren: () => __webpack_require__.e(/*! import() | self-check-self-check-module */ "self-check-self-check-module").then(__webpack_require__.bind(null, /*! ./self-check/self-check.module */ "./src/app/self-check/self-check.module.ts")).then(m => m.SelfCheckPageModule)
+        loadChildren: () => __webpack_require__.e(/*! import() | self-check-self-check-module */ "self-check-self-check-module").then(__webpack_require__.bind(null, /*! ./self-check/self-check.module */ "./src/app/self-check/self-check.module.ts")).then((m) => m.SelfCheckPageModule),
     },
     {
-        path: 'rumor',
-        loadChildren: () => __webpack_require__.e(/*! import() | rumor-rumor-module */ "rumor-rumor-module").then(__webpack_require__.bind(null, /*! ./rumor/rumor.module */ "./src/app/rumor/rumor.module.ts")).then(m => m.RumorPageModule)
+        path: 'login',
+        loadChildren: () => __webpack_require__.e(/*! import() | login-login-module */ "login-login-module").then(__webpack_require__.bind(null, /*! ./login/login.module */ "./src/app/login/login.module.ts")).then((m) => m.LoginPageModule),
+    },
+    {
+        path: 'chw-home',
+        loadChildren: () => __webpack_require__.e(/*! import() | chw-home-chw-home-module */ "chw-home-chw-home-module").then(__webpack_require__.bind(null, /*! ./chw-home/chw-home.module */ "./src/app/chw-home/chw-home.module.ts")).then((m) => m.ChwHomePageModule),
+    },
+    {
+        path: 'tracked-entity-list',
+        loadChildren: () => __webpack_require__.e(/*! import() | tracked-entity-list-tracked-entity-list-module */ "tracked-entity-list-tracked-entity-list-module").then(__webpack_require__.bind(null, /*! ./tracked-entity-list/tracked-entity-list.module */ "./src/app/tracked-entity-list/tracked-entity-list.module.ts")).then((m) => m.TrackedEntityListPageModule),
+    },
+    {
+        path: 'tracked-entity',
+        loadChildren: () => __webpack_require__.e(/*! import() | tracked-entity-tracked-entity-module */ "tracked-entity-tracked-entity-module").then(__webpack_require__.bind(null, /*! ./tracked-entity/tracked-entity.module */ "./src/app/tracked-entity/tracked-entity.module.ts")).then((m) => m.TrackedEntityPageModule),
+    },
+    {
+        path: 'manage-tracked-entity-profile',
+        loadChildren: () => __webpack_require__.e(/*! import() | manage-tracked-entity-profile-manage-tracked-entity-profile-module */ "manage-tracked-entity-profile-manage-tracked-entity-profile-module").then(__webpack_require__.bind(null, /*! ./manage-tracked-entity-profile/manage-tracked-entity-profile.module */ "./src/app/manage-tracked-entity-profile/manage-tracked-entity-profile.module.ts")).then((m) => m.ManageTrackedEntityProfilePageModule),
+    },
+    {
+        path: 'manage-tracked-entity-event',
+        loadChildren: () => __webpack_require__.e(/*! import() | manage-tracked-entity-event-manage-tracked-entity-event-module */ "manage-tracked-entity-event-manage-tracked-entity-event-module").then(__webpack_require__.bind(null, /*! ./manage-tracked-entity-event/manage-tracked-entity-event.module */ "./src/app/manage-tracked-entity-event/manage-tracked-entity-event.module.ts")).then((m) => m.ManageTrackedEntityEventPageModule),
+    },
+    {
+        path: 'self-check-profile',
+        loadChildren: () => __webpack_require__.e(/*! import() | self-check-profile-self-check-profile-module */ "self-check-profile-self-check-profile-module").then(__webpack_require__.bind(null, /*! ./self-check-profile/self-check-profile.module */ "./src/app/self-check-profile/self-check-profile.module.ts")).then((m) => m.SelfCheckProfilePageModule),
+    },
+    {
+        path: 'manage-self-check-profile',
+        loadChildren: () => __webpack_require__.e(/*! import() | manage-self-check-profile-manage-self-check-profile-module */ "manage-self-check-profile-manage-self-check-profile-module").then(__webpack_require__.bind(null, /*! ./manage-self-check-profile/manage-self-check-profile.module */ "./src/app/manage-self-check-profile/manage-self-check-profile.module.ts")).then((m) => m.ManageSelfCheckProfilePageModule),
+    },
+    {
+        path: 'self-check-enrollment',
+        loadChildren: () => __webpack_require__.e(/*! import() | self-check-enrollment-self-check-enrollment-module */ "self-check-enrollment-self-check-enrollment-module").then(__webpack_require__.bind(null, /*! ./self-check-enrollment/self-check-enrollment.module */ "./src/app/self-check-enrollment/self-check-enrollment.module.ts")).then((m) => m.SelfCheckEnrollmentPageModule),
+    },
+    {
+        path: 'manage-self-check',
+        loadChildren: () => __webpack_require__.e(/*! import() | manage-self-check-manage-self-check-module */ "manage-self-check-manage-self-check-module").then(__webpack_require__.bind(null, /*! ./manage-self-check/manage-self-check.module */ "./src/app/manage-self-check/manage-self-check.module.ts")).then((m) => m.ManageSelfCheckPageModule),
     },
 ];
 let AppRoutingModule = class AppRoutingModule {
@@ -728,9 +777,9 @@ let AppRoutingModule = class AppRoutingModule {
 AppRoutingModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
         imports: [
-            _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"].forRoot(routes, { preloadingStrategy: _angular_router__WEBPACK_IMPORTED_MODULE_2__["PreloadAllModules"] })
+            _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"].forRoot(routes, { preloadingStrategy: _angular_router__WEBPACK_IMPORTED_MODULE_2__["PreloadAllModules"] }),
         ],
-        exports: [_angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"]]
+        exports: [_angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"]],
     })
 ], AppRoutingModule);
 
@@ -824,6 +873,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ionic_native_status_bar_ngx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic-native/status-bar/ngx */ "./node_modules/@ionic-native/status-bar/ngx/index.js");
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
 /* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
+/* harmony import */ var _language_list_language_list_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./language-list/language-list.component */ "./src/app/language-list/language-list.component.ts");
+
 
 
 
@@ -837,17 +888,61 @@ let AppModule = class AppModule {
 };
 AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-        declarations: [_app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"]],
-        entryComponents: [],
+        declarations: [_app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"], _language_list_language_list_component__WEBPACK_IMPORTED_MODULE_9__["LanguageListComponent"]],
+        entryComponents: [_language_list_language_list_component__WEBPACK_IMPORTED_MODULE_9__["LanguageListComponent"]],
         imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__["BrowserModule"], _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicModule"].forRoot(), _app_routing_module__WEBPACK_IMPORTED_MODULE_8__["AppRoutingModule"]],
         providers: [
             _ionic_native_status_bar_ngx__WEBPACK_IMPORTED_MODULE_6__["StatusBar"],
             _ionic_native_splash_screen_ngx__WEBPACK_IMPORTED_MODULE_5__["SplashScreen"],
-            { provide: _angular_router__WEBPACK_IMPORTED_MODULE_3__["RouteReuseStrategy"], useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicRouteStrategy"] }
+            { provide: _angular_router__WEBPACK_IMPORTED_MODULE_3__["RouteReuseStrategy"], useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicRouteStrategy"] },
         ],
-        bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"]]
+        bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"]],
     })
 ], AppModule);
+
+
+
+/***/ }),
+
+/***/ "./src/app/language-list/language-list.component.scss":
+/*!************************************************************!*\
+  !*** ./src/app/language-list/language-list.component.scss ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2xhbmd1YWdlLWxpc3QvbGFuZ3VhZ2UtbGlzdC5jb21wb25lbnQuc2NzcyJ9 */");
+
+/***/ }),
+
+/***/ "./src/app/language-list/language-list.component.ts":
+/*!**********************************************************!*\
+  !*** ./src/app/language-list/language-list.component.ts ***!
+  \**********************************************************/
+/*! exports provided: LanguageListComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LanguageListComponent", function() { return LanguageListComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+
+
+let LanguageListComponent = class LanguageListComponent {
+    constructor() { }
+    ngOnInit() { }
+};
+LanguageListComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        selector: 'app-language-list',
+        template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./language-list.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/language-list/language-list.component.html")).default,
+        styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./language-list.component.scss */ "./src/app/language-list/language-list.component.scss")).default]
+    }),
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+], LanguageListComponent);
 
 
 
@@ -869,7 +964,7 @@ __webpack_require__.r(__webpack_exports__);
 // The list of file replacements can be found in `angular.json`.
 
 const environment = {
-    production: false
+    production: false,
 };
 /*
  * For easier debugging in development mode, you can import the following file
@@ -905,8 +1000,9 @@ __webpack_require__.r(__webpack_exports__);
 if (_environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].production) {
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["enableProdMode"])();
 }
-Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_2__["platformBrowserDynamic"])().bootstrapModule(_app_app_module__WEBPACK_IMPORTED_MODULE_3__["AppModule"])
-    .catch(err => console.log(err));
+Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_2__["platformBrowserDynamic"])()
+    .bootstrapModule(_app_app_module__WEBPACK_IMPORTED_MODULE_3__["AppModule"])
+    .catch((err) => console.log(err));
 
 
 /***/ }),

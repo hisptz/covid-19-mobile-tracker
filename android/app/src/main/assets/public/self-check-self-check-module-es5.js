@@ -21,7 +21,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-menu-button></ion-menu-button>\n    </ion-buttons>\n    <ion-title>Self Check/Assessment</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-router-outlet id=\"main\"></ion-router-outlet>\n  <ion-button class=\"enroll-button\" shape=\"round\" color=\"success\">\n    <ion-icon name=\"person-add-outline\"></ion-icon>\n    <ion-label>Enroll</ion-label>\n  </ion-button>\n  <ion-button class=\"check-up-button\" shape=\"round\">\n    <ion-icon name=\"heart-outline\"></ion-icon>\n    <ion-label>Check up</ion-label>\n  </ion-button>\n  <ion-tabs>\n    <ion-tab-bar slot=\"bottom\">\n      <ion-tab-button tab=\"schedule\">\n        <ion-icon name=\"home\"></ion-icon>\n        <ion-label>Home</ion-label>\n      </ion-tab-button>\n\n      <ion-tab-button tab=\"speakers\">\n        <ion-icon name=\"heart-outline\"></ion-icon>\n        <ion-label>Status</ion-label>\n      </ion-tab-button>\n\n      <ion-tab-button tab=\"map\">\n        <ion-icon name=\"stats-chart-outline\"></ion-icon>\n        <ion-label>Progress</ion-label>\n      </ion-tab-button>\n\n      <ion-tab-button tab=\"about\">\n        <ion-icon name=\"information-circle\"></ion-icon>\n        <ion-label>Info</ion-label>\n      </ion-tab-button>\n    </ion-tab-bar>\n  </ion-tabs>\n\n</ion-content>\n";
+    __webpack_exports__["default"] = "<ion-header class=\"ion-no-border\">\n  <ion-toolbar color=\"primary\">\n    <ion-buttons slot=\"start\">\n      <ion-back-button></ion-back-button>\n    </ion-buttons>\n    <ion-title>Self Check</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button [routerLink]=\"['/self-check-profile']\">\n        <ion-icon name=\"person-circle\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-router-outlet id=\"main\"></ion-router-outlet>\n  <ion-tabs>\n    <ion-tab-bar color=\"primary\" slot=\"top\">\n      <ion-tab-button tab=\"home\">\n        <ion-icon name=\"home\"></ion-icon>\n        <ion-label>Home</ion-label>\n      </ion-tab-button>\n\n      <ion-tab-button tab=\"status\">\n        <ion-icon name=\"heart-outline\"></ion-icon>\n        <ion-label>Status</ion-label>\n      </ion-tab-button>\n\n      <ion-tab-button tab=\"progress\">\n        <ion-icon name=\"stats-chart-outline\"></ion-icon>\n        <ion-label>Progress</ion-label>\n      </ion-tab-button>\n    </ion-tab-bar>\n  </ion-tabs>\n  <ion-fab vertical=\"bottom\" horizontal=\"start\" slot=\"fixed\">\n    <ion-button shape=\"round\" color=\"success\" [routerLink]=\"['/self-check-enrollment']\">\n      <ion-icon slot=\"start\" name=\"person-add\"></ion-icon>\n      <ion-label>Enroll</ion-label>\n    </ion-button>\n  </ion-fab>\n  <ion-fab vertical=\"bottom\" horizontal=\"end\" slot=\"fixed\">\n    <ion-button shape=\"round\" [routerLink]=\"['/manage-self-check']\">\n      <ion-icon slot=\"start\" name=\"heart-outline\"></ion-icon>\n      <ion-label>Check-up</ion-label>\n    </ion-button>\n  </ion-fab>\n\n</ion-content>\n";
     /***/
   },
 
@@ -71,7 +71,45 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     var routes = [{
       path: '',
-      component: _self_check_page__WEBPACK_IMPORTED_MODULE_3__["SelfCheckPage"]
+      component: _self_check_page__WEBPACK_IMPORTED_MODULE_3__["SelfCheckPage"],
+      children: [{
+        path: 'home',
+        loadChildren: function loadChildren() {
+          return __webpack_require__.e(
+          /*! import() | self-check-home-self-check-home-module */
+          "self-check-home-self-check-home-module").then(__webpack_require__.bind(null,
+          /*! ../self-check-home/self-check-home.module */
+          "./src/app/self-check-home/self-check-home.module.ts")).then(function (m) {
+            return m.SelfCheckHomePageModule;
+          });
+        }
+      }, {
+        path: 'progress',
+        loadChildren: function loadChildren() {
+          return __webpack_require__.e(
+          /*! import() | self-check-progress-self-check-progress-module */
+          "self-check-progress-self-check-progress-module").then(__webpack_require__.bind(null,
+          /*! ../self-check-progress/self-check-progress.module */
+          "./src/app/self-check-progress/self-check-progress.module.ts")).then(function (m) {
+            return m.SelfCheckProgressPageModule;
+          });
+        }
+      }, {
+        path: 'status',
+        loadChildren: function loadChildren() {
+          return __webpack_require__.e(
+          /*! import() | self-check-status-self-check-status-module */
+          "self-check-status-self-check-status-module").then(__webpack_require__.bind(null,
+          /*! ../self-check-status/self-check-status.module */
+          "./src/app/self-check-status/self-check-status.module.ts")).then(function (m) {
+            return m.SelfCheckStatusPageModule;
+          });
+        }
+      }, {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full'
+      }]
     }];
 
     var SelfCheckPageRoutingModule = function SelfCheckPageRoutingModule() {

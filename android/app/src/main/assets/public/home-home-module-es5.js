@@ -1,3 +1,7 @@
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["home-home-module"], {
@@ -17,7 +21,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<ion-header class=\"ion-no-border\">\n  <ion-toolbar color=\"primary\" class=\"self-check-block\">\n    <ion-row>\n      <ion-col>\n        <div class=\"tracker-title\">COVID-19 Tracker</div>\n        <div class=\"tracker-subtitle\">Do your own test</div>\n        <div class=\"tracker-description\">\n          Check if you have any covid-19 symptoms and help slow the outbreak!\n        </div>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col>\n        <ion-button expand=\"block\" shape=\"round\" color=\"success\" fill=\"solid\">\n          <ion-icon slot=\"start\" name=\"heart\"></ion-icon>\n          <ion-label>Self Check now</ion-label>\n        </ion-button>\n      </ion-col>\n    </ion-row>\n  </ion-toolbar>\n</ion-header>\n<ion-content [fullscreen]=\"true\">\n  <div class=\"tracker-subtitle ion-text-center ion-margin-top\">Take step to protect yourself and others</div>\n  <ion-row>\n    <ion-col>\n      <ion-slides pager=\"true\" [options]=\"slideOptions\">\n        <ion-slide>\n          <div class=\"protect-slide\">\n            <ion-img src=\"assets/icon/mask.png\"></ion-img>\n            <div class=\"tracker-subtitle\">Wear Face mask</div>\n          </div>\n        </ion-slide>\n        <ion-slide class=\"protect-slide\">\n          <ion-img src=\"assets/icon/wash_hands.png\"></ion-img>\n          <div class=\"tracker-subtitle\">Wash your hands</div>\n        </ion-slide>\n        <ion-slide class=\"protect-slide\">\n          <ion-img src=\"assets/icon/social_distancing.png\"></ion-img>\n          <div class=\"tracker-subtitle\">Avoid close contacts</div>\n        </ion-slide>\n      </ion-slides>\n    </ion-col>\n  </ion-row>\n\n  <div class=\"chw-block\">\n    <ion-row>\n      <ion-col>\n        <ion-img src=\"assets/icon/chw.svg\"></ion-img>\n      </ion-col>\n      <ion-col>\n        <div class=\"tracker-subtitle\">Are you Health worker?</div>\n        <div class=\"tracker-description\">\n          Track rumors, follow up on patients and their contacts\n        </div>\n        <ion-button fill=\"solid\" color=\"primary\" expand=\"block\" shape=\"round\">\n          <ion-icon slot=\"start\" name=\"log-in\"></ion-icon>\n          <ion-label>Login</ion-label>\n        </ion-button>\n      </ion-col>\n    </ion-row>\n  </div>\n\n</ion-content>\n";
+    __webpack_exports__["default"] = "<ion-header class=\"ion-no-border\">\n  <ion-toolbar color=\"primary\">\n    <ion-title>COVID Tracker</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button (click)=\"onShowLanguageList($event)\">\n        <ion-icon slot=\"start\" name=\"globe-outline\"></ion-icon>\n        <ion-label>English</ion-label>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n<ion-content>\n  <ion-row class=\"self-check-block\">\n    <ion-col class=\"ion-padding-start ion-padding-end ion-padding-bottom\">\n      <h4>Self Report daily.</h4>\n      <h5 class=\"ion-text-left\">Check if you have covid-19 symptoms and help slow the outbreak!</h5>\n      <ion-button class=\"ion-margin-top\" size=\"large\" expand=\"block\" shape=\"round\" color=\"success\" fill=\"solid\"\n        [routerLink]=\"['/self-check']\">\n        <ion-icon slot=\"start\" name=\"heart\"></ion-icon>\n        <ion-label>Self Check now</ion-label>\n      </ion-button>\n    </ion-col>\n  </ion-row>\n\n  <div class=\"chw-block ion-padding\">\n    <h5 class=\"ion-text-center\">ARE YOU A COMMUNITY HEALTH WORKER?</h5>\n    <h6 class=\"ion-text-center\">Track rumors, follow up on patients and their contacts</h6>\n    <ion-button size=\"large\" fill=\"solid\" color=\"primary\" expand=\"block\" shape=\"round\" [routerLink]=\"['/login']\">\n      <ion-icon slot=\"start\" name=\"log-in\"></ion-icon>\n      <ion-label>Login</ion-label>\n    </ion-button>\n  </div>\n\n</ion-content>\n";
     /***/
   },
 
@@ -170,7 +174,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = ".login-block {\n  position: fixed;\n  bottom: 0;\n  display: flex;\n  justify-content: center;\n  width: 100%;\n}\n\n.self-check-block {\n  border-bottom-left-radius: 45px;\n  border-bottom-right-radius: 45px;\n  padding: 20px 15px 20px 15px;\n}\n\n.tracker-title {\n  font-weight: 600;\n  padding-bottom: 30px;\n  font-size: 17px;\n}\n\n.tracker-subtitle {\n  font-weight: 600;\n  font-size: 14px;\n  padding-bottom: 10px;\n}\n\n.tracker-description {\n  font-size: 13px;\n  font-weight: 200;\n  text-align: left;\n  padding-bottom: 10px;\n}\n\n.chw-block {\n  position: fixed;\n  bottom: 16px;\n  left: 15px;\n  right: 15px;\n  background-color: #eeeefd;\n  border-radius: 5px;\n  padding: 15px;\n}\n\n.chw-block ion-img {\n  height: 130px;\n}\n\n.chw-content {\n  padding-left: 7px;\n  width: 70%;\n}\n\n.protect-slide {\n  display: block;\n  border-radius: 5px;\n}\n\n.protect-slide ion-img {\n  height: calc(100vh - 520px);\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ob21lL21rb213YS9kZXZlbG9wbWVudHMvcGxheWdyb3VuZC9sYWIvc3JjL2FwcC9ob21lL2hvbWUucGFnZS5zY3NzIiwic3JjL2FwcC9ob21lL2hvbWUucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsZUFBQTtFQUNBLFNBQUE7RUFDQSxhQUFBO0VBQ0EsdUJBQUE7RUFDQSxXQUFBO0FDQ0Y7O0FERUE7RUFDRSwrQkFBQTtFQUNBLGdDQUFBO0VBQ0EsNEJBQUE7QUNDRjs7QURFQTtFQUNFLGdCQUFBO0VBQ0Esb0JBQUE7RUFDQSxlQUFBO0FDQ0Y7O0FERUE7RUFDRSxnQkFBQTtFQUNBLGVBQUE7RUFDQSxvQkFBQTtBQ0NGOztBREVBO0VBQ0UsZUFBQTtFQUNBLGdCQUFBO0VBQ0EsZ0JBQUE7RUFDQSxvQkFBQTtBQ0NGOztBREVBO0VBQ0UsZUFBQTtFQUNBLFlBQUE7RUFDQSxVQUFBO0VBQ0EsV0FBQTtFQUNBLHlCQUFBO0VBQ0Esa0JBQUE7RUFDQSxhQUFBO0FDQ0Y7O0FERUE7RUFDRSxhQUFBO0FDQ0Y7O0FERUE7RUFDRSxpQkFBQTtFQUNBLFVBQUE7QUNDRjs7QURFQTtFQUNFLGNBQUE7RUFDQSxrQkFBQTtBQ0NGOztBREVBO0VBQ0UsMkJBQUE7QUNDRiIsImZpbGUiOiJzcmMvYXBwL2hvbWUvaG9tZS5wYWdlLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIubG9naW4tYmxvY2sge1xuICBwb3NpdGlvbjogZml4ZWQ7XG4gIGJvdHRvbTogMDtcbiAgZGlzcGxheTogZmxleDtcbiAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG4gIHdpZHRoOiAxMDAlO1xufVxuXG4uc2VsZi1jaGVjay1ibG9jayB7XG4gIGJvcmRlci1ib3R0b20tbGVmdC1yYWRpdXM6IDQ1cHg7XG4gIGJvcmRlci1ib3R0b20tcmlnaHQtcmFkaXVzOiA0NXB4O1xuICBwYWRkaW5nOiAyMHB4IDE1cHggMjBweCAxNXB4O1xufVxuXG4udHJhY2tlci10aXRsZSB7XG4gIGZvbnQtd2VpZ2h0OiA2MDA7XG4gIHBhZGRpbmctYm90dG9tOiAzMHB4O1xuICBmb250LXNpemU6IDE3cHg7XG59XG5cbi50cmFja2VyLXN1YnRpdGxlIHtcbiAgZm9udC13ZWlnaHQ6IDYwMDtcbiAgZm9udC1zaXplOiAxNHB4O1xuICBwYWRkaW5nLWJvdHRvbTogMTBweDtcbn1cblxuLnRyYWNrZXItZGVzY3JpcHRpb24ge1xuICBmb250LXNpemU6IDEzcHg7XG4gIGZvbnQtd2VpZ2h0OiAyMDA7XG4gIHRleHQtYWxpZ246IGxlZnQ7XG4gIHBhZGRpbmctYm90dG9tOiAxMHB4O1xufVxuXG4uY2h3LWJsb2NrIHtcbiAgcG9zaXRpb246IGZpeGVkO1xuICBib3R0b206IDE2cHg7XG4gIGxlZnQ6IDE1cHg7XG4gIHJpZ2h0OiAxNXB4O1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjZWVlZWZkO1xuICBib3JkZXItcmFkaXVzOiA1cHg7XG4gIHBhZGRpbmc6IDE1cHg7XG59XG5cbi5jaHctYmxvY2sgaW9uLWltZyB7XG4gIGhlaWdodDogMTMwcHg7XG59XG5cbi5jaHctY29udGVudCB7XG4gIHBhZGRpbmctbGVmdDogN3B4O1xuICB3aWR0aDogNzAlO1xufVxuXG4ucHJvdGVjdC1zbGlkZSB7XG4gIGRpc3BsYXk6IGJsb2NrO1xuICBib3JkZXItcmFkaXVzOiA1cHg7XG59XG5cbi5wcm90ZWN0LXNsaWRlIGlvbi1pbWcge1xuICBoZWlnaHQ6IGNhbGMoMTAwdmggLSA1MjBweCk7XG59XG4iLCIubG9naW4tYmxvY2sge1xuICBwb3NpdGlvbjogZml4ZWQ7XG4gIGJvdHRvbTogMDtcbiAgZGlzcGxheTogZmxleDtcbiAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG4gIHdpZHRoOiAxMDAlO1xufVxuXG4uc2VsZi1jaGVjay1ibG9jayB7XG4gIGJvcmRlci1ib3R0b20tbGVmdC1yYWRpdXM6IDQ1cHg7XG4gIGJvcmRlci1ib3R0b20tcmlnaHQtcmFkaXVzOiA0NXB4O1xuICBwYWRkaW5nOiAyMHB4IDE1cHggMjBweCAxNXB4O1xufVxuXG4udHJhY2tlci10aXRsZSB7XG4gIGZvbnQtd2VpZ2h0OiA2MDA7XG4gIHBhZGRpbmctYm90dG9tOiAzMHB4O1xuICBmb250LXNpemU6IDE3cHg7XG59XG5cbi50cmFja2VyLXN1YnRpdGxlIHtcbiAgZm9udC13ZWlnaHQ6IDYwMDtcbiAgZm9udC1zaXplOiAxNHB4O1xuICBwYWRkaW5nLWJvdHRvbTogMTBweDtcbn1cblxuLnRyYWNrZXItZGVzY3JpcHRpb24ge1xuICBmb250LXNpemU6IDEzcHg7XG4gIGZvbnQtd2VpZ2h0OiAyMDA7XG4gIHRleHQtYWxpZ246IGxlZnQ7XG4gIHBhZGRpbmctYm90dG9tOiAxMHB4O1xufVxuXG4uY2h3LWJsb2NrIHtcbiAgcG9zaXRpb246IGZpeGVkO1xuICBib3R0b206IDE2cHg7XG4gIGxlZnQ6IDE1cHg7XG4gIHJpZ2h0OiAxNXB4O1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjZWVlZWZkO1xuICBib3JkZXItcmFkaXVzOiA1cHg7XG4gIHBhZGRpbmc6IDE1cHg7XG59XG5cbi5jaHctYmxvY2sgaW9uLWltZyB7XG4gIGhlaWdodDogMTMwcHg7XG59XG5cbi5jaHctY29udGVudCB7XG4gIHBhZGRpbmctbGVmdDogN3B4O1xuICB3aWR0aDogNzAlO1xufVxuXG4ucHJvdGVjdC1zbGlkZSB7XG4gIGRpc3BsYXk6IGJsb2NrO1xuICBib3JkZXItcmFkaXVzOiA1cHg7XG59XG5cbi5wcm90ZWN0LXNsaWRlIGlvbi1pbWcge1xuICBoZWlnaHQ6IGNhbGMoMTAwdmggLSA1MjBweCk7XG59Il19 */";
+    __webpack_exports__["default"] = ".self-check-block {\n  background-color: var(--ion-color-primary);\n  color: #ffffff;\n  border-bottom-left-radius: 30px;\n  border-bottom-right-radius: 30px;\n}\n\n.chw-block {\n  background-color: #ffffff;\n  position: absolute;\n  bottom: 0;\n  display: block;\n  color: #555;\n  font-weight: lighter !important;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ob21lL21rb213YS9kZXZlbG9wbWVudHMvcGxheWdyb3VuZC9sYWIvc3JjL2FwcC9ob21lL2hvbWUucGFnZS5zY3NzIiwic3JjL2FwcC9ob21lL2hvbWUucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsMENBQUE7RUFDQSxjQUFBO0VBQ0EsK0JBQUE7RUFDQSxnQ0FBQTtBQ0NGOztBRENBO0VBQ0UseUJBQUE7RUFDQSxrQkFBQTtFQUNBLFNBQUE7RUFDQSxjQUFBO0VBQ0EsV0FBQTtFQUNBLCtCQUFBO0FDRUYiLCJmaWxlIjoic3JjL2FwcC9ob21lL2hvbWUucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLnNlbGYtY2hlY2stYmxvY2sge1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB2YXIoLS1pb24tY29sb3ItcHJpbWFyeSk7XG4gIGNvbG9yOiAjZmZmZmZmO1xuICBib3JkZXItYm90dG9tLWxlZnQtcmFkaXVzOiAzMHB4O1xuICBib3JkZXItYm90dG9tLXJpZ2h0LXJhZGl1czogMzBweDtcbn1cbi5jaHctYmxvY2sge1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjZmZmZmZmO1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIGJvdHRvbTogMDtcbiAgZGlzcGxheTogYmxvY2s7XG4gIGNvbG9yOiAjNTU1O1xuICBmb250LXdlaWdodDogbGlnaHRlciAhaW1wb3J0YW50O1xufVxuIiwiLnNlbGYtY2hlY2stYmxvY2sge1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB2YXIoLS1pb24tY29sb3ItcHJpbWFyeSk7XG4gIGNvbG9yOiAjZmZmZmZmO1xuICBib3JkZXItYm90dG9tLWxlZnQtcmFkaXVzOiAzMHB4O1xuICBib3JkZXItYm90dG9tLXJpZ2h0LXJhZGl1czogMzBweDtcbn1cblxuLmNody1ibG9jayB7XG4gIGJhY2tncm91bmQtY29sb3I6ICNmZmZmZmY7XG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgYm90dG9tOiAwO1xuICBkaXNwbGF5OiBibG9jaztcbiAgY29sb3I6ICM1NTU7XG4gIGZvbnQtd2VpZ2h0OiBsaWdodGVyICFpbXBvcnRhbnQ7XG59Il19 */";
     /***/
   },
 
@@ -205,20 +209,67 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
     /*! @angular/core */
     "./node_modules/@angular/core/fesm2015/core.js");
+    /* harmony import */
 
-    var HomePage = function HomePage() {
-      _classCallCheck(this, HomePage);
 
-      this.slideOptions = {
-        initialSlide: 0,
-        speed: 400,
-        cubeEffect: {
-          shadow: true,
-          slideShadows: true,
-          shadowOffset: 20,
-          shadowScale: 0.94
+    var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! @ionic/angular */
+    "./node_modules/@ionic/angular/fesm2015/ionic-angular.js");
+    /* harmony import */
+
+
+    var _language_list_language_list_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! ../language-list/language-list.component */
+    "./src/app/language-list/language-list.component.ts");
+
+    var HomePage = /*#__PURE__*/function () {
+      function HomePage(popoverController) {
+        _classCallCheck(this, HomePage);
+
+        this.popoverController = popoverController;
+      }
+
+      _createClass(HomePage, [{
+        key: "onShowLanguageList",
+        value: function onShowLanguageList(ev) {
+          return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+            var popover;
+            return regeneratorRuntime.wrap(function _callee$(_context) {
+              while (1) {
+                switch (_context.prev = _context.next) {
+                  case 0:
+                    _context.next = 2;
+                    return this.popoverController.create({
+                      component: _language_list_language_list_component__WEBPACK_IMPORTED_MODULE_3__["LanguageListComponent"],
+                      event: ev,
+                      translucent: true
+                    });
+
+                  case 2:
+                    popover = _context.sent;
+                    _context.next = 5;
+                    return popover.present();
+
+                  case 5:
+                    return _context.abrupt("return", _context.sent);
+
+                  case 6:
+                  case "end":
+                    return _context.stop();
+                }
+              }
+            }, _callee, this);
+          }));
         }
-      };
+      }]);
+
+      return HomePage;
+    }();
+
+    HomePage.ctorParameters = function () {
+      return [{
+        type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["PopoverController"]
+      }];
     };
 
     HomePage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -229,7 +280,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(
       /*! ./home.page.scss */
       "./src/app/home/home.page.scss"))["default"]]
-    }), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])], HomePage);
+    }), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_2__["PopoverController"]])], HomePage);
     /***/
   }
 }]);
