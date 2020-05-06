@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { PopoverController } from '@ionic/angular';
+import { LanguageListComponent } from '../language-list/language-list.component';
 
 @Component({
   selector: 'app-home',
@@ -6,17 +8,14 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  slideOptions: any;
-  constructor() {
-    this.slideOptions = {
-      initialSlide: 0,
-      speed: 400,
-      cubeEffect: {
-        shadow: true,
-        slideShadows: true,
-        shadowOffset: 20,
-        shadowScale: 0.94,
-      },
-    };
+  constructor(public popoverController: PopoverController) {}
+
+  async onShowLanguageList(ev: any) {
+    const popover = await this.popoverController.create({
+      component: LanguageListComponent,
+      event: ev,
+      translucent: true,
+    });
+    return await popover.present();
   }
 }
