@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
-import { LanguageListComponent } from '../../components/language-list/language-list.component';
+import { LanguageListComponent } from '../../shared/components/language-list/language-list.component';
 
 @Component({
   selector: 'app-home',
