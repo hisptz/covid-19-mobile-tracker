@@ -18,6 +18,7 @@ import { UnitIntervalInputComponent } from './input-fields/unit-interval-input/u
 import { InputFieldContainerComponent } from './input-fields/input-field-container/input-field-container.component';
 import { OrganisationUnitInputComponent } from './input-fields/organisation-unit-input/organisation-unit-input.component';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
+import { OrganisationUnitTreeComponent } from './organisation-unit-tree/organisation-unit-tree.component';
 
 export const components: any[] = [
   LanguageListComponent,
@@ -40,5 +41,6 @@ export const components: any[] = [
   InputFieldContainerComponent,
   OrganisationUnitInputComponent,
   ProgressBarComponent,
+  OrganisationUnitTreeComponent,
 ];
 export const entryComponents: any[] = [LanguageListComponent];

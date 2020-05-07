@@ -22,16 +22,17 @@
  *
  */
 import { Component, OnInit } from '@angular/core';
-import { ModalController, NavParams } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
+import { Store } from '@ngrx/store';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { State, getCurrentUserColorSettings } from '../../store';
 import { AppColorObject, CurrentUser, OrganisationUnit } from 'src/app/models';
-import { OrganisationUnitSearchPage } from '../organisation-unit-search/organisation-unit-search.page';
-import { UserService } from 'src/app/shared/services/user.service';
 import { OrganisationUnitService } from 'src/app/shared/services/organisation-unit.service';
 import { ToasterMessagesService } from 'src/app/shared/services/toaster-messages.service';
+import { UserService } from 'src/app/shared/services/user.service';
+
+import { getCurrentUserColorSettings, State } from '../../store';
+import { OrganisationUnitSearchPage } from '../organisation-unit-search/organisation-unit-search.page';
 
 @Component({
   selector: 'app-organisation-unit-selection',
@@ -50,7 +51,6 @@ export class OrganisationUnitSelectionPage implements OnInit {
 
   constructor(
     private modalController: ModalController,
-    private navParms: NavParams,
     private store: Store<State>,
     private userService: UserService,
     private organisationUnitService: OrganisationUnitService,
@@ -64,10 +64,8 @@ export class OrganisationUnitSelectionPage implements OnInit {
   }
 
   ngOnInit() {
-    this.selectedOrganisayionUnitIds = this.navParms.get(
-      'selectedOrganisayionUnitIds',
-    );
-    const allowMultipleSelection = this.navParms.get('allowMultipleSelection');
+    this.selectedOrganisayionUnitIds = [];
+    const allowMultipleSelection = false;
     this.allowMultipleSelection =
       allowMultipleSelection || this.allowMultipleSelection;
     this.discoveringAndSetHierarchy();

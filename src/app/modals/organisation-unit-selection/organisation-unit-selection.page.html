@@ -23,16 +23,14 @@
 *
 -->
 <ion-header>
-    <ion-toolbar [color]="(colorSettings$ | async).colorAttributes.main" mode="md">
-        <div class="organisation-unit-deatils animated fadeIn">
-            <span [translate]="'Organisation unit selection'"></span>
-        </div>
+    <ion-toolbar [color]="'primary'" mode="md">
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-title [translate]="'Area Selection'"></ion-title>
         <ion-buttons slot="end">
             <ion-button (click)="openOrganisationUnitSetSearchModal()">
                 <ion-icon name="search"></ion-icon>
-            </ion-button>
-            <ion-button (click)="closeModal()">
-                <ion-icon name="close"></ion-icon>
             </ion-button>
         </ion-buttons>
     </ion-toolbar>
@@ -40,12 +38,16 @@
 
 <ion-content>
     <div *ngIf="isLoading">
-        <app-progress-bar [color]="(colorSettings$ | async).colorAttributes.secondary" [isIndeterminateProcess]="true" [processMessage]="''">
+        <app-progress-bar [color]="(colorSettings$ | async).colorAttributes.secondary" [isIndeterminateProcess]="true"
+            [processMessage]="''">
         </app-progress-bar>
     </div>
     <div *ngIf="!isLoading">
         <div *ngFor="let organisationUnit of organisationUnits; trackBy: trackByFn">
-            <app-organisation-unit-tree (selectOrganisationUnit)="onSelectOrganisationUnit($event)" [selectedOrganisayionUnitIds]="selectedOrganisayionUnitIds" [isOrganisationUnitToggled]="isOrganisationUnitToggled" [organisationUnit]="organisationUnit"></app-organisation-unit-tree>
+            <app-organisation-unit-tree (selectOrganisationUnit)="onSelectOrganisationUnit($event)"
+                [selectedOrganisayionUnitIds]="selectedOrganisayionUnitIds"
+                [isOrganisationUnitToggled]="isOrganisationUnitToggled" [organisationUnit]="organisationUnit">
+            </app-organisation-unit-tree>
         </div>
     </div>
 </ion-content>
