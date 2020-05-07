@@ -43,19 +43,19 @@ export const DEFAULT_APP_METADATA = {
   sections: {
     resourceType: 'entryForm',
     displayName: 'Sections',
-    isOnLogin: false,
+    isOnLogin: true,
     defaultIds: [],
   },
   dataElements: {
     resourceType: 'entryForm',
     displayName: 'Data Elements',
-    isOnLogin: false,
+    isOnLogin: true,
     defaultIds: [],
   },
   categoryCombos: {
     resourceType: 'entryForm',
     displayName: 'Category combos',
-    isOnLogin: false,
+    isOnLogin: true,
     defaultIds: [],
   },
   dataSets: {
@@ -85,37 +85,37 @@ export const DEFAULT_APP_METADATA = {
   constants: {
     resourceType: 'report',
     displayName: 'Constants',
-    isOnLogin: false,
+    isOnLogin: true,
     defaultIds: [],
   },
   programs: {
     resourceType: 'event',
     displayName: 'Programs',
-    isOnLogin: false,
+    isOnLogin: true,
     defaultIds: [],
   },
   programStageSections: {
     resourceType: 'event',
     displayName: 'Program Stage Sections',
-    isOnLogin: false,
+    isOnLogin: true,
     defaultIds: [],
   },
   programRules: {
     resourceType: 'event',
     displayName: 'Program Rules',
-    isOnLogin: false,
+    isOnLogin: true,
     defaultIds: [],
   },
   programRuleActions: {
     resourceType: 'event',
     displayName: 'Program Rule Actions',
-    isOnLogin: false,
+    isOnLogin: true,
     defaultIds: [],
   },
   programRuleVariables: {
     resourceType: 'event',
     displayName: 'Program Rules Variables',
-    isOnLogin: false,
+    isOnLogin: true,
     defaultIds: [],
   },
 };

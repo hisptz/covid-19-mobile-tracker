@@ -29,6 +29,7 @@ import {
   SetCurrentUserColorSettings,
   State,
 } from 'src/app/store';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -69,6 +70,7 @@ export class LoginPage implements OnInit {
     private navCtrl: NavController,
     private modalController: ModalController,
     private store: Store<State>,
+    private router: Router,
   ) {
     this.colorSettings$ = this.store.select(getCurrentUserColorSettings);
     this.appIcon = 'assets/img/logo.png';
@@ -241,7 +243,7 @@ export class LoginPage implements OnInit {
       }
       this.store.dispatch(AddCurrentUser({ currentUser: this.currentUser }));
       await this.userService.setCurrentUser(this.currentUser);
-      this.navCtrl.navigateRoot('/tabs');
+      this.router.navigate(['/chw-home']);
     } catch (error) {
       await this.toasterMessageService.showToasterMessage(
         error,
