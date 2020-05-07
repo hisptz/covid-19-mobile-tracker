@@ -1,5 +1,7 @@
 # COVID-19 Mobile Tracking
 
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+
 Mobile app powered by DHIS2 tracker implementation to help track COVID-19 cases
 
 # Installation
