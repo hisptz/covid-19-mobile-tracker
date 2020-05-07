@@ -1,0 +1,25 @@
+.chw-selection-block {
+  background-color: var(--ion-color-primary);
+}
+.chw-home-block {
+  border-bottom-left-radius: 45px;
+  border-bottom-right-radius: 45px;
+  //   padding: 0 10px 20px 10px;
+}
+
+.chw-home-card {
+  background-color: #fdfdfd;
+  border: solid thin #eeeefd;
+  border-radius: 5px;
+  padding: 15px;
+  display: block;
+  text-align: center;
+}
+
+.chw-home-card ion-img {
+  height: 130px;
+}
+
+.chw-home-card .tracker-title {
+  padding-bottom: 5px;
+}

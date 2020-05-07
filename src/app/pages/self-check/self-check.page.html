@@ -1,0 +1,48 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Self Check</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['/self-check-profile']">
+        <ion-icon name="person-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-router-outlet id="main"></ion-router-outlet>
+  <ion-tabs>
+    <ion-tab-bar color="primary" slot="top">
+      <ion-tab-button tab="home">
+        <ion-icon name="home"></ion-icon>
+        <ion-label>Home</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="status">
+        <ion-icon name="heart-outline"></ion-icon>
+        <ion-label>Status</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="progress">
+        <ion-icon name="stats-chart-outline"></ion-icon>
+        <ion-label>Progress</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+    <ion-button shape="round" color="success" [routerLink]="['/self-check-enrollment']">
+      <ion-icon slot="start" name="person-add"></ion-icon>
+      <ion-label>Enroll</ion-label>
+    </ion-button>
+  </ion-fab>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-button shape="round" [routerLink]="['/manage-self-check']">
+      <ion-icon slot="start" name="heart-outline"></ion-icon>
+      <ion-label>Check-up</ion-label>
+    </ion-button>
+  </ion-fab>
+
+</ion-content>

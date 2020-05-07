@@ -1,0 +1,30 @@
+<ion-toolbar color="primary">
+  <ion-buttons slot="start">
+    <ion-back-button></ion-back-button>
+  </ion-buttons>
+  <ion-title>COVID Tracker</ion-title>
+  <ion-buttons slot="end">
+    <ion-button (click)="onShowLanguageList($event)">
+      <ion-icon slot="start" name="globe-outline"></ion-icon>
+      <ion-label>English</ion-label>
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+
+<ion-content color="primary">
+  <form class="login-form" #f="ngForm" (ngSubmit)="onLogin(f)">
+    <ion-item class="login-input">
+      <ion-label position="floating">Username</ion-label>
+      <ion-input type="text" ngModel name="username" required></ion-input>
+    </ion-item>
+    <ion-item class="login-input">
+      <ion-label position="floating">Password</ion-label>
+      <ion-input type="password" ngModel name="password" required></ion-input>
+    </ion-item>
+    <ion-button color="light" fill="outline" size="large" class="login-btn" expand="block" type="submit"
+      [disabled]="!f.valid ">
+      <ion-icon slot="start" name="log-in"></ion-icon>
+      <ion-label>Login</ion-label>
+    </ion-button>
+  </form>
+</ion-content>
