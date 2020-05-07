@@ -2,9 +2,10 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
-    "types": [],
+    "types": ["node"],
+    "typeRoots": ["./node_modules/@types"],
     "paths": {
-      "typeorm": ["./node_modules/typeorm/typeorm-model-shim.js"]
+      "typeorm": ["./node_modules/typeorm/browser"]
     }
   },
   "include": ["src/**/*.ts"],

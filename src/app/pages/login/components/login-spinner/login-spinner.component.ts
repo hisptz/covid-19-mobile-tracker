@@ -21,13 +21,36 @@
  * @author Joseph Chingalo <profschingalo@gmail.com>
  *
  */
+import { Component, OnInit, Input } from '@angular/core';
 
-import { BarcodeSettings } from './barcode-settings';
-export interface LoginFormField {
-  id: string;
-  placehoder?: string;
-  type: string;
-  readonly: boolean;
-  isHidden?: boolean;
-  barcodeSettings?: BarcodeSettings;
+@Component({
+  selector: 'app-login-spinner',
+  templateUrl: './login-spinner.component.html',
+  styleUrls: ['./login-spinner.component.scss']
+})
+export class LoginSpinnerComponent implements OnInit {
+  @Input()
+  keyFlag: string;
+  @Input()
+  serverUrl: string;
+  @Input()
+  applicationTitle: string;
+  @Input()
+  keyApplicationIntro: string;
+  @Input()
+  keyApplicationFooter: string;
+  @Input()
+  keyApplicationNotification: string;
+
+  icon: any = {
+    appLogo: '',
+    dhisLogo: ''
+  };
+
+  constructor() {
+    this.icon.appLogo = 'assets/img/logo.png';
+    this.icon.dhisLogo = 'assets/img/dhis_logo.png';
+  }
+
+  ngOnInit() {}
 }
