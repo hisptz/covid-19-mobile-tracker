@@ -29,6 +29,7 @@ export const LOGIN_FORM_FIELDS: LoginFormField[] = [
     placehoder: 'Enter server address',
     type: 'TEXT',
     readonly: false,
+    isHidden: true,
     barcodeSettings: {
       allowBarcodeReaderOnText: true,
       allowBarcodeReaderOnNumerical: false,

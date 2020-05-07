@@ -17,6 +17,7 @@ import { TrueOnlyInputComponent } from './input-fields/true-only-input/true-only
 import { UnitIntervalInputComponent } from './input-fields/unit-interval-input/unit-interval-input.component';
 import { InputFieldContainerComponent } from './input-fields/input-field-container/input-field-container.component';
 import { OrganisationUnitInputComponent } from './input-fields/organisation-unit-input/organisation-unit-input.component';
+import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 
 export const components: any[] = [
   LanguageListComponent,
@@ -38,5 +39,6 @@ export const components: any[] = [
   UnitIntervalInputComponent,
   InputFieldContainerComponent,
   OrganisationUnitInputComponent,
+  ProgressBarComponent,
 ];
 export const entryComponents: any[] = [LanguageListComponent];

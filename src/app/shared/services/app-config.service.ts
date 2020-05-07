@@ -23,7 +23,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { createConnection } from 'typeorm';
+import { createConnection, Connection } from 'typeorm';
 import { Platform } from '@ionic/angular';
 import {
   CategoryComboEntity,
@@ -91,7 +91,7 @@ export class AppConfigService {
         } finally {
           setTimeout(async () => {
             try {
-              const connection = await this.startConnection(
+              const connection: Connection = await this.startConnection(
                 dataBaseName,
                 entities,
                 synchronize,
@@ -99,7 +99,7 @@ export class AppConfigService {
               this.connection = connection;
             } catch (error) {
               synchronize = false;
-              const connection = await this.startConnection(
+              const connection: Connection = await this.startConnection(
                 dataBaseName,
                 entities,
                 synchronize,

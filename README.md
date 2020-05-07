@@ -29,6 +29,13 @@ npx cap add ios
 npx cap add android
 ```
 
+OR
+
+```
+ionic capacitor add ios
+ionic capacitor add android
+```
+
 Both android and ios folders at the root of the project are created. These are entirely separate native project artifacts that should be considered part of your Ionic app (i.e., check them into source control, edit them in their own IDEs, etc.).
 
 ### 1.3 Open IDE to build, run, and deploy
@@ -36,6 +43,13 @@ Both android and ios folders at the root of the project are created. These are e
 ```
 npx cap open ios
 npx cap open android
+```
+
+OR
+
+```
+ionic capacitor run ios
+ionic capacitor run android
 ```
 
 The native iOS and Android projects are opened in their standard IDEs (Xcode and Android Studio, respectively). Use the IDEs to run and deploy your app.

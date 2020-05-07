@@ -33,3 +33,4 @@ www/
 android
 ios
 capacitor.config.json
+plugins/

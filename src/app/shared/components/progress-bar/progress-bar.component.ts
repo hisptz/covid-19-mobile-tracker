@@ -21,13 +21,35 @@
  * @author Joseph Chingalo <profschingalo@gmail.com>
  *
  */
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 
-import { BarcodeSettings } from './barcode-settings';
-export interface LoginFormField {
-  id: string;
-  placehoder?: string;
-  type: string;
-  readonly: boolean;
-  isHidden?: boolean;
-  barcodeSettings?: BarcodeSettings;
+@Component({
+  selector: 'app-progress-bar',
+  templateUrl: './progress-bar.component.html',
+  styleUrls: ['./progress-bar.component.scss']
+})
+export class ProgressBarComponent implements OnInit {
+  @Input() progressPercentage: number;
+  @Input() processMessage: string;
+  @Input() showCancelButton: boolean;
+  @Input() showLoader: boolean;
+  @Input() showPercentage: boolean;
+  @Input() color: string;
+  @Input() isIndeterminateProcess: boolean;
+
+  @Output() cancelProgress = new EventEmitter();
+
+  constructor() {}
+
+  onCancelProgress() {
+    if (this.showCancelButton) {
+      this.cancelProgress.emit();
+    }
+  }
+
+  ngOnInit() {
+    if (this.color === undefined) {
+      this.color = 'primary';
+    }
+  }
 }
