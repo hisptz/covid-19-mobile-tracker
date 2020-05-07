@@ -25,9 +25,10 @@ import { CurrentUser } from 'src/app/models';
 import { DEFAULT_COLOR_SETTING } from './default-color-setting';
 
 export const DEFAULT_USER: CurrentUser = {
-  serverUrl: 'play.dhis2.org/demo',
+  // serverUrl: 'https://hisptz.com/dhis2covid19',
+  serverUrl: 'https://play.dhis2.org/2.34.0',
   username: 'admin ',
-  password: 'district',
+  password: 'Dhis@2020',
   currentLanguage: 'en',
   colorSettings: DEFAULT_COLOR_SETTING,
 };

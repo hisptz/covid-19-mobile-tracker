@@ -21,13 +21,5 @@
  * @author Joseph Chingalo <profschingalo@gmail.com>
  *
  */
-
-import { BarcodeSettings } from './barcode-settings';
-export interface LoginFormField {
-  id: string;
-  placehoder?: string;
-  type: string;
-  readonly: boolean;
-  isHidden?: boolean;
-  barcodeSettings?: BarcodeSettings;
-}
+export * from './login-helper';
+export * from './login-message-helper';

@@ -14,6 +14,7 @@ import { AppComponent } from './app.component';
 import { effects, metaReducers, reducers } from './store';
 import { EffectsModule } from '@ngrx/effects';
 import { nativePlugins } from './shared/services';
+import { IonicStorageModule } from '@ionic/storage';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -25,6 +26,7 @@ export function createTranslateLoader(http: HttpClient) {
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
+    IonicStorageModule.forRoot(),
     StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot(effects),
     HttpClientModule,
