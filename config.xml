@@ -20,6 +20,8 @@
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="3000" />
     <platform name="android">
+        <preference default="27.+" name="ANDROID_SUPPORT_V4_VERSION" />
+        <framework src="com.android.support:supportv4:$ANDROID_SUPPORT_V4_VERSION" />
         <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application" xmlns:android="http://schemas.android.com/apk/res/android">
             <application android:networkSecurityConfig="@xml/network_security_config" />
         </edit-config>
@@ -99,7 +101,6 @@
     <plugin name="cordova-plugin-splashscreen" spec="5.0.2" />
     <plugin name="cordova-plugin-ionic-webview" spec="^4.0.0" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
-    <engine name="android" spec="7.1.4" />
     <plugin name="cordova-plugin-datepicker" spec="^0.9.3" />
     <plugin name="phonegap-plugin-barcodescanner" spec="^8.1.0" />
     <plugin name="cordova-plugin-geolocation" spec="^4.0.2" />
@@ -107,4 +108,5 @@
     <plugin name="cordova-plugin-advanced-http" spec="^2.4.1" />
     <plugin name="cordova-plugin-network-information" spec="^2.0.2" />
     <plugin name="cordova-plugin-background-mode" spec="^0.7.3" />
+    <plugin name="cordova-plugin-androidx-adapter" spec="^1.1.0" />
 </widget>
