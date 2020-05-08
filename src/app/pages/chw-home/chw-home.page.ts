@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-chw-home',
@@ -6,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./chw-home.page.scss'],
 })
 export class ChwHomePage implements OnInit {
-  constructor() {}
+  constructor(private menuCtrl: MenuController) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.menuCtrl.enable(true);
+  }
 }
