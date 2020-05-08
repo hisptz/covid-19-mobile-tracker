@@ -96,7 +96,9 @@ export class LoginPage implements OnInit {
       currentUser = await this.userService.getCurrentUser();
     } catch (error) {
     } finally {
-      this.currentUser = currentUser ? currentUser : DEFAULT_USER;
+      this.currentUser = currentUser
+        ? { ...currentUser, password: '' }
+        : DEFAULT_USER;
     }
   }
 
@@ -243,7 +245,7 @@ export class LoginPage implements OnInit {
       }
       this.store.dispatch(AddCurrentUser({ currentUser: this.currentUser }));
       await this.userService.setCurrentUser(this.currentUser);
-      this.router.navigate(['/chw-home']);
+      this.navCtrl.navigateRoot('/chw-home');
     } catch (error) {
       await this.toasterMessageService.showToasterMessage(
         error,

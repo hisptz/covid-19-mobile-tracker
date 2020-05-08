@@ -34,8 +34,8 @@ import { OrganisationUnitSearchPage } from './organisation-unit-search.page';
 const routes: Routes = [
   {
     path: '',
-    component: OrganisationUnitSearchPage
-  }
+    component: OrganisationUnitSearchPage,
+  },
 ];
 
 @NgModule({
@@ -44,8 +44,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
   ],
-  declarations: [OrganisationUnitSearchPage]
+  declarations: [OrganisationUnitSearchPage],
 })
 export class OrganisationUnitSearchPageModule {}

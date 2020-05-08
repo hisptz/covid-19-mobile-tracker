@@ -27,12 +27,12 @@ import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 import { Geolocation, GeolocationOptions } from '@ionic-native/geolocation/ngx';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GeolocationService {
   constructor(
     private geolocation: Geolocation,
-    private diagnostic: Diagnostic
+    private diagnostic: Diagnostic,
   ) {}
 
   isLocationAuthorized() {
@@ -40,11 +40,11 @@ export class GeolocationService {
     return new Promise((resolve, reject) => {
       this.diagnostic
         .getLocationAuthorizationStatus()
-        .then(status => {
+        .then((status) => {
           locationStatus = status === 'GRANTED' ? true : false;
           resolve(locationStatus);
         })
-        .catch(error => {
+        .catch((error) => {
           reject(error);
         });
     });
@@ -63,7 +63,7 @@ export class GeolocationService {
           isLocationEnabled = status;
           resolve(isLocationEnabled);
         })
-        .catch(error => {
+        .catch((error) => {
           reject(error);
         });
     });
@@ -73,7 +73,7 @@ export class GeolocationService {
     const options: GeolocationOptions = {
       timeout: 4000,
       enableHighAccuracy: true,
-      maximumAge: 4000
+      maximumAge: 4000,
     };
     return new Promise((resolve, reject) => {
       this.geolocation

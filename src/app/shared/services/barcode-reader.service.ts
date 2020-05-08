@@ -27,17 +27,17 @@ import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BarcodeReaderService {
   constructor(
     private diagnostic: Diagnostic,
-    private barcodeScanner: BarcodeScanner
+    private barcodeScanner: BarcodeScanner,
   ) {}
 
   isCameraAvailable(): Observable<any> {
     let status = false;
-    return new Observable(observer => {
+    return new Observable((observer) => {
       this.diagnostic
         .isCameraPresent()
         .then(() => {
@@ -53,10 +53,10 @@ export class BarcodeReaderService {
   }
 
   isCameraAuthorized(): Observable<any> {
-    return new Observable(observer => {
+    return new Observable((observer) => {
       this.diagnostic
         .getCameraAuthorizationStatus()
-        .then(status => {
+        .then((status) => {
           if (status === 'GRANTED') {
             observer.next(true);
           } else {
@@ -71,10 +71,10 @@ export class BarcodeReaderService {
   }
 
   requestCameraAuthorization(): Observable<any> {
-    return new Observable(observer => {
+    return new Observable((observer) => {
       this.diagnostic
         .requestCameraAuthorization(false)
-        .then(status => {
+        .then((status) => {
           observer.next(status);
           observer.complete();
         })
@@ -85,7 +85,7 @@ export class BarcodeReaderService {
   }
 
   scanBarcodeOrQrCode(barcodeSettings): Observable<any> {
-    return new Observable(observer => {
+    return new Observable((observer) => {
       this.barcodeScanner
         .scan()
         .then((barcodeData: any) => {
@@ -94,7 +94,7 @@ export class BarcodeReaderService {
           const dataResponse = this.getSanitizedData(
             text,
             cancelled,
-            barcodeSettings
+            barcodeSettings,
           );
           observer.next(dataResponse);
           observer.complete();
@@ -131,7 +131,7 @@ export class BarcodeReaderService {
             scanedText.indexOf(multilineSeparator) > -1
           ) {
             data = [];
-            scanedText.split(multilineSeparator).map(keyValuePair => {
+            scanedText.split(multilineSeparator).map((keyValuePair) => {
               const keyValuePairArray = keyValuePair.split(keyPairSeparator);
               if (keyValuePairArray.length > 1) {
                 const object = {};

@@ -9,10 +9,9 @@ describe('UnitIntervalInputComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UnitIntervalInputComponent ],
+      declarations: [UnitIntervalInputComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    })
-    .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {

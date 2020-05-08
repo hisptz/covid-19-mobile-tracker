@@ -147,6 +147,7 @@ export class LoginMetadataSyncComponent implements OnInit, OnDestroy {
       'authorizationKey',
       'currentDatabase',
     ]);
+    this.currentUser.progressTracker = {};
     this.authenticateUser(this.currentUser, this.processes);
   }
 
@@ -414,7 +415,8 @@ export class LoginMetadataSyncComponent implements OnInit, OnDestroy {
       currentUser.progressTracker[currentUser.currentDatabase]
         ? !this.isOnLogin
           ? emptyProgressTracker
-          : currentUser.progressTracker[currentUser.currentDatabase]
+          : currentUser.progressTracker[currentUser.currentDatabase] ||
+            emptyProgressTracker
         : emptyProgressTracker;
     try {
       Object.keys(progressTrackerObject).map((key: string) => {
@@ -514,11 +516,8 @@ export class LoginMetadataSyncComponent implements OnInit, OnDestroy {
     );
     const { currentDatabase } = this.currentUser;
     if (currentDatabase) {
-      // this.currentUser.progressTracker[currentDatabase] = progressTracker;
-      this.updateCurrentUser.emit({
-        ...this.currentUser,
-        progressTracker: { [currentDatabase]: progressTracker },
-      });
+      this.currentUser.progressTracker[currentDatabase] = progressTracker;
+      this.updateCurrentUser.emit(this.currentUser);
     }
     if (totalProcesses === totalExpectedProcesses) {
       if (this.progressTrackerBackup) {

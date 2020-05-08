@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform, NavController, MenuController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { UserService } from './shared/services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,9 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
+    private navCtrl: NavController,
+    private menuCtrl: MenuController,
+    private userService: UserService,
   ) {
     this.initializeApp();
   }
@@ -23,5 +27,23 @@ export class AppComponent {
       this.statusBar.styleLightContent();
       this.splashScreen.hide();
     });
+  }
+
+  async logOut() {
+    let currentUser = null;
+    try {
+      currentUser = await this.userService.getCurrentUser();
+      if (currentUser) {
+        await this.userService.setCurrentUser({
+          ...currentUser,
+          password: '',
+          isLogin: false,
+        });
+      }
+    } catch (error) {
+    } finally {
+      this.menuCtrl.toggle();
+      this.navCtrl.navigateRoot('/home');
+    }
   }
 }

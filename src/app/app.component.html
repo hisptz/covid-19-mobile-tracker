@@ -1,14 +1,14 @@
 <ion-app color="primary">
   <ion-menu side="start" menuId="first" contentId="main" type="overlay">
     <ion-header>
-      <ion-toolbar>
+      <ion-toolbar color="primary">
         <ion-title>Menu</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content>
       <ion-list>
-        <ion-item lines="none">Profile</ion-item>
-        <ion-item lines="none">Log out</ion-item>
+        <ion-item  lines="none">Profile</ion-item>
+        <ion-item lines="none" (click)="logOut()">Log out</ion-item>
       </ion-list>
     </ion-content>
   </ion-menu>

@@ -9,10 +9,9 @@ describe('OrganisationUnitSearchPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OrganisationUnitSearchPage ],
+      declarations: [OrganisationUnitSearchPage],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    })
-    .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
