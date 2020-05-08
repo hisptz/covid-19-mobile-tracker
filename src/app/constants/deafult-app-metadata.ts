@@ -34,12 +34,12 @@ export const DEFAULT_APP_METADATA = {
   //   isOnLogin: false,
   //   defaultIds: [],
   // },
-  dataStore: {
-    resourceType: 'report',
-    displayName: 'Data Store',
-    isOnLogin: false,
-    defaultIds: [],
-  },
+  // dataStore: {
+  //   resourceType: 'report',
+  //   displayName: 'Data Store',
+  //   isOnLogin: false,
+  //   defaultIds: [],
+  // },
   // sections: {
   //   resourceType: 'entryForm',
   //   displayName: 'Sections',
