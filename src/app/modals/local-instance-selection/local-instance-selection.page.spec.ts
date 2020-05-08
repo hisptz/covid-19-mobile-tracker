@@ -9,10 +9,9 @@ describe('LocalInstanceSelectionPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LocalInstanceSelectionPage ],
+      declarations: [LocalInstanceSelectionPage],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    })
-    .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {

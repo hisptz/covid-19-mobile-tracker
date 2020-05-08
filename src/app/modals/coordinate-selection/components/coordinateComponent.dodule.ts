@@ -29,6 +29,6 @@ import { CoordinateComponent } from './coordinate/coordinate.component';
 @NgModule({
   declarations: [CoordinateComponent],
   imports: [IonicModule, CommonModule, TranslateModule.forChild()],
-  exports: [CoordinateComponent]
+  exports: [CoordinateComponent],
 })
 export class CoordinateComponentsModule {}

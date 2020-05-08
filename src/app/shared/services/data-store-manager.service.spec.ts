@@ -6,7 +6,9 @@ describe('DataStoreManagerService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: DataStoreManagerService = TestBed.get(DataStoreManagerService);
+    const service: DataStoreManagerService = TestBed.get(
+      DataStoreManagerService,
+    );
     expect(service).toBeTruthy();
   });
 });

@@ -26,7 +26,7 @@ import { ToastController } from '@ionic/angular';
 import { ToastOptions } from '@ionic/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ToasterMessagesService {
   constructor(private toastController: ToastController) {}
@@ -35,7 +35,7 @@ export class ToasterMessagesService {
     message: string,
     duration: number = 4000,
     header?: string,
-    position?: any
+    position?: any,
   ) {
     position = position ? position : 'bottom';
     message = this.getSanitizedErrorMessage(message);
@@ -45,7 +45,7 @@ export class ToasterMessagesService {
       message,
       header,
       position,
-      duration
+      duration,
     };
     if (!header) {
       delete toasterConfig.header;
@@ -68,7 +68,7 @@ export class ToasterMessagesService {
         .match(matchRegx)[0]
         .replace(/(<([^>]+)>)/gi, ':separator:')
         .split(':separator:')
-        .filter(content => content.length > 0)[0];
+        .filter((content) => content.length > 0)[0];
     } catch (e) {}
     if (status) {
       customMessage = `Status ${status}, ${customMessage}`;
@@ -78,7 +78,7 @@ export class ToasterMessagesService {
 
   getKeyValuePairMessage(errorObject) {
     let keyValueMessage = '';
-    Object.keys(errorObject).map(key => {
+    Object.keys(errorObject).map((key) => {
       let value = errorObject[key];
       if (typeof errorObject[key] === 'object') {
         value = this.getKeyValuePairMessage(errorObject[key]);

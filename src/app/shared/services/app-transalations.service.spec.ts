@@ -6,7 +6,9 @@ describe('AppTransalationsService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: AppTransalationsService = TestBed.get(AppTransalationsService);
+    const service: AppTransalationsService = TestBed.get(
+      AppTransalationsService,
+    );
     expect(service).toBeTruthy();
   });
 });

@@ -34,8 +34,8 @@ import { OptionSetSelectionPage } from './option-set-selection.page';
 const routes: Routes = [
   {
     path: '',
-    component: OptionSetSelectionPage
-  }
+    component: OptionSetSelectionPage,
+  },
 ];
 
 @NgModule({
@@ -44,8 +44,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
   ],
-  declarations: [OptionSetSelectionPage]
+  declarations: [OptionSetSelectionPage],
 })
 export class OptionSetSelectionPageModule {}

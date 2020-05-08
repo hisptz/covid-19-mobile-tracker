@@ -9,10 +9,9 @@ describe('OptionSetSelectionPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OptionSetSelectionPage ],
+      declarations: [OptionSetSelectionPage],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    })
-    .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {

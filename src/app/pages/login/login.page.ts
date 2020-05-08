@@ -243,7 +243,7 @@ export class LoginPage implements OnInit {
       }
       this.store.dispatch(AddCurrentUser({ currentUser: this.currentUser }));
       await this.userService.setCurrentUser(this.currentUser);
-      this.router.navigate(['/chw-home']);
+      this.navCtrl.navigateRoot('/chw-home');
     } catch (error) {
       await this.toasterMessageService.showToasterMessage(
         error,

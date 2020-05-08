@@ -6,7 +6,9 @@ describe('ProgramStageSectionService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: ProgramStageSectionService = TestBed.get(ProgramStageSectionService);
+    const service: ProgramStageSectionService = TestBed.get(
+      ProgramStageSectionService,
+    );
     expect(service).toBeTruthy();
   });
 });

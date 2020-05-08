@@ -34,11 +34,11 @@ export class CurrentUserEffects {
   setCurrentUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(currentUserAction.AddCurrentUser),
-      switchMap(actions => {
+      switchMap((actions) => {
         const { currentUser } = actions;
         const { id } = currentUser;
         return of(currentUserAction.SetCurrentUser({ id }));
-      })
-    )
+      }),
+    ),
   );
 }
