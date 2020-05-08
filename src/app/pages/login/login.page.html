@@ -44,7 +44,7 @@
         (updateCurrentUser)="onUpdateCurrentUser($event)" (failOnLogin)="onFailLogin($event)"
         (successOnLoginAndSyncMetadata)="onSuccessLogin($event)" [currentUser]="currentUser"
         (cancelProgress)="onCancelLoginProcess()" [overAllMessage]="overAllLoginMessage"
-        [color]="(colorSettings$ | async).colorAttributes.secondary" [showOverallProgressBar]="showOverallProgressBar"
+        [color]="(colorSettings$ | async).colorAttributes.primary" [showOverallProgressBar]="showOverallProgressBar"
         [isOnLogin]="isOnLogin" [processes]="processes">
       </app-login-metadata-sync>
     </div>
