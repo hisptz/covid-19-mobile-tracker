@@ -67,7 +67,7 @@ export function getEmptyProcessTracker(
   isOnLogin: boolean,
 ) {
   const progressTracker = {};
-  progressTracker['communication'] = {
+  progressTracker[`communication`] = {
     expectedProcesses: isOnLogin ? 5 : 4,
     totalPassedProcesses: 0,
     passedProcesses: [],
@@ -92,7 +92,7 @@ export function getEmptyProcessTracker(
   return progressTracker;
 }
 
-export function getCompletedTrackedProcess(progressTracker) {
+export function getCompletedTrackedProcess(progressTracker: any) {
   let completedTrackedProcess = [];
   Object.keys(progressTracker).map((resourceType: string) => {
     progressTracker[resourceType].passedProcesses.map((passedProcess: any) => {
@@ -114,7 +114,7 @@ export function getCompletedTrackedProcess(progressTracker) {
   return completedTrackedProcess;
 }
 
-export function getPercetage(numerator, denominator) {
+export function getPercetage(numerator: any, denominator: any) {
   const percentage =
     numerator && denominator ? Math.round((numerator / denominator) * 100) : 0;
   return percentage;

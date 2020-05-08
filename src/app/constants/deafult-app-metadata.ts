@@ -118,4 +118,10 @@ export const DEFAULT_APP_METADATA = {
     isOnLogin: true,
     defaultIds: [],
   },
+  relationshipTypes: {
+    resourceType: 'event',
+    displayName: 'Relationship types',
+    isOnLogin: true,
+    defaultIds: [],
+  },
 };
