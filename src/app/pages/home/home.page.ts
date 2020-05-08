@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PopoverController, MenuController } from '@ionic/angular';
 import { LanguageListComponent } from '../../shared/components/language-list/language-list.component';
 
@@ -7,7 +7,7 @@ import { LanguageListComponent } from '../../shared/components/language-list/lan
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit {
   constructor(
     public popoverController: PopoverController,
     private menuCtrl: MenuController,
