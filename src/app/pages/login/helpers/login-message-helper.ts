@@ -122,6 +122,15 @@ export function getProgressMessage(process: string, processType: string) {
         : processType === 'saving'
         ? 'Program rules variables have been discovered'
         : process;
+  } else if (process === 'relationshipTypes') {
+    progressMessage =
+      processType === 'dowmloading'
+        ? 'Discovering relationship types'
+        : processType === 'start-saving'
+        ? 'Saving relationship types'
+        : processType === 'saving'
+        ? 'Relationship types have been discovered'
+        : process;
   } else if (process === 'indicators') {
     progressMessage =
       processType === 'dowmloading'
