@@ -44,6 +44,7 @@ export interface Program {
   trackedEntity?: any;
   trackedEntityType?: any;
   attributeValues?: any;
+  selectedAttribute?: string;
 }
 
 export interface ProgramProgramTrackedEntityAttribute {
