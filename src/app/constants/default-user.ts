@@ -26,7 +26,7 @@ import { DEFAULT_COLOR_SETTING } from './default-color-setting';
 
 export const DEFAULT_USER: CurrentUser = {
   serverUrl: 'https://hisptz.com/dhis2covid19',
-  username: 'admin ',
+  username: 'android1',
   password: 'Dhis@2020',
   currentLanguage: 'en',
   colorSettings: DEFAULT_COLOR_SETTING,

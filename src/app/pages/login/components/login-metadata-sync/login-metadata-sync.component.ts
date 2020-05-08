@@ -146,6 +146,7 @@ export class LoginMetadataSyncComponent implements OnInit, OnDestroy {
       'name',
       'authorizationKey',
       'currentDatabase',
+      'progressTracker',
     ]);
     this.authenticateUser(this.currentUser, this.processes);
   }
