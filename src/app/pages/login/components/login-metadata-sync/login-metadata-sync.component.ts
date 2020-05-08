@@ -43,6 +43,7 @@ import { IndicatorService } from 'src/app/shared/services/indicator.service';
 import { StandardResportService } from 'src/app/shared/services/standard-resport.service';
 import { ValidationRuleService } from 'src/app/shared/services/validation-rule.service';
 import { DataStoreManagerService } from 'src/app/shared/services/data-store-manager.service';
+import { RelationshipsService } from 'src/app/shared/services/relationships.service';
 @Component({
   selector: 'app-login-metadata-sync',
   templateUrl: './login-metadata-sync.component.html',
@@ -105,6 +106,7 @@ export class LoginMetadataSyncComponent implements OnInit, OnDestroy {
     private standardResportService: StandardResportService,
     private validationRuleService: ValidationRuleService,
     private dataStoreManagerService: DataStoreManagerService,
+    private relationshipsService: RelationshipsService,
   ) {
     this.showCancelButton = true;
     this.showPercentage = true;
@@ -147,7 +149,6 @@ export class LoginMetadataSyncComponent implements OnInit, OnDestroy {
       'authorizationKey',
       'currentDatabase',
     ]);
-    this.currentUser.progressTracker = {};
     this.authenticateUser(this.currentUser, this.processes);
   }
 
@@ -765,6 +766,8 @@ export class LoginMetadataSyncComponent implements OnInit, OnDestroy {
         this.discoveringValidationRulesFromServer(process);
       } else if (process === 'dataStore') {
         this.discoveringDataStoreFromServer(process);
+      } else if (process === 'relationshipTypes') {
+        this.discoveringRelationshipTypesFromServer(process);
       } else {
         setTimeout(() => {
           this.removeFromQueue(process, 'dowmloading', false);
@@ -1016,6 +1019,21 @@ export class LoginMetadataSyncComponent implements OnInit, OnDestroy {
     );
   }
 
+  discoveringRelationshipTypesFromServer(process: string) {
+    this.subscriptions.add(
+      this.relationshipsService
+        .discoveringRelationshipTypesMetadata(this.currentUser)
+        .subscribe(
+          (response: any[]) => {
+            this.removeFromQueue(process, 'dowmloading', false, response);
+          },
+          (error) => {
+            this.onFailToLogin(error);
+          },
+        ),
+    );
+  }
+
   startSavingProcess(process: string, data: any[]) {
     const type = 'start-saving';
     const progressMessage = getProgressMessage(process, type);
@@ -1052,6 +1070,8 @@ export class LoginMetadataSyncComponent implements OnInit, OnDestroy {
       this.savingValidationRulesToLocalStorage(process, data);
     } else if (process === 'dataStore') {
       this.savingDataStoreDataToLocalStorage(process, data);
+    } else if (process === 'relationshipTypes') {
+      this.savingRelationshiTypesToLocalStorage(process, data);
     } else {
       setTimeout(() => {
         this.removeFromQueue(process, 'dowmloading', false);
@@ -1294,6 +1314,24 @@ export class LoginMetadataSyncComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.dataStoreManagerService
         .savingDataStoreDataToLocalStorage(dataStoreData)
+        .subscribe(
+          () => {
+            this.removeFromQueue(process, 'saving', false);
+          },
+          (error) => {
+            this.onFailToLogin(error);
+          },
+        ),
+    );
+  }
+
+  savingRelationshiTypesToLocalStorage(
+    process: string,
+    relationshipTypes: any[],
+  ) {
+    this.subscriptions.add(
+      this.relationshipsService
+        .savingRelationshipTypesMetadata(relationshipTypes)
         .subscribe(
           () => {
             this.removeFromQueue(process, 'saving', false);

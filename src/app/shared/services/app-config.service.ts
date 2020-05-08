@@ -65,6 +65,7 @@ import {
   SectionIndicatorEntity,
   SmsCommandEntity,
   ValidationRuleEntity,
+  RelationshipTypeEntity,
 } from '../../entites';
 
 @Injectable({
@@ -170,6 +171,7 @@ export class AppConfigService {
       SectionIndicatorEntity,
       SmsCommandEntity,
       ValidationRuleEntity,
+      RelationshipTypeEntity,
     ];
   }
 }

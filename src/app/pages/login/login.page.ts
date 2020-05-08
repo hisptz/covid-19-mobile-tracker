@@ -97,7 +97,7 @@ export class LoginPage implements OnInit {
     } catch (error) {
     } finally {
       this.currentUser = currentUser
-        ? { ...currentUser, password: '' }
+        ? { ...currentUser, password: '', progressTracker: {} }
         : DEFAULT_USER;
     }
   }
