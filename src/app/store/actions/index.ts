@@ -22,4 +22,4 @@
  *
  */
 export * from './current-user.actions';
-export * from './organisation-unit-actions';
+export * from './selections-actions';

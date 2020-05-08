@@ -4,7 +4,7 @@ import { Store, select } from '@ngrx/store';
 import { State } from 'src/app/store';
 import { Observable, of } from 'rxjs';
 import { OrganisationUnit, CurrentUser } from 'src/app/models';
-import { getCurrentOrganisationUnit } from 'src/app/store/selectors/organisation-unit.selectors';
+import { getCurrentOrganisationUnit } from 'src/app/store/selectors/selections.selectors';
 import { OrganisationUnitSelectionPage } from 'src/app/modals/organisation-unit-selection/organisation-unit-selection.page';
 import { ProgramService } from 'src/app/shared/services/program.service';
 import { ProgramSelectionService } from 'src/app/shared/services/program-selection.service';

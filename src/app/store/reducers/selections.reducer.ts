@@ -15,26 +15,41 @@
  * along with lab. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { OrganisationUnit } from 'src/app/models';
+import { OrganisationUnit, Program } from 'src/app/models';
 import { createReducer, on } from '@ngrx/store';
-import { setCurrentOrgUnit } from '../actions/organisation-unit-actions';
+import {
+  setCurrentOrgUnit,
+  setCurrentProgram,
+} from '../actions/selections-actions';
 
-export interface OrganisationState {
+export interface SelectionsState {
   currentOrganisationUnit: OrganisationUnit;
+  currentProgram: Program;
+  currentProgramSourceAttribute: string;
 }
 
-const initialOrganisationUnitState: OrganisationState = {
+const initialSelectionsState: SelectionsState = {
   currentOrganisationUnit: null,
+  currentProgram: null,
+  currentProgramSourceAttribute: undefined,
 };
 
 const reducer = createReducer(
-  initialOrganisationUnitState,
+  initialSelectionsState,
   on(setCurrentOrgUnit, (state, { currentOrganisationUnit }) => ({
     ...state,
     currentOrganisationUnit,
   })),
+  on(
+    setCurrentProgram,
+    (state, { currentProgram, currentProgramSourceAttribute }) => ({
+      ...state,
+      currentProgram,
+      currentProgramSourceAttribute,
+    }),
+  ),
 );
 
-export function organisationUnitReducer(state: OrganisationState, action) {
+export function selectionsReducer(state: SelectionsState, action) {
   return reducer(state, action);
 }
