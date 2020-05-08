@@ -29,14 +29,14 @@ import {
   Output,
   OnDestroy,
   OnChanges,
-  SimpleChanges
+  SimpleChanges,
 } from '@angular/core';
 import L from 'leaflet';
 
 @Component({
   selector: 'app-coordinate',
   templateUrl: './coordinate.component.html',
-  styleUrls: ['./coordinate.component.scss']
+  styleUrls: ['./coordinate.component.scss'],
 })
 export class CoordinateComponent implements OnInit, OnDestroy, OnChanges {
   @Input() position: any;
@@ -78,12 +78,12 @@ export class CoordinateComponent implements OnInit, OnDestroy, OnChanges {
       this.map = L.map('coordinate-selection', {
         center,
         zoom: 5,
-        zoomControl: false
+        zoomControl: false,
       });
       this.map.addControl(L.control.zoom({ position: 'topright' }));
       L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution:
-          '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       }).addTo(this.map);
 
       this.setMapMarker(center);
@@ -97,8 +97,8 @@ export class CoordinateComponent implements OnInit, OnDestroy, OnChanges {
         iconUrl: 'assets/icon/marker-icon.png',
         iconSize: [21, 31],
         iconAnchor: [10, 31],
-        popupAnchor: [0, -31]
-      })
+        popupAnchor: [0, -31],
+      }),
     }).addTo(this.map);
     this.marker.dragging.enable();
   }
@@ -133,13 +133,16 @@ export class CoordinateComponent implements OnInit, OnDestroy, OnChanges {
       accuracy: this.accuracy,
       altitude: this.altitude,
       isLocationBasedOnPhone: this.isLocationBasedOnPhone,
-      isLoadingMyLocation: this.isLoadingMyLocation
+      isLoadingMyLocation: this.isLoadingMyLocation,
     };
     if (position) {
       this.marker.setLatLng(new L.LatLng(position.lat, position.lng));
       coordinateData = {
         ...coordinateData,
-        position: { lat: position.lat.toFixed(6), lng: position.lng.toFixed(6) }
+        position: {
+          lat: position.lat.toFixed(6),
+          lng: position.lng.toFixed(6),
+        },
       };
     }
     this.coordonateChange.emit(coordinateData);
@@ -149,7 +152,7 @@ export class CoordinateComponent implements OnInit, OnDestroy, OnChanges {
     if (position && position.lat && position.lng) {
       this.marker.setLatLng(new L.LatLng(position.lat, position.lng));
       this.map.setView(new L.LatLng(position.lat, position.lng), 8, {
-        animation: true
+        animation: true,
       });
     }
   }

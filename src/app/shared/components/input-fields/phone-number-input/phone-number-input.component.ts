@@ -26,7 +26,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 @Component({
   selector: 'app-phone-number-input',
   templateUrl: './phone-number-input.component.html',
-  styleUrls: ['./phone-number-input.component.scss']
+  styleUrls: ['./phone-number-input.component.scss'],
 })
 export class PhoneNumberInputComponent implements OnInit {
   @Input() dataElementId: string;

@@ -9,10 +9,9 @@ describe('LoginMetadataSyncComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoginMetadataSyncComponent ],
+      declarations: [LoginMetadataSyncComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    })
-    .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {

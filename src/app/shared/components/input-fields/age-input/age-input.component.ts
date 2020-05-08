@@ -33,7 +33,7 @@ export interface CurrentAge {
 @Component({
   selector: 'app-age-input',
   templateUrl: './age-input.component.html',
-  styleUrls: ['./age-input.component.scss']
+  styleUrls: ['./age-input.component.scss'],
 })
 export class AgeInputComponent implements OnInit {
   @Input() dataElementId: string;
@@ -52,7 +52,7 @@ export class AgeInputComponent implements OnInit {
     this.currentAge = {
       days: 0,
       months: 0,
-      years: 0
+      years: 0,
     };
   }
 

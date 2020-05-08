@@ -30,7 +30,7 @@ export interface State {
 }
 
 export const reducers: ActionReducerMap<State> = {
-  currentUser: currentUserReducer
+  currentUser: currentUserReducer,
 };
 export const getRootState = (state: State) => state;
 export const metaReducers: MetaReducer<State>[] = [];

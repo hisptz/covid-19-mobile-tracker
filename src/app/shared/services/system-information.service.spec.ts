@@ -6,7 +6,9 @@ describe('SystemInformationService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: SystemInformationService = TestBed.get(SystemInformationService);
+    const service: SystemInformationService = TestBed.get(
+      SystemInformationService,
+    );
     expect(service).toBeTruthy();
   });
 });

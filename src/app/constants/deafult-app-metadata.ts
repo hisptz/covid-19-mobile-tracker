@@ -58,12 +58,12 @@ export const DEFAULT_APP_METADATA = {
     isOnLogin: true,
     defaultIds: [],
   },
-  // dataSets: {
-  //   resourceType: 'entryForm',
-  //   displayName: 'Data Sets',
-  //   isOnLogin: false,
-  //   defaultIds: [],
-  // },
+  dataSets: {
+    resourceType: 'entryForm',
+    displayName: 'Data Sets',
+    isOnLogin: false,
+    defaultIds: [],
+  },
   // smsCommand: {
   //   resourceType: 'entryForm',
   //   displayName: 'SMS Command',
@@ -92,7 +92,7 @@ export const DEFAULT_APP_METADATA = {
     resourceType: 'event',
     displayName: 'Programs',
     isOnLogin: true,
-    defaultIds: [],
+    defaultIds: ['LGJoObFBwXP', 'uYjxkTbwRNf', 'wQaWU3KPllK'],
   },
   programStageSections: {
     resourceType: 'event',

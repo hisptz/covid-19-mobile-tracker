@@ -35,8 +35,8 @@ import { CoordinateComponentsModule } from './components/coordinateComponent.dod
 const routes: Routes = [
   {
     path: '',
-    component: CoordinateSelectionPage
-  }
+    component: CoordinateSelectionPage,
+  },
 ];
 
 @NgModule({
@@ -46,8 +46,8 @@ const routes: Routes = [
     IonicModule,
     CoordinateComponentsModule,
     RouterModule.forChild(routes),
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
   ],
-  declarations: [CoordinateSelectionPage]
+  declarations: [CoordinateSelectionPage],
 })
 export class CoordinateSelectionPageModule {}

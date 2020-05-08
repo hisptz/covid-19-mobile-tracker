@@ -29,9 +29,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./input-field-container.component.scss'],
 })
 export class InputFieldContainerComponent implements OnInit {
-
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {}
-
 }
