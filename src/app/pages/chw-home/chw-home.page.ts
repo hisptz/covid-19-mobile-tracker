@@ -2,10 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { MenuController, ModalController } from '@ionic/angular';
 import { Store, select } from '@ngrx/store';
 import { State } from 'src/app/store';
-import { Observable } from 'rxjs';
-import { OrganisationUnit } from 'src/app/models';
+import { Observable, of } from 'rxjs';
+import { OrganisationUnit, CurrentUser } from 'src/app/models';
 import { getCurrentOrganisationUnit } from 'src/app/store/selectors/organisation-unit.selectors';
 import { OrganisationUnitSelectionPage } from 'src/app/modals/organisation-unit-selection/organisation-unit-selection.page';
+import { ProgramService } from 'src/app/shared/services/program.service';
+import { ProgramSelectionService } from 'src/app/shared/services/program-selection.service';
+import { switchMap } from 'rxjs/operators';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-chw-home',
@@ -14,9 +18,12 @@ import { OrganisationUnitSelectionPage } from 'src/app/modals/organisation-unit-
 })
 export class ChwHomePage implements OnInit {
   currentOrganisationUnit$: Observable<OrganisationUnit>;
+  programs: any[];
   constructor(
     private menuCtrl: MenuController,
     private modalController: ModalController,
+    private programService: ProgramSelectionService,
+    private userService: UserService,
     private store: Store<State>,
   ) {}
 
@@ -24,6 +31,14 @@ export class ChwHomePage implements OnInit {
     this.menuCtrl.enable(true);
     this.currentOrganisationUnit$ = this.store.pipe(
       select(getCurrentOrganisationUnit),
+    );
+
+    this.currentOrganisationUnit$.subscribe(
+      (selectedOrganisationUnit: OrganisationUnit) => {
+        if (selectedOrganisationUnit) {
+          this.setPrograms(selectedOrganisationUnit);
+        }
+      },
     );
   }
 
@@ -34,5 +49,15 @@ export class ChwHomePage implements OnInit {
     });
 
     return await modal.present();
+  }
+
+  async setPrograms(selectedOrganisationUnit: OrganisationUnit) {
+    const currentUser: CurrentUser = await this.userService.getCurrentUser();
+    this.programs = await this.programService.getProgramListBySelectedOrganisationUnitAndRoles(
+      selectedOrganisationUnit.id,
+      'WITH_REGISTRATION',
+      currentUser ? currentUser.programs : [],
+      currentUser ? currentUser.authorities : [],
+    );
   }
 }
