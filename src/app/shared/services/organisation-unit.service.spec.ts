@@ -6,7 +6,9 @@ describe('OrganisationUnitService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: OrganisationUnitService = TestBed.get(OrganisationUnitService);
+    const service: OrganisationUnitService = TestBed.get(
+      OrganisationUnitService,
+    );
     expect(service).toBeTruthy();
   });
 });

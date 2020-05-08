@@ -34,8 +34,8 @@ import { TranslateModule } from '@ngx-translate/core';
 const routes: Routes = [
   {
     path: '',
-    component: TranslationSelectionPage
-  }
+    component: TranslationSelectionPage,
+  },
 ];
 
 @NgModule({
@@ -44,8 +44,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     TranslateModule.forChild(),
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
   ],
-  declarations: [TranslationSelectionPage]
+  declarations: [TranslationSelectionPage],
 })
 export class TranslationSelectionPageModule {}

@@ -6,7 +6,9 @@ describe('ProgramRuleEngineService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: ProgramRuleEngineService = TestBed.get(ProgramRuleEngineService);
+    const service: ProgramRuleEngineService = TestBed.get(
+      ProgramRuleEngineService,
+    );
     expect(service).toBeTruthy();
   });
 });

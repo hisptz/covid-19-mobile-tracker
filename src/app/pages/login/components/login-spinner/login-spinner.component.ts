@@ -26,7 +26,7 @@ import { Component, OnInit, Input } from '@angular/core';
 @Component({
   selector: 'app-login-spinner',
   templateUrl: './login-spinner.component.html',
-  styleUrls: ['./login-spinner.component.scss']
+  styleUrls: ['./login-spinner.component.scss'],
 })
 export class LoginSpinnerComponent implements OnInit {
   @Input()
@@ -44,7 +44,7 @@ export class LoginSpinnerComponent implements OnInit {
 
   icon: any = {
     appLogo: '',
-    dhisLogo: ''
+    dhisLogo: '',
   };
 
   constructor() {

@@ -77,7 +77,7 @@ export class OrganisationUnitService {
       );
       const chunk = 500;
       ouRepository
-        .save(organisationUnits, { chunk })
+        .save(_.uniqBy(organisationUnits, 'id'), { chunk })
         .then(() => {
           observer.next();
           observer.complete();

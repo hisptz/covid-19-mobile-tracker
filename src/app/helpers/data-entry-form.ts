@@ -26,13 +26,13 @@ export function getUidsFromExpression(expression: string) {
   let uids = [];
   const matchRegrex = /(\{.*?\})/gi;
   if (expression.match(matchRegrex)) {
-    expression.match(matchRegrex).forEach(function(value) {
+    expression.match(matchRegrex).forEach(function (value) {
       uids = uids.concat(
         value
           .replace('{', ':separator:')
           .replace('}', ':separator:')
           .split(':separator:')
-          .filter(content => content.length > 0)
+          .filter((content) => content.length > 0),
       );
     });
   }

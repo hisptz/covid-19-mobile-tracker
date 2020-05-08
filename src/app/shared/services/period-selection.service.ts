@@ -26,7 +26,7 @@ import * as _ from 'lodash';
 declare var dhis2;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PeriodSelectionService {
   constructor() {}
@@ -43,16 +43,16 @@ export class PeriodSelectionService {
   async getPeriodsList(
     periodType: string,
     openFuturePeriods: number,
-    currentPeriodOffset: number
+    currentPeriodOffset: number,
   ) {
     let periods = dhis2.period.generator.generateReversedPeriods(
       periodType,
-      currentPeriodOffset
+      currentPeriodOffset,
     );
     periods = dhis2.period.generator.filterOpenPeriods(
       periodType,
       periods,
-      openFuturePeriods
+      openFuturePeriods,
     );
     return _.map(periods, (period: any) => {
       const { id, name, iso, startDate, endDate } = period;

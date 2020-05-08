@@ -28,7 +28,7 @@ import { DatePicker } from '@ionic-native/date-picker/ngx';
 @Component({
   selector: 'app-date-time',
   templateUrl: './date-time.component.html',
-  styleUrls: ['./date-time.component.scss']
+  styleUrls: ['./date-time.component.scss'],
 })
 export class DateTimeComponent implements OnInit {
   @Input() mode: string;
@@ -67,17 +67,17 @@ export class DateTimeComponent implements OnInit {
           allowFutureDates: true,
           is24Hour: false,
           androidTheme: this.datePicker.ANDROID_THEMES
-            .THEME_DEVICE_DEFAULT_LIGHT
+            .THEME_DEVICE_DEFAULT_LIGHT,
         })
         .then(
-          dateResponse => {
+          (dateResponse) => {
             const displayValue = this.getDisplayValue(
               new Date(dateResponse),
-              this.mode
+              this.mode,
             );
             this.dateTimeChange.emit(displayValue);
           },
-          error => {}
+          (error) => {},
         );
     }
   }
