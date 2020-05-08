@@ -27,6 +27,7 @@ import * as _ from 'lodash';
 import { getRepository } from 'typeorm';
 import { HttpClientService } from './http-client.service';
 import { CurrentUser } from 'src/app/models';
+import { RelationshipTypeEntity } from 'src/app/entites';
 
 @Injectable({
   providedIn: 'root',
@@ -39,7 +40,7 @@ export class RelationshipsService {
   ): Observable<any> {
     return new Observable((observer) => {
       const resource = 'relationshipTypes';
-      const fields = `fields=fields=id,displayName,toConstraint[relationshipEntity,trackedEntityType,program],fromConstraint[relationshipEntity,trackedEntityType,program]`;
+      const fields = `fields=id,displayName,toConstraint[relationshipEntity,trackedEntityType,program],fromConstraint[relationshipEntity,trackedEntityType,program]`;
       const url = `/api/${resource}.json?${fields}`;
       this.httpCLientService
         .get(url, true, currentUser)
@@ -55,6 +56,18 @@ export class RelationshipsService {
   }
 
   savingRelationshipTypesMetadata(relationShips: any[]): Observable<any> {
-    return new Observable((obesver) => {});
+    return new Observable((observer) => {
+      const repository = getRepository(RelationshipTypeEntity);
+      const chunk = 50;
+      repository
+        .save(relationShips, { chunk })
+        .then(() => {
+          observer.next();
+          observer.complete();
+        })
+        .catch((error) => {
+          observer.error(error);
+        });
+    });
   }
 }
