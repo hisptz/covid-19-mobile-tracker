@@ -8,7 +8,7 @@ import { services } from './services';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
-  declarations: [...components],
+  declarations: [...components, ...entryComponents],
   entryComponents,
   imports: [CommonModule, IonicModule, FormsModule, TranslateModule],
   exports: [...components],

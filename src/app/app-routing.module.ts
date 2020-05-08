@@ -88,13 +88,6 @@ const routes: Routes = [
         (m) => m.ManageSelfCheckPageModule,
       ),
   },
-  {
-    path: 'org-unit-selection',
-    loadChildren: () =>
-      import(
-        './modals/organisation-unit-selection/organisation-unit-selection.module'
-      ).then((m) => m.OrganisationUnitSelectionPageModule),
-  },
 ];
 
 @NgModule({

@@ -128,13 +128,17 @@ export class OrganisationUnitSelectionPage implements OnInit {
     }
   }
 
-  async closeModal(data?: any) {
-    await this.modalController.dismiss(data);
+  async onClose(e?) {
+    if (e) {
+      e.stopPropagation();
+    }
+    await this.modalController.dismiss();
   }
 
   // @TODO handling multiple selections
   async onSelectOrganisationUnit(currentOrganisationUnit: OrganisationUnit) {
     this.store.dispatch(setCurrentOrgUnit({ currentOrganisationUnit }));
+    this.onClose();
   }
 
   async openOrganisationUnitSetSearchModal(selectedOrganisationUnitIds) {
