@@ -21,20 +21,22 @@
  * @author Joseph Chingalo <profschingalo@gmail.com>
  *
  */
-export * from './organisation-unit.entity';
-export * from './validation-rule.entity';
-export * from './data-store.entity';
-export * from './data-set.entity';
-export * from './section.entity';
-export * from './data-element.entity';
-export * from './category-combo.entity';
-export * from './sms-command.entity';
-export * from './indicator.entity';
-export * from './constant.entity';
-export * from './report.entity';
-export * from './data-value.entity';
-export * from './data-set-completeness.entity';
-export * from './program.entity';
-export * from './program-rule.entity';
-export * from './relationship-types.entity';
-export * from './event.entity';
+export interface RelationshipType {
+  id: string;
+  displayName: string;
+  toConstraint: RelationShipContraint;
+  fromConstraint: RelationShipContraint;
+}
+
+export interface RelationShipContraint {
+  relationshipEntity: string;
+  trackedEntityType?: RelationShipTrackedEntityType;
+  program?: RelationshipProgram;
+}
+
+interface RelationshipProgram {
+  id: string;
+}
+interface RelationShipTrackedEntityType {
+  id: string;
+}

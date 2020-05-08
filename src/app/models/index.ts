@@ -47,6 +47,7 @@ export * from './data-set-completeness';
 export * from './events';
 export * from './program';
 export * from './program-rule';
+export * from './relationship-types';
 export * from './currrent-entry-selection';
 export * from './data-entry-form';
 export * from './item-pager';
