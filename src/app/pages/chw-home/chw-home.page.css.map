@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,eAAe,CAAC;EACd,yBAAyB,EAAE,IAAI;EAC/B,0BAA0B,EAAE,IAAI;CAEjC;;AAED,AAAA,cAAc,CAAC;EACb,gBAAgB,EAAE,OAAO;EACzB,MAAM,EAAE,kBAAkB;EAC1B,aAAa,EAAE,GAAG;EAClB,OAAO,EAAE,IAAI;EACb,OAAO,EAAE,KAAK;EACd,UAAU,EAAE,MAAM;CACnB;;AAED,AAAA,cAAc,CAAC,OAAO,CAAC;EACrB,MAAM,EAAE,KAAK;CACd;;AAED,AAAA,cAAc,CAAC,cAAc,CAAC;EAC5B,cAAc,EAAE,GAAG;CACpB",
-    "sources": [
-        "chw-home.page.scss"
-    ],
-    "names": [],
-    "file": "chw-home.page.css"
-}

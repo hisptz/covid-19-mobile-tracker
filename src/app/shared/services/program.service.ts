@@ -37,6 +37,7 @@ import {
   ProgramStageEntryFormEntity,
   TrackedEntityAttributeEntity,
 } from 'src/app/entites';
+import { CONNECTION_NAME } from 'src/app/constants/db-options';
 
 @Injectable({
   providedIn: 'root',
@@ -124,13 +125,16 @@ export class ProgramService {
   }
 
   async savingProgramBasicInfo(programs: any[]) {
-    const repository = getRepository(ProgramEntity);
+    const repository = getRepository(ProgramEntity, CONNECTION_NAME);
     const chunk = 50;
     await repository.save(programs, { chunk });
   }
 
   async savingProgramDataSource(programs: any[]) {
-    const repository = getRepository(ProgramOrganisationUnitEntity);
+    const repository = getRepository(
+      ProgramOrganisationUnitEntity,
+      CONNECTION_NAME,
+    );
     const chunk = 50;
     const programOrganisationUnits = _.flattenDeep(
       _.map(
@@ -155,7 +159,7 @@ export class ProgramService {
   }
 
   async savingProgramProgramIndicators(programs: any[]) {
-    const repository = getRepository(ProgramIndicatorEntity);
+    const repository = getRepository(ProgramIndicatorEntity, CONNECTION_NAME);
     const chunk = 50;
     const programIndicatorsData = _.flattenDeep(
       _.map(
@@ -178,7 +182,10 @@ export class ProgramService {
   }
 
   async savingProgramProgramStage(programs: any) {
-    const repository = getRepository(ProgramProgramStageEntity);
+    const repository = getRepository(
+      ProgramProgramStageEntity,
+      CONNECTION_NAME,
+    );
     const chunk = 50;
     const programProgramStages = _.flattenDeep(
       _.map(
@@ -201,6 +208,7 @@ export class ProgramService {
   async savingProgramProgramTrackedEntityAttributes(programs: any[]) {
     const repository = getRepository(
       ProgramProgramTrackedEntityAttributeEntity,
+      CONNECTION_NAME,
     );
     const chunk = 50;
     const programTrackedEntityAttributesData = _.flattenDeep(
@@ -230,7 +238,10 @@ export class ProgramService {
   }
 
   async savingTrackedEntityAttributes(programTrackedEntityAttributes: any[]) {
-    const repository = getRepository(TrackedEntityAttributeEntity);
+    const repository = getRepository(
+      TrackedEntityAttributeEntity,
+      CONNECTION_NAME,
+    );
     const chunk = 50;
     const trackedEntityAttributes = _.flattenDeep(
       _.map(
@@ -258,7 +269,10 @@ export class ProgramService {
   }
 
   async savingTrackerRegistrationForm(programs: any[]) {
-    const repository = getRepository(TrackerRegistrationFormEntity);
+    const repository = getRepository(
+      TrackerRegistrationFormEntity,
+      CONNECTION_NAME,
+    );
     const chunk = 50;
     const trackerRegistrationForms = _.flattenDeep(
       _.map(
@@ -277,7 +291,10 @@ export class ProgramService {
   }
 
   async savingProgramStageEntryForm(programs: any) {
-    const repository = getRepository(ProgramStageEntryFormEntity);
+    const repository = getRepository(
+      ProgramStageEntryFormEntity,
+      CONNECTION_NAME,
+    );
     const chunk = 50;
     const programStageEntryForm = _.flattenDeep(
       _.map(

@@ -27,6 +27,7 @@ import { getRepository } from 'typeorm';
 import { HttpClientService } from './http-client.service';
 import { CurrentUser } from 'src/app/models';
 import { SmsCommandEntity } from 'src/app/entites';
+import { CONNECTION_NAME } from 'src/app/constants/db-options';
 
 @Injectable({
   providedIn: 'root',
@@ -51,7 +52,7 @@ export class SmsCommandService {
   }
 
   savingSmsCommandsToLocalStorage(smsCommands: any[]): Observable<any> {
-    const repository = getRepository(SmsCommandEntity);
+    const repository = getRepository(SmsCommandEntity, CONNECTION_NAME);
     const chunk = 50;
     return new Observable((observer) => {
       repository

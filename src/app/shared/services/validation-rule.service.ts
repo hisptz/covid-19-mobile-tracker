@@ -28,6 +28,7 @@ import { HttpClientService } from './http-client.service';
 import { CurrentUser, ValidationRule } from 'src/app/models';
 import { ValidationRuleEntity } from 'src/app/entites';
 import { getUidsFromExpression } from 'src/app/helpers';
+import { CONNECTION_NAME } from 'src/app/constants/db-options';
 
 @Injectable({
   providedIn: 'root',
@@ -86,7 +87,7 @@ export class ValidationRuleService {
 
   savingValidationRulesToLocalStorage(validationRules: any[]): Observable<any> {
     return new Observable((observer) => {
-      const repository = getRepository(ValidationRuleEntity);
+      const repository = getRepository(ValidationRuleEntity, CONNECTION_NAME);
       const chunk = 50;
       repository
         .save(validationRules, { chunk })
@@ -101,7 +102,7 @@ export class ValidationRuleService {
   }
 
   async getValidationRulesByDateElementIds(dataElementIds: string[]) {
-    const repository = getRepository(ValidationRuleEntity);
+    const repository = getRepository(ValidationRuleEntity, CONNECTION_NAME);
     const validationRules = await repository.find();
     return this.getSanitizedValidationRules(validationRules, dataElementIds);
   }

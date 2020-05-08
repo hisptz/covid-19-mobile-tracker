@@ -32,6 +32,7 @@ import {
   SectionDataElementEntity,
   SectionIndicatorEntity,
 } from 'src/app/entites';
+import { CONNECTION_NAME } from 'src/app/constants/db-options';
 
 @Injectable({
   providedIn: 'root',
@@ -90,12 +91,12 @@ export class SectionService {
   }
 
   async savingSectionBasicInfo(sections: any) {
-    const repository = getRepository(SectionEntity);
+    const repository = getRepository(SectionEntity, CONNECTION_NAME);
     const chunk = 50;
     await repository.save(sections, { chunk });
   }
   async savingSectionDataElements(sections: any) {
-    const repository = getRepository(SectionDataElementEntity);
+    const repository = getRepository(SectionDataElementEntity, CONNECTION_NAME);
     const chunk = 50;
     const sectionDataElements = _.map(
       _.filter(sections, (section: any) => {
@@ -115,7 +116,7 @@ export class SectionService {
     await repository.save(sectionDataElements, { chunk });
   }
   async savingSectionIndicators(sections: any) {
-    const repository = getRepository(SectionIndicatorEntity);
+    const repository = getRepository(SectionIndicatorEntity, CONNECTION_NAME);
     const chunk = 50;
     const sectionIndicators = _.map(
       _.filter(sections, (section: any) => {
@@ -134,11 +135,15 @@ export class SectionService {
   }
 
   async getSavedSections(sectionIds: string[]): Promise<Section[]> {
-    const sectionRepository = getRepository(SectionEntity);
+    const sectionRepository = getRepository(SectionEntity, CONNECTION_NAME);
     const sectionDataElementRepository = getRepository(
       SectionDataElementEntity,
+      CONNECTION_NAME,
     );
-    const sectionIndicatorRepository = getRepository(SectionIndicatorEntity);
+    const sectionIndicatorRepository = getRepository(
+      SectionIndicatorEntity,
+      CONNECTION_NAME,
+    );
     const sectionsResponse = await sectionRepository.findByIds(sectionIds);
     const sectionDataElements = await sectionDataElementRepository.findByIds(
       sectionIds,

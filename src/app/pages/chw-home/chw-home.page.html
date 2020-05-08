@@ -10,33 +10,46 @@
 <ion-content>
   <ion-row class="chw-selection-block">
     <ion-col size="10">
-      <ion-item color="primary" class="selector-item-value">
-        <ion-text>Select Area</ion-text>
+      <ion-item color="primary" class="selector-item-value" (click)="openOrganisationUnitModal($event)">
+        <ion-text>{{(currentOrganisationUnit$ | async)?.name || 'Select Area'}}</ion-text>
         <ion-icon slot="end" name="add-circle"></ion-icon>
       </ion-item>
     </ion-col>
   </ion-row>
-  <ion-list class="ion-padding-top">
-    <ion-item [routerLink]="['/tracked-entity-list']">
-      <ion-avatar slot="start" *ngIf="false">
-        <img src="assets/icon/rumor.png">
-      </ion-avatar>
-      <ion-label>
-        <h2 class="ion-padding-bottom">Rumor Tracing</h2>
-        <p>34 Rumors</p>
-      </ion-label>
-      <ion-icon color="success" name="sync"></ion-icon>
-    </ion-item>
-    <ion-item [routerLink]="['/tracked-entity-list']">
-      <ion-avatar slot="start" *ngIf="false">
-        <img src="assets/icon/rumor.png">
-      </ion-avatar>
-      <ion-label>
-        <h2 class="ion-padding-bottom">Suspect followup and contact tracing</h2>
-        <p>34 Suspects, 100 Contacts</p>
-      </ion-label>
-      <ion-icon color="warning" name="alert-circle"></ion-icon>
-    </ion-item>
-
-  </ion-list>
+  <ion-row *ngIf="!(currentOrganisationUnit$ | async)">
+    <ion-col>
+      <ion-card>
+        <ion-card-content class="ion-text-center">
+          <ion-icon color="warning" size="large" name="alert-circle-outline"></ion-icon>
+          <ion-card-subtitle class="ion-margin-top" color="warning">Select Area to view forms</ion-card-subtitle>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngIf="currentOrganisationUnit$ | async">
+    <ion-col>
+      <ion-list class="ion-padding-top">
+        <ion-item [routerLink]="['/tracked-entity-list']">
+          <ion-avatar slot="start" *ngIf="false">
+            <img src="assets/icon/rumor.png">
+          </ion-avatar>
+          <ion-label>
+            <h2 class="ion-padding-bottom">Rumor Tracing</h2>
+            <p>34 Rumors</p>
+          </ion-label>
+          <ion-icon color="success" name="sync"></ion-icon>
+        </ion-item>
+        <ion-item [routerLink]="['/tracked-entity-list']">
+          <ion-avatar slot="start" *ngIf="false">
+            <img src="assets/icon/rumor.png">
+          </ion-avatar>
+          <ion-label>
+            <h2 class="ion-padding-bottom">Suspect followup and contact tracing</h2>
+            <p>34 Suspects, 100 Contacts</p>
+          </ion-label>
+          <ion-icon color="warning" name="alert-circle"></ion-icon>
+        </ion-item>
+      </ion-list>
+    </ion-col>
+  </ion-row>
 </ion-content>

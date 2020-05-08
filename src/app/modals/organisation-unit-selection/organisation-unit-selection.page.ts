@@ -22,16 +22,23 @@
  *
  */
 import { Component, OnInit } from '@angular/core';
-import { ModalController, NavParams } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
+import { select, Store } from '@ngrx/store';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { State, getCurrentUserColorSettings } from '../../store';
+import { take } from 'rxjs/operators';
 import { AppColorObject, CurrentUser, OrganisationUnit } from 'src/app/models';
-import { OrganisationUnitSearchPage } from '../organisation-unit-search/organisation-unit-search.page';
-import { UserService } from 'src/app/shared/services/user.service';
 import { OrganisationUnitService } from 'src/app/shared/services/organisation-unit.service';
 import { ToasterMessagesService } from 'src/app/shared/services/toaster-messages.service';
+import { UserService } from 'src/app/shared/services/user.service';
+import { getCurrentOrganisationUnitIds } from 'src/app/store/selectors/organisation-unit.selectors';
+
+import {
+  getCurrentUserColorSettings,
+  setCurrentOrgUnit,
+  State,
+} from '../../store';
+import { OrganisationUnitSearchPage } from '../organisation-unit-search/organisation-unit-search.page';
 
 @Component({
   selector: 'app-organisation-unit-selection',
@@ -41,7 +48,7 @@ import { ToasterMessagesService } from 'src/app/shared/services/toaster-messages
 export class OrganisationUnitSelectionPage implements OnInit {
   cancelIcon: string;
   colorSettings$: Observable<AppColorObject>;
-  selectedOrganisayionUnitIds: string[];
+  selectedOrganisationUnitIds$: Observable<string[]>;
   organisationUnitList: OrganisationUnit[];
   organisationUnits: OrganisationUnit[];
   allowMultipleSelection: boolean;
@@ -50,7 +57,6 @@ export class OrganisationUnitSelectionPage implements OnInit {
 
   constructor(
     private modalController: ModalController,
-    private navParms: NavParams,
     private store: Store<State>,
     private userService: UserService,
     private organisationUnitService: OrganisationUnitService,
@@ -64,19 +70,24 @@ export class OrganisationUnitSelectionPage implements OnInit {
   }
 
   ngOnInit() {
-    this.selectedOrganisayionUnitIds = this.navParms.get(
-      'selectedOrganisayionUnitIds',
+    this.selectedOrganisationUnitIds$ = this.store.pipe(
+      select(getCurrentOrganisationUnitIds),
     );
-    const allowMultipleSelection = this.navParms.get('allowMultipleSelection');
+    const allowMultipleSelection = false;
     this.allowMultipleSelection =
       allowMultipleSelection || this.allowMultipleSelection;
-    this.discoveringAndSetHierarchy();
+
+    this.selectedOrganisationUnitIds$
+      .pipe(take(1))
+      .subscribe((selectedOrganisationUnitIds) => {
+        this.discoveringAndSetHierarchy(selectedOrganisationUnitIds);
+      });
   }
 
-  async discoveringAndSetHierarchy() {
+  async discoveringAndSetHierarchy(selectedOrganisationUnitIds) {
     try {
       await this.setOrganisationUnitHierarchy();
-      await this.setToggledOrganisationUnit(this.selectedOrganisayionUnitIds);
+      await this.setToggledOrganisationUnit(selectedOrganisationUnitIds);
     } catch (error) {
       const message = `Error ${JSON.stringify(error)}`;
       console.log({ message });
@@ -117,24 +128,24 @@ export class OrganisationUnitSelectionPage implements OnInit {
     }
   }
 
-  async closeModal(data?: any) {
-    await this.modalController.dismiss(data);
+  async onClose(e?) {
+    if (e) {
+      e.stopPropagation();
+    }
+    await this.modalController.dismiss();
   }
 
   // @TODO handling multiple selections
-  async onSelectOrganisationUnit(organisationUnit: OrganisationUnit) {
-    console.log({
-      organisationUnit,
-      allowMultipleSelection: this.allowMultipleSelection,
-    });
-    await this.closeModal(organisationUnit);
+  async onSelectOrganisationUnit(currentOrganisationUnit: OrganisationUnit) {
+    this.store.dispatch(setCurrentOrgUnit({ currentOrganisationUnit }));
+    this.onClose();
   }
 
-  async openOrganisationUnitSetSearchModal() {
+  async openOrganisationUnitSetSearchModal(selectedOrganisationUnitIds) {
     const modal = await this.modalController.create({
       component: OrganisationUnitSearchPage,
       componentProps: {
-        selectedOrganisayionUnitIds: this.selectedOrganisayionUnitIds,
+        selectedOrganisayionUnitIds: selectedOrganisationUnitIds,
         organisationUnitList: this.organisationUnitList,
       },
       cssClass: 'inset-modal',

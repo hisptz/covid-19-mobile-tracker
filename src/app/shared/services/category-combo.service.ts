@@ -27,6 +27,7 @@ import { getRepository } from 'typeorm';
 import { HttpClientService } from './http-client.service';
 import { CurrentUser } from 'src/app/models';
 import { CategoryComboEntity } from 'src/app/entites';
+import { CONNECTION_NAME } from 'src/app/constants/db-options';
 
 @Injectable({
   providedIn: 'root',
@@ -55,7 +56,7 @@ export class CategoryComboService {
   }
 
   savingCategoryCombosToLocalStorage(categoryCombos: any[]): Observable<any> {
-    const repository = getRepository(CategoryComboEntity);
+    const repository = getRepository(CategoryComboEntity, CONNECTION_NAME);
     const chunk = 500;
     return new Observable((observer) => {
       repository
@@ -71,7 +72,7 @@ export class CategoryComboService {
   }
 
   async getCategoryCombosByIds(ids: string[]) {
-    const repository = getRepository(CategoryComboEntity);
+    const repository = getRepository(CategoryComboEntity, CONNECTION_NAME);
     return await repository.findByIds(ids);
   }
 }

@@ -25,6 +25,7 @@ import * as _ from 'lodash';
 import { getRepository, Repository } from 'typeorm';
 import { DataSet, DataSetSource } from 'src/app/models';
 import { DataSetSourceEntity, DataSetEntity } from 'src/app/entites';
+import { CONNECTION_NAME } from 'src/app/constants/db-options';
 
 @Injectable({
   providedIn: 'root',
@@ -37,9 +38,10 @@ export class DataSetSelectionService {
     dataSetIdsByUserRoles: string[],
     authorities: string[],
   ) {
-    const dataSetRepository = getRepository('DataSetEntity') as Repository<
-      DataSetEntity
-    >;
+    const dataSetRepository = getRepository(
+      'DataSetEntity',
+      CONNECTION_NAME,
+    ) as Repository<DataSetEntity>;
     const dataSetOrganisationUnits = await this.getProgramsByOrganisationUnits([
       organisationUnitId,
     ]);
@@ -66,6 +68,7 @@ export class DataSetSelectionService {
   async getProgramsByOrganisationUnits(organisationUnitIdArry: string[]) {
     const dataSetrganisationUnitRepository = getRepository(
       'DataSetSourceEntity',
+      CONNECTION_NAME,
     ) as Repository<DataSetSourceEntity>;
     const dataSetOrganisationUnits = await dataSetrganisationUnitRepository.find();
     return _.filter(
