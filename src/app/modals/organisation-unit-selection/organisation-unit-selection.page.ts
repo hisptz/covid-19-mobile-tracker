@@ -76,6 +76,7 @@ export class OrganisationUnitSelectionPage implements OnInit {
       await this.setOrganisationUnitHierarchy();
       await this.setToggledOrganisationUnit(this.selectedOrganisayionUnitIds);
     } catch (error) {
+      console.trace(error);
       const message = `Error ${JSON.stringify(error)}`;
       console.log({ message });
       this.toasterMessagesService.showToasterMessage(message);

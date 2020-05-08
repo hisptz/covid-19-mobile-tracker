@@ -32,6 +32,7 @@ import {
   ProgramRuleActionEntity,
   ProgramRuleVariableEntity,
 } from 'src/app/entites';
+import { CONNECTION_NAME } from 'src/app/constants/db-options';
 
 @Injectable({
   providedIn: 'root',
@@ -120,7 +121,7 @@ export class ProgramRuleEngineService {
 
   savingProgramRulesToLocalStorage(programRules: any[]): Observable<any> {
     return new Observable((observer) => {
-      const repository = getRepository(ProgramRuleEntity);
+      const repository = getRepository(ProgramRuleEntity, CONNECTION_NAME);
       const chunk = 50;
       repository
         .save(programRules, { chunk })
@@ -138,7 +139,10 @@ export class ProgramRuleEngineService {
     programRuleActions: any[],
   ): Observable<any> {
     return new Observable((observer) => {
-      const repository = getRepository(ProgramRuleActionEntity);
+      const repository = getRepository(
+        ProgramRuleActionEntity,
+        CONNECTION_NAME,
+      );
       const chunk = 50;
       repository
         .save(programRuleActions, { chunk })
@@ -156,7 +160,10 @@ export class ProgramRuleEngineService {
     programRuleVariables: any[],
   ): Observable<any> {
     return new Observable((observer) => {
-      const repository = getRepository(ProgramRuleVariableEntity);
+      const repository = getRepository(
+        ProgramRuleVariableEntity,
+        CONNECTION_NAME,
+      );
       const chunk = 50;
       repository
         .save(programRuleVariables, { chunk })

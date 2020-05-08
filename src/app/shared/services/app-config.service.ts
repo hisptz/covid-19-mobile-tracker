@@ -66,6 +66,7 @@ import {
   SmsCommandEntity,
   ValidationRuleEntity,
 } from '../../entites';
+import { CONNECTION_NAME } from 'src/app/constants/db-options';
 
 @Injectable({
   providedIn: 'root',
@@ -121,6 +122,7 @@ export class AppConfigService {
   ) {
     return await createConnection({
       type: 'cordova',
+      name: CONNECTION_NAME,
       database: `${dataBaseName}`,
       location: 'default',
       logging: ['error', 'schema', 'log', 'info'],

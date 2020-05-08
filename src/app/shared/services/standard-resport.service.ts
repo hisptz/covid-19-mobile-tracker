@@ -31,6 +31,7 @@ import {
   ReportEntity,
   ReportDesignEntity,
 } from 'src/app/entites';
+import { CONNECTION_NAME } from 'src/app/constants/db-options';
 
 @Injectable({
   providedIn: 'root',
@@ -78,8 +79,11 @@ export class StandardResportService {
   }
 
   savingReportsToLocalStorage(reports: any[]): Observable<any> {
-    const reportRepository = getRepository(ReportEntity);
-    const reportDesignRepository = getRepository(ReportDesignEntity);
+    const reportRepository = getRepository(ReportEntity, CONNECTION_NAME);
+    const reportDesignRepository = getRepository(
+      ReportDesignEntity,
+      CONNECTION_NAME,
+    );
     const chunk = 50;
     return new Observable((observer) => {
       reportRepository
@@ -102,7 +106,7 @@ export class StandardResportService {
   }
 
   savingConstantsToLocalStorage(constants: any[]): Observable<any> {
-    const repository = getRepository(ConstantEntity);
+    const repository = getRepository(ConstantEntity, CONNECTION_NAME);
     const chunk = 50;
     return new Observable((observer) => {
       repository

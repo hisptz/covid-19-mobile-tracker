@@ -27,6 +27,7 @@ import { getRepository } from 'typeorm';
 import { HttpClientService } from './http-client.service';
 import { CurrentUser, OrganisationUnit } from 'src/app/models';
 import { OrganisationUnitEntity } from 'src/app/entites';
+import { CONNECTION_NAME } from 'src/app/constants/db-options';
 
 declare var dhis2;
 
@@ -70,7 +71,10 @@ export class OrganisationUnitService {
     organisationUnits: any[],
   ): Observable<any> {
     return new Observable((observer) => {
-      const ouRepository = getRepository(OrganisationUnitEntity);
+      const ouRepository = getRepository(
+        OrganisationUnitEntity,
+        CONNECTION_NAME,
+      );
       const chunk = 500;
       ouRepository
         .save(organisationUnits, { chunk })
@@ -86,12 +90,12 @@ export class OrganisationUnitService {
   }
 
   async getOrganiisationUnitByIds(organisationUnitIds: string[]) {
-    const ouRepository = getRepository(OrganisationUnitEntity);
+    const ouRepository = getRepository(OrganisationUnitEntity, CONNECTION_NAME);
     return await ouRepository.findByIds(organisationUnitIds);
   }
 
   async getAllOrganisationUnits() {
-    const ouRepository = getRepository(OrganisationUnitEntity);
+    const ouRepository = getRepository(OrganisationUnitEntity, CONNECTION_NAME);
     return await ouRepository.find();
   }
 }

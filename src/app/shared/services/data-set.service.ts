@@ -36,6 +36,7 @@ import {
   DataSetElementEntity,
 } from 'src/app/entites';
 import { DEFAULT_APP_METADATA } from 'src/app/constants';
+import { CONNECTION_NAME } from 'src/app/constants/db-options';
 
 @Injectable({
   providedIn: 'root',
@@ -128,13 +129,13 @@ export class DataSetService {
   }
 
   async savingDataSetBasicInfo(dataSets: any[]) {
-    const repository = getRepository(DataSetEntity);
+    const repository = getRepository(DataSetEntity, CONNECTION_NAME);
     const chunk = 50;
     await repository.save(dataSets, { chunk });
   }
 
   async savingDataSetEntryForm(dataSets: any[]) {
-    const repository = getRepository(DataSetDesignEntity);
+    const repository = getRepository(DataSetDesignEntity, CONNECTION_NAME);
     const entryForms = _.map(
       _.filter(dataSets, (dataSet: any) => {
         return (
@@ -150,7 +151,7 @@ export class DataSetService {
   }
 
   async getDataSetEntryForm(dataSetId: string): Promise<any> {
-    const repository = getRepository(DataSetDesignEntity);
+    const repository = getRepository(DataSetDesignEntity, CONNECTION_NAME);
     const dataSetDesignObj = await repository.findOne(dataSetId);
     const dataSetDesign =
       dataSetDesignObj && dataSetDesignObj.dataSetDesign
@@ -160,7 +161,7 @@ export class DataSetService {
   }
 
   async savingDataSetIndicators(dataSets: any[]) {
-    const repository = getRepository(DataSetIndicatorEntity);
+    const repository = getRepository(DataSetIndicatorEntity, CONNECTION_NAME);
     const dataSetIndicators = _.map(
       _.filter(dataSets, (dataSet: any) => {
         return dataSet && dataSet.indicators;
@@ -181,7 +182,7 @@ export class DataSetService {
   }
 
   async savingDataSetDataSource(dataSets: any[]) {
-    const repository = getRepository(DataSetSourceEntity);
+    const repository = getRepository(DataSetSourceEntity, CONNECTION_NAME);
     const dataSetSources = _.map(
       _.filter(dataSets, (dataSet: any) => {
         return (
@@ -203,7 +204,7 @@ export class DataSetService {
   }
 
   async savingDataSetSections(dataSets: any[]) {
-    const repository = getRepository(DataSetSectionEntity);
+    const repository = getRepository(DataSetSectionEntity, CONNECTION_NAME);
     const dataSetSections = _.map(
       _.filter(dataSets, (dataSet: any) => {
         return dataSet && dataSet.sections && dataSet.sections.length > 0;
@@ -218,7 +219,7 @@ export class DataSetService {
   }
 
   async savingDataSetOperands(dataSets: any[]) {
-    const repository = getRepository(DataSetOperandEntity);
+    const repository = getRepository(DataSetOperandEntity, CONNECTION_NAME);
     const dataSetOperands = _.flattenDeep(
       _.map(
         _.filter(dataSets, (dataSet: any) => {
@@ -243,7 +244,7 @@ export class DataSetService {
   }
 
   async getDataSetOperandsByDataSetId(dataSetId: string) {
-    const repository = getRepository(DataSetOperandEntity);
+    const repository = getRepository(DataSetOperandEntity, CONNECTION_NAME);
     const compulsoryDataElementOperands = await repository.find({
       dataSetId,
     });
@@ -265,7 +266,7 @@ export class DataSetService {
   }
 
   async savingDataSetDataElements(dataSets: any[]) {
-    const repository = getRepository(DataSetElementEntity);
+    const repository = getRepository(DataSetElementEntity, CONNECTION_NAME);
     const data = _.map(
       _.filter(dataSets, (dataSet: any) => {
         return dataSet && (dataSet.dataElements || dataSet.dataSetElements);
@@ -285,7 +286,7 @@ export class DataSetService {
   }
 
   async getDatsSetDataElements(dataSetId: string): Promise<string[]> {
-    const repository = getRepository(DataSetElementEntity);
+    const repository = getRepository(DataSetElementEntity, CONNECTION_NAME);
     const dataSetElementObj = await repository.findOne(dataSetId);
     let dataElementIds = [];
     dataElementIds = _.concat(

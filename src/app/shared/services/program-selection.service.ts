@@ -25,6 +25,7 @@ import * as _ from 'lodash';
 import { getRepository, Repository } from 'typeorm';
 import { ProgramEntity, ProgramOrganisationUnitEntity } from 'src/app/entites';
 import { ProgramOrganisationUnit, Program } from 'src/app/models';
+import { CONNECTION_NAME } from 'src/app/constants/db-options';
 
 @Injectable({
   providedIn: 'root',
@@ -38,9 +39,10 @@ export class ProgramSelectionService {
     programIdsByUserRoles: string[],
     authorities: string[],
   ) {
-    const programRepository = getRepository('ProgramEntity') as Repository<
-      ProgramEntity
-    >;
+    const programRepository = getRepository(
+      'ProgramEntity',
+      CONNECTION_NAME,
+    ) as Repository<ProgramEntity>;
     const ProgramOrganisationUnits = await this.getProgramsByOrganisationUnits([
       organisationUnitId,
     ]);
@@ -111,6 +113,7 @@ export class ProgramSelectionService {
   async getProgramsByOrganisationUnits(organisationUnitIds: string[]) {
     const programOrganisationUnitRepository = getRepository(
       'ProgramOrganisationUnitEntity',
+      CONNECTION_NAME,
     ) as Repository<ProgramOrganisationUnitEntity>;
     const ProgramOrganisationUnits = await programOrganisationUnitRepository.find();
     return _.filter(

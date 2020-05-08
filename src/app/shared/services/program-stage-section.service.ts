@@ -28,6 +28,7 @@ import { HttpClientService } from './http-client.service';
 import { CurrentUser } from 'src/app/models';
 import { DEFAULT_APP_METADATA } from 'src/app/constants';
 import { ProgramStageSectionEntity } from 'src/app/entites';
+import { CONNECTION_NAME } from 'src/app/constants/db-options';
 
 @Injectable({
   providedIn: 'root',
@@ -65,7 +66,10 @@ export class ProgramStageSectionService {
   savingProgramStageSectionsToLocalStorage(
     programStageSections: any[],
   ): Observable<any> {
-    const repository = getRepository(ProgramStageSectionEntity);
+    const repository = getRepository(
+      ProgramStageSectionEntity,
+      CONNECTION_NAME,
+    );
     const chunk = 50;
     const programStageSectionData = _.flattenDeep(
       _.map(
