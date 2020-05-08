@@ -24,13 +24,16 @@
 
 import { ActionReducerMap, MetaReducer } from '@ngrx/store';
 import { CurrentUserState, currentUserReducer } from './current-user.reducer';
+import { OrganisationState, organisationUnitReducer } from './org-unit.reducer';
 
 export interface State {
   currentUser: CurrentUserState;
+  organisationUnit: OrganisationState;
 }
 
 export const reducers: ActionReducerMap<State> = {
   currentUser: currentUserReducer,
+  organisationUnit: organisationUnitReducer,
 };
 export const getRootState = (state: State) => state;
 export const metaReducers: MetaReducer<State>[] = [];
