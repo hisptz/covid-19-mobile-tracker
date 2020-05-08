@@ -1,6 +1,7 @@
 import { createSelector } from '@ngrx/store';
 import { getRootState, State } from '../reducers';
 import { OrganisationState } from '../reducers/org-unit.reducer';
+import { OrganisationUnit } from 'src/app/models';
 
 /**
  * Copyright (C) 2020 UDSM DHIS2 PROJECT
@@ -27,4 +28,10 @@ export const getCurrentOrganisationUnit = createSelector(
   getOrganisationUnitState,
   (organisationUnitState: OrganisationState) =>
     organisationUnitState.currentOrganisationUnit,
+);
+
+export const getCurrentOrganisationUnitIds = createSelector(
+  getCurrentOrganisationUnit,
+  (organisationUnit: OrganisationUnit) =>
+    organisationUnit ? [organisationUnit.id] : [],
 );

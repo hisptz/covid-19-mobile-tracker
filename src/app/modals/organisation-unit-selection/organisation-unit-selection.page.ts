@@ -23,15 +23,21 @@
  */
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { AppColorObject, CurrentUser, OrganisationUnit } from 'src/app/models';
 import { OrganisationUnitService } from 'src/app/shared/services/organisation-unit.service';
 import { ToasterMessagesService } from 'src/app/shared/services/toaster-messages.service';
 import { UserService } from 'src/app/shared/services/user.service';
+import { getCurrentOrganisationUnitIds } from 'src/app/store/selectors/organisation-unit.selectors';
 
-import { getCurrentUserColorSettings, State } from '../../store';
+import {
+  getCurrentUserColorSettings,
+  setCurrentOrgUnit,
+  State,
+} from '../../store';
 import { OrganisationUnitSearchPage } from '../organisation-unit-search/organisation-unit-search.page';
 
 @Component({
@@ -42,7 +48,7 @@ import { OrganisationUnitSearchPage } from '../organisation-unit-search/organisa
 export class OrganisationUnitSelectionPage implements OnInit {
   cancelIcon: string;
   colorSettings$: Observable<AppColorObject>;
-  selectedOrganisayionUnitIds: string[];
+  selectedOrganisationUnitIds$: Observable<string[]>;
   organisationUnitList: OrganisationUnit[];
   organisationUnits: OrganisationUnit[];
   allowMultipleSelection: boolean;
@@ -64,19 +70,25 @@ export class OrganisationUnitSelectionPage implements OnInit {
   }
 
   ngOnInit() {
-    this.selectedOrganisayionUnitIds = [];
+    this.selectedOrganisationUnitIds$ = this.store.pipe(
+      select(getCurrentOrganisationUnitIds),
+    );
     const allowMultipleSelection = false;
     this.allowMultipleSelection =
       allowMultipleSelection || this.allowMultipleSelection;
-    this.discoveringAndSetHierarchy();
+
+    this.selectedOrganisationUnitIds$
+      .pipe(take(1))
+      .subscribe((selectedOrganisationUnitIds) => {
+        this.discoveringAndSetHierarchy(selectedOrganisationUnitIds);
+      });
   }
 
-  async discoveringAndSetHierarchy() {
+  async discoveringAndSetHierarchy(selectedOrganisationUnitIds) {
     try {
       await this.setOrganisationUnitHierarchy();
-      await this.setToggledOrganisationUnit(this.selectedOrganisayionUnitIds);
+      await this.setToggledOrganisationUnit(selectedOrganisationUnitIds);
     } catch (error) {
-      console.trace(error);
       const message = `Error ${JSON.stringify(error)}`;
       console.log({ message });
       this.toasterMessagesService.showToasterMessage(message);
@@ -121,19 +133,15 @@ export class OrganisationUnitSelectionPage implements OnInit {
   }
 
   // @TODO handling multiple selections
-  async onSelectOrganisationUnit(organisationUnit: OrganisationUnit) {
-    console.log({
-      organisationUnit,
-      allowMultipleSelection: this.allowMultipleSelection,
-    });
-    await this.closeModal(organisationUnit);
+  async onSelectOrganisationUnit(currentOrganisationUnit: OrganisationUnit) {
+    this.store.dispatch(setCurrentOrgUnit({ currentOrganisationUnit }));
   }
 
-  async openOrganisationUnitSetSearchModal() {
+  async openOrganisationUnitSetSearchModal(selectedOrganisationUnitIds) {
     const modal = await this.modalController.create({
       component: OrganisationUnitSearchPage,
       componentProps: {
-        selectedOrganisayionUnitIds: this.selectedOrganisayionUnitIds,
+        selectedOrganisayionUnitIds: selectedOrganisationUnitIds,
         organisationUnitList: this.organisationUnitList,
       },
       cssClass: 'inset-modal',

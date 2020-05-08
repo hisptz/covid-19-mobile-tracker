@@ -28,8 +28,8 @@
             <ion-back-button></ion-back-button>
         </ion-buttons>
         <ion-title [translate]="'Area Selection'"></ion-title>
-        <ion-buttons slot="end">
-            <ion-button (click)="openOrganisationUnitSetSearchModal()">
+        <ion-buttons slot="end" *ngIf="selectedOrganisationUnitIds$ | async as selectedOrganisationUnitIds">
+            <ion-button (click)="openOrganisationUnitSetSearchModal(selectedOrganisationUnitIds)">
                 <ion-icon name="search"></ion-icon>
             </ion-button>
         </ion-buttons>
@@ -45,7 +45,7 @@
     <div *ngIf="!isLoading">
         <div *ngFor="let organisationUnit of organisationUnits; trackBy: trackByFn">
             <app-organisation-unit-tree (selectOrganisationUnit)="onSelectOrganisationUnit($event)"
-                [selectedOrganisayionUnitIds]="selectedOrganisayionUnitIds"
+                [selectedOrganisayionUnitIds]="selectedOrganisationUnitIds$ | async"
                 [isOrganisationUnitToggled]="isOrganisationUnitToggled" [organisationUnit]="organisationUnit">
             </app-organisation-unit-tree>
         </div>

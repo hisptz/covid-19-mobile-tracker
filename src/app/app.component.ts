@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Platform, NavController, MenuController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { UserService } from './shared/services/user.service';
+import { AppConfigService } from './shared/services/app-config.service';
+import { CurrentUser } from './models';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +20,7 @@ export class AppComponent {
     private navCtrl: NavController,
     private menuCtrl: MenuController,
     private userService: UserService,
+    private appConfigService: AppConfigService,
   ) {
     this.initializeApp();
   }
@@ -26,7 +29,20 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleLightContent();
       this.splashScreen.hide();
+      this.initiateDatabaseConnection();
     });
+  }
+
+  async initiateDatabaseConnection() {
+    try {
+      const currentUser: CurrentUser = await this.userService.getCurrentUser();
+      this.appConfigService.initateDataBaseConnection(
+        currentUser.currentDatabase,
+        true,
+      );
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   async logOut() {
