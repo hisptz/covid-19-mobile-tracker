@@ -134,10 +134,11 @@ export interface TrackedEntityInstance {
   orgUnitName: string;
   trackedEntityInstance: string;
   deleted: boolean;
-  inactive: boolean;
-  enrollments: any;
-  relationships: any;
+  inactive?: boolean;
+  enrollments: Enrollment[];
+  relationships: any[];
   syncStatus: string;
+  attributes?: TrackedEntityAttributeValue;
 }
 
 export interface TrackedEntityAttributeValue {
@@ -157,8 +158,8 @@ export interface Enrollment {
   enrollmentDate: string;
   incidentDate: string;
   status: string;
-  coordinate: Coordinate;
+  coordinate?: Coordinate;
   attributes: any;
-  events: any;
+  events: any[];
   syncStatus: string;
 }

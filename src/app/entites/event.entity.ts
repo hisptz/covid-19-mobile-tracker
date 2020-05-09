@@ -28,19 +28,19 @@ import { Coordinate, EventDataValue } from 'src/app/models';
 export class EventEntity {
   @PrimaryColumn() id: string;
   @Column() program: string;
-  @Column() programName: string;
+  @Column({ nullable: true }) programName: string;
   @Column() programStage: string;
   @Column() orgUnit: string;
-  @Column() orgUnitName: string;
+  @Column({ nullable: true }) orgUnitName: string;
   @Column() status: string;
   @Column() eventDate: string;
   @Column() dueDate: string;
   @Column() deleted: string;
-  @Column() attributeCategoryOptions: string;
-  @Column() attributeCc: string;
-  @Column() notes: string;
-  @Column() eventType: string;
-  @Column('simple-json') coordinate: Coordinate;
-  @Column('simple-json') dataValues: EventDataValue;
+  @Column({ nullable: true }) attributeCategoryOptions: string;
+  @Column({ nullable: true }) attributeCc: string;
+  @Column({ nullable: true }) notes: string;
+  @Column({ nullable: true }) eventType: string;
+  @Column({ nullable: true, type: 'simple-json' }) coordinate: Coordinate;
+  @Column({ type: 'simple-json' }) dataValues: EventDataValue;
   @Column() trackedEntityInstance: string;
 }
