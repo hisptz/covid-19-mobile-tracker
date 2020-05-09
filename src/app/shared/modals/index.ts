@@ -1,5 +1,9 @@
 import { OrganisationUnitSelectionPage } from './organisation-unit-selection/organisation-unit-selection.page';
 import { OptionSetSelectionPage } from './option-set-selection/option-set-selection.page';
+import { CoordinateSelectionPage } from './coordinate-selection/coordinate-selection.page';
+import { OrganisationUnitSearchPage } from './organisation-unit-search/organisation-unit-search.page';
+import { LocalInstanceSelectionPage } from './local-instance-selection/local-instance-selection.page';
+import { TranslationSelectionPage } from './translation-selection/translation-selection.page';
 
 /**
  * Copyright (C) 2020 UDSM DHIS2 PROJECT
@@ -20,4 +24,8 @@ import { OptionSetSelectionPage } from './option-set-selection/option-set-select
 export const modals: any[] = [
   OrganisationUnitSelectionPage,
   OptionSetSelectionPage,
+  CoordinateSelectionPage,
+  OrganisationUnitSearchPage,
+  LocalInstanceSelectionPage,
+  TranslationSelectionPage,
 ];

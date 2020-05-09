@@ -26,7 +26,7 @@ import { ModalController, NavParams } from '@ionic/angular';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { State, getCurrentUserColorSettings } from '../../store';
+import { State, getCurrentUserColorSettings } from '../../../store';
 import { AppColorObject, OrganisationUnit } from 'src/app/models';
 import { OrganisationUnitService } from 'src/app/shared/services/organisation-unit.service';
 import { ToasterMessagesService } from 'src/app/shared/services/toaster-messages.service';

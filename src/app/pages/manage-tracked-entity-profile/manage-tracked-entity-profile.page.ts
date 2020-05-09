@@ -52,6 +52,10 @@ export class ManageTrackedEntityProfilePage implements OnInit {
       select(getCurrentTrackedEntityInstance),
     );
 
+    this.currentTrackedEntityInstance$.subscribe((instance) => {
+      console.log(instance);
+    });
+
     const user = await this.userService.getCurrentUser();
 
     this.currentUser$ = of(user);

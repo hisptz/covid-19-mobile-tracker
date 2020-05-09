@@ -5,7 +5,7 @@ import { State, setCurrentProgram } from 'src/app/store';
 import { Observable, of } from 'rxjs';
 import { OrganisationUnit, CurrentUser, Program } from 'src/app/models';
 import { getCurrentOrganisationUnit } from 'src/app/store/selectors/selections.selectors';
-import { OrganisationUnitSelectionPage } from 'src/app/modals/organisation-unit-selection/organisation-unit-selection.page';
+import { OrganisationUnitSelectionPage } from 'src/app/shared/modals/organisation-unit-selection/organisation-unit-selection.page';
 import { ProgramService } from 'src/app/shared/services/program.service';
 import { ProgramSelectionService } from 'src/app/shared/services/program-selection.service';
 import { switchMap } from 'rxjs/operators';

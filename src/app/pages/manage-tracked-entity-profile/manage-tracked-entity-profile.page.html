@@ -12,8 +12,7 @@
   <ion-row *ngIf="params.program" class="ion-padding">
     <ion-col>
       <form>
-        <div
-          *ngFor="let programTrackedEntityAttribute of params.program.programTrackedEntityAttributes;trackBy: trackByFn">
+        <div *ngFor="let programTrackedEntityAttribute of params.program.programTrackedEntityAttributes">
           <div
             *ngIf="params.currentUser && programTrackedEntityAttribute && programTrackedEntityAttribute.trackedEntityAttribute && programTrackedEntityAttribute.trackedEntityAttribute.id && !hiddenFields[programTrackedEntityAttribute.trackedEntityAttribute.id]">
             <tracked-entity-inputs [trackedEntityAttribute]="programTrackedEntityAttribute.trackedEntityAttribute"
@@ -30,7 +29,7 @@
           </div>
         </div>
         <ion-button [disabled]="!isFormReady" expand="block" size="large" shape="round" color="success"
-          (click)="onSave($event,trackedEntityInstance)">Save</ion-button>
+          (click)="onSave($event, params.trackedEntityInstance)">Save</ion-button>
       </form>
 
     </ion-col>

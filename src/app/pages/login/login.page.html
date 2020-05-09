@@ -44,7 +44,7 @@
         (updateCurrentUser)="onUpdateCurrentUser($event)" (failOnLogin)="onFailLogin($event)"
         (successOnLoginAndSyncMetadata)="onSuccessLogin($event)" [currentUser]="currentUser"
         (cancelProgress)="onCancelLoginProcess()" [overAllMessage]="overAllLoginMessage"
-        [color]="(colorSettings$ | async).colorAttributes.primary" [showOverallProgressBar]="showOverallProgressBar"
+        [color]="(colorSettings$ | async)?.colorAttributes?.main" [showOverallProgressBar]="showOverallProgressBar"
         [isOnLogin]="isOnLogin" [processes]="processes">
       </app-login-metadata-sync>
     </div>
@@ -62,7 +62,7 @@
           <div *ngIf="currentUser">
             <app-login-form [currentUser]="currentUser"
               [buttonColor]="(colorSettings$ | async).colorAttributes.secondary"
-              (loginFormReady)="onFormFieldChange($event)" (startLoginProcess)="onStartLoginProcess($event)">
+              (loginFormReady)="onFormFieldChange($event)" (startLoginProcess)="onStartLoginProcess()">
             </app-login-form>
           </div>
         </ion-col>

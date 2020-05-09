@@ -25,7 +25,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { State, getCurrentUserColorSettings } from '../../store';
+import { State, getCurrentUserColorSettings } from '../../../store';
 import * as _ from 'lodash';
 import { LocalInstance, CurrentUser, AppColorObject } from 'src/app/models';
 
