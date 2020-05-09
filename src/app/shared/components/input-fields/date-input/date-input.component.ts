@@ -34,6 +34,7 @@ export class DateInputComponent implements OnInit {
   @Input() lockingFieldStatus: boolean;
   @Input() data: any;
   @Input() valueType: string;
+  @Input() label: string;
 
   @Output() valueChange = new EventEmitter();
 

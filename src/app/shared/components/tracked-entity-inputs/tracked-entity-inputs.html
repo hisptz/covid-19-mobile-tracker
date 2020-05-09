@@ -22,19 +22,19 @@
 *
 *
 -->
-<div *ngIf="!isLoading && trackedEntityAttribute">
-  <div (click)="showTooltips()" class="inputLabel">
+<div *ngIf="!isLoading && trackedEntityAttribute" class="ion-padding-top">
+  <!-- <div (click)="showTooltips()" class="inputLabel">
     {{ fieldLabelKey }}
     <span *ngIf="mandatory" class="required">&nbsp;*</span>
     <span *ngIf="trackedEntityAttribute.description">&nbsp;&nbsp;
       <ion-icon color="icon-color" name="help-circle"></ion-icon>
     </span>
-  </div>
+  </div> -->
   <div *ngIf="trackedEntityAttribute.optionSet"
     [ngClass]="(trackedEntityAttributesSavingStatusClass[trackedEntityAttribute.id +'-trackedEntityAttribute'])?trackedEntityAttributesSavingStatusClass[trackedEntityAttribute.id +'-trackedEntityAttribute']:'input-field-container'">
     <app-option-set-input [dataEntrySettings]="dataEntrySettings" (change)="updateValue($event)"
       [dataElementId]="trackedEntityAttribute.id" [categoryOptionComboId]="'trackedEntityAttribute'" [data]="data"
-      [options]="trackedEntityAttribute.optionSet.options">
+      [options]="trackedEntityAttribute.optionSet.options" [label]="fieldLabelKey">
     </app-option-set-input>
   </div>
   <div *ngIf="!trackedEntityAttribute.optionSet"
@@ -42,29 +42,30 @@
     <div *ngIf="textInputField.indexOf(trackedEntityAttribute.valueType) > -1">
       <app-text-input (change)="updateValue($event)" [dataElementId]="trackedEntityAttribute.id"
         [categoryOptionComboId]="'trackedEntityAttribute'" [data]="data" [barcodeSettings]="barcodeSettings"
-        [valueType]="trackedEntityAttribute.valueType">
+        [valueType]="trackedEntityAttribute.valueType" [label]="fieldLabelKey">
       </app-text-input>
     </div>
     <div *ngIf="numericalInputField.indexOf(trackedEntityAttribute.valueType) > -1">
       <app-numerical-input (change)="updateValue($event)" [dataElementId]="trackedEntityAttribute.id"
         [categoryOptionComboId]="'trackedEntityAttribute'" [data]="data" [barcodeSettings]="barcodeSettings"
-        [valueType]="trackedEntityAttribute.valueType">
+        [valueType]="trackedEntityAttribute.valueType" [label]="fieldLabelKey">
       </app-numerical-input>
     </div>
     <div
       *ngIf="trackedEntityAttribute.valueType === 'DATE' || trackedEntityAttribute.valueType === 'DATETIME' || trackedEntityAttribute.valueType === 'TIME' ">
       <app-date-input (change)="updateValue($event)" [valueType]="trackedEntityAttribute.valueType"
-        [dataElementId]="trackedEntityAttribute.id" [categoryOptionComboId]="'trackedEntityAttribute'" [data]="data">
+        [dataElementId]="trackedEntityAttribute.id" [label]="fieldLabelKey"
+        [categoryOptionComboId]="'trackedEntityAttribute'" [data]="data">
       </app-date-input>
     </div>
     <div *ngIf="trackedEntityAttribute.valueType === 'TRUE_ONLY'">
       <app-true-only-input (change)="updateValue($event)" [dataElementId]="trackedEntityAttribute.id"
-        [categoryOptionComboId]="'trackedEntityAttribute'" [data]="data">
+        [categoryOptionComboId]="'trackedEntityAttribute'" [data]="data" [label]="fieldLabelKey">
       </app-true-only-input>
     </div>
     <div *ngIf="trackedEntityAttribute.valueType === 'AGE'">
       <app-age-input (change)="updateValue($event)" [dataElementId]="trackedEntityAttribute.id"
-        [categoryOptionComboId]="'trackedEntityAttribute'" [data]="data">
+        [categoryOptionComboId]="'trackedEntityAttribute'" [data]="data" [label]="fieldLabelKey">
       </app-age-input>
     </div>
     <div *ngIf="trackedEntityAttribute.valueType === 'BOOLEAN'">
@@ -101,7 +102,8 @@
     <div *ngIf="trackedEntityAttribute.valueType === 'PHONE_NUMBER'">
       <app-phone-number-input (change)="updateValue($event)"
         [(dataValuesSavingStatusClass)]="trackedEntityAttributesSavingStatusClass"
-        [dataElementId]="trackedEntityAttribute.id" [categoryOptionComboId]="'trackedEntityAttribute'" [data]="data">
+        [dataElementId]="trackedEntityAttribute.id" [categoryOptionComboId]="'trackedEntityAttribute'" [data]="data"
+        [label]="fieldLabelKey">
       </app-phone-number-input>
     </div>
 

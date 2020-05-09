@@ -33,6 +33,7 @@ export class PhoneNumberInputComponent implements OnInit {
   @Input() categoryOptionComboId: string;
   @Input() lockingFieldStatus: boolean;
   @Input() data: any;
+  @Input() label: any;
   @Output() phoneNumberChange = new EventEmitter();
   @Input() dataValuesSavingStatusClass: any;
 

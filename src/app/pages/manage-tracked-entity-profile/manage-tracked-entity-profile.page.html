@@ -12,6 +12,7 @@
   <ion-row *ngIf="params.program" class="ion-padding">
     <ion-col>
       <form>
+        <app-date-time [mode]="'date'" [label]="'Enrollment Date'"></app-date-time>
         <div *ngFor="let programTrackedEntityAttribute of params.program.programTrackedEntityAttributes">
           <div
             *ngIf="params.currentUser && programTrackedEntityAttribute && programTrackedEntityAttribute.trackedEntityAttribute && programTrackedEntityAttribute.trackedEntityAttribute.id && !hiddenFields[programTrackedEntityAttribute.trackedEntityAttribute.id]">
