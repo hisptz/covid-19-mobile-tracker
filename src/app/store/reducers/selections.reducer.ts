@@ -25,13 +25,13 @@ import {
 export interface SelectionsState {
   currentOrganisationUnit: OrganisationUnit;
   currentProgram: Program;
-  currentProgramSourceAttribute: string;
+  currentProgramTrackedEntityAttribute: any;
 }
 
 const initialSelectionsState: SelectionsState = {
   currentOrganisationUnit: null,
   currentProgram: null,
-  currentProgramSourceAttribute: undefined,
+  currentProgramTrackedEntityAttribute: null,
 };
 
 const reducer = createReducer(
@@ -42,10 +42,10 @@ const reducer = createReducer(
   })),
   on(
     setCurrentProgram,
-    (state, { currentProgram, currentProgramSourceAttribute }) => ({
+    (state, { currentProgram, currentProgramTrackedEntityAttribute }) => ({
       ...state,
       currentProgram,
-      currentProgramSourceAttribute,
+      currentProgramTrackedEntityAttribute,
     }),
   ),
 );

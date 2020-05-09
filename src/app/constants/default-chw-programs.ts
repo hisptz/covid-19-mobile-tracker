@@ -21,7 +21,11 @@ export const DEFAULT_CHW_PROGRAMS: any[] = [
   },
   {
     id: 'uYjxkTbwRNf',
-    useAttributeList: true,
-    attributeIds: ['bXiW7NXmLeQ', 'fMhTMx4AQP2', 'fqUUeAddlNM', 'M4FJs4udgif'],
+    trackedEntityAttributeIds: [
+      'bXiW7NXmLeQ',
+      'fMhTMx4AQP2',
+      'fqUUeAddlNM',
+      'M4FJs4udgif',
+    ],
   },
 ];
