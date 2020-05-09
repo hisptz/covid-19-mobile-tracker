@@ -109,5 +109,5 @@
     <plugin name="cordova-plugin-background-mode" spec="^0.7.3" />
     <plugin name="cordova-plugin-androidx-adapter" spec="^1.1.0" />
     <allow-navigation href="http://localhost:8100" sessionid="b738f0cd" />
-    <engine name="android" spec="8.1.0" />
+    <engine name="android" spec="~8.1.0" />
 </widget>

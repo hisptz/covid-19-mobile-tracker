@@ -22,7 +22,7 @@
  */
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
-import { getRepository,  In } from 'typeorm';
+import { getRepository, In } from 'typeorm';
 import {
   EnrollmentEntity,
   TrackedEntityAttributeValueEntity,
@@ -130,7 +130,11 @@ export class ProgramFormDataService {
           return _.map(
             trackedEntityInstanceObj.enrollments || [],
             (enrollmentObj: any) => {
-              return { ...enrollmentObj,id :enrollmentObj.enrollment ,events: [] };
+              return {
+                ...enrollmentObj,
+                id: enrollmentObj.enrollment,
+                events: [],
+              };
             },
           );
         }),
@@ -237,9 +241,9 @@ export class ProgramFormDataService {
                       eventObj.program &&
                       eventObj.program === program,
                   ),
-                  eventObj => {
-                    
-                  }
+                  (eventObj) => {
+                    return { ...{}, ...eventObj };
+                  },
                 ),
               };
             }),
