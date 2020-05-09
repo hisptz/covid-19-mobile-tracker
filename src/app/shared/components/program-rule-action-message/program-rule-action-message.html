@@ -1,6 +1,6 @@
 <!--
 *
-* Copyright 2019 HISP Tanzania
+* Copyright 2015 HISP Tanzania
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,17 +17,12 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 * MA 02110-1301, USA.
 *
-* @since 2019
+* @since 2015
 * @author Joseph Chingalo profschingalo@gmail.com>
 *
 *
 -->
-<ion-row>
-    <ion-col>
-        <ion-item>
-            <ion-input [readonly]="lockingFieldStatus" (ionBlur)="updateValue()" [(ngModel)]="inputFieldValue"
-                type="tel">
-            </ion-input>
-        </ion-item>
-    </ion-col>
-</ion-row>
+<div [ngClass]="programRuleActionMessage.messageType == 'error'? 'error' : 'warning'">
+  <ion-icon [color]="programRuleActionMessage.messageType == 'error'? 'danger' : 'current'" [name]="programRuleActionMessage.messageType == 'error'? 'alert' : 'warning'"></ion-icon>
+  {{ programRuleActionMessage.message }}
+</div>

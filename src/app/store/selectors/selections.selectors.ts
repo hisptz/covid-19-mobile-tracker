@@ -46,3 +46,9 @@ export const getCurrentProgramTrackedEntityAttribute = createSelector(
   (selectionsState: SelectionsState) =>
     selectionsState.currentProgramTrackedEntityAttribute,
 );
+
+export const getCurrentTrackedEntityInstance = createSelector(
+  getSelectionsState,
+  (selectionsState: SelectionsState) =>
+    selectionsState.currentTrackedEntityInstance,
+);

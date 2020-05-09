@@ -1,4 +1,5 @@
 import { OrganisationUnitSelectionPage } from './organisation-unit-selection/organisation-unit-selection.page';
+import { OptionSetSelectionPage } from './option-set-selection/option-set-selection.page';
 
 /**
  * Copyright (C) 2020 UDSM DHIS2 PROJECT
@@ -16,4 +17,7 @@ import { OrganisationUnitSelectionPage } from './organisation-unit-selection/org
  * You should have received a copy of the GNU Lesser General Public License
  * along with lab. If not, see <http://www.gnu.org/licenses/>.
  */
-export const modals: any[] = [OrganisationUnitSelectionPage];
+export const modals: any[] = [
+  OrganisationUnitSelectionPage,
+  OptionSetSelectionPage,
+];

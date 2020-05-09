@@ -3,11 +3,12 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Tracked Entities</ion-title>
+    <ion-title>{{(currentProgram$ | async)?.displayName}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content
+  *ngIf="{program: currentProgram$ | async, organisationUnit: currentOrganisationUnit$ | async} as currentParameters">
   <ion-list class="ion-padding-top">
     <ion-item [routerLink]="['/tracked-entity']">
       <ion-avatar slot="start" *ngIf="false">
@@ -33,7 +34,7 @@
   </ion-list>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button [routerLink]="['/manage-tracked-entity-profile']">
+    <ion-fab-button (click)="onAddTrackedEntityInstance($event, currentParameters)">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

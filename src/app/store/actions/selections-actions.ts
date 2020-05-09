@@ -13,3 +13,10 @@ export const setCurrentProgram = createAction(
     currentProgramTrackedEntityAttribute: any;
   }>(),
 );
+
+export const setCurrentTrackedEntityInstance = createAction(
+  '[OrgUnit] Set current tracked entity instance',
+  props<{
+    currentTrackedEntityInstance: any;
+  }>(),
+);
