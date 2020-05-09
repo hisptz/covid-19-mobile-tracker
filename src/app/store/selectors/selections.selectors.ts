@@ -41,8 +41,8 @@ export const getCurrentProgram = createSelector(
   (selectionsState: SelectionsState) => selectionsState.currentProgram,
 );
 
-export const getCurrentProgramAttribute = createSelector(
+export const getCurrentProgramTrackedEntityAttribute = createSelector(
   getSelectionsState,
   (selectionsState: SelectionsState) =>
-    selectionsState.currentProgramSourceAttribute,
+    selectionsState.currentProgramTrackedEntityAttribute,
 );

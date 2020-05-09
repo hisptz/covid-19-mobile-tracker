@@ -60,7 +60,7 @@ export class ChwHomePage implements OnInit {
     this.store.dispatch(
       setCurrentProgram({
         currentProgram,
-        currentProgramSourceAttribute:
+        currentProgramTrackedEntityAttribute:
           currentProgram.currentProgramTrackedEntityAttribute,
       }),
     );
