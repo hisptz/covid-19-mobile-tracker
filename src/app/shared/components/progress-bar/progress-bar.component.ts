@@ -48,8 +48,9 @@ export class ProgressBarComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.color === undefined) {
-      this.color = 'primary';
-    }
+    // if (this.color === undefined) {
+    //   this.color = 'primary';
+    // }
+    this.color = 'primary';
   }
 }

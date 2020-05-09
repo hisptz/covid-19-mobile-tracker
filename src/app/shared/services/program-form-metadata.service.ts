@@ -40,12 +40,16 @@ import {
 } from 'src/app/models';
 import { CONNECTION_NAME } from 'src/app/constants/db-options';
 import { DataElementService } from './data-element.service';
+import { ProgramStageSectionService } from './program-stage-section.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProgramFormMetadataService {
-  constructor(private dataElementService: DataElementService) {}
+  constructor(
+    private dataElementService: DataElementService,
+    private programStageSectionService: ProgramStageSectionService,
+  ) {}
 
   async getProgramByIds(ids: string[], shouldIncludeAllMetadata = true) {
     let programs = [];
@@ -125,7 +129,7 @@ export class ProgramFormMetadataService {
   async getprogramStages(programIds: string[]) {
     let programStages = [];
     try {
-      const programProgramStageEntities: any = this.getProgramProgramStageEntities(
+      const programProgramStageEntities: any = await this.getProgramProgramStageEntities(
         programIds,
       );
       const programStageIds = _.flattenDeep(
@@ -138,7 +142,7 @@ export class ProgramFormMetadataService {
       const dataElements = await this.getProgramStageDataElements(
         programProgramStageEntities,
       );
-      const programStageSectionEntities = this.getProgramStageSectionEntities(
+      const programStageSectionsByProgram = await this.getProgramStageSections(
         programStageIds,
       );
       programStages = _.map(
@@ -172,21 +176,39 @@ export class ProgramFormMetadataService {
                 };
               },
             ),
-            programStageSections: _.map(
-              programStageSections,
-              (programStageSection: any) => {
+            programStageSections: _.flattenDeep(
+              _.map(programStageSections, (programStageSection: any) => {
                 const id =
                   programStageSection && programStageSection.id
                     ? programStageSection.id
                     : '';
-                // const section = _.find(
-                //   programStageSectionEntities,
-                //   (programStageSectionEntity: ProgramStageSection) => {
-                //     const { dataElements } = programStageSection;
-                //   },
-                // );
-                return [];
-              },
+                const section = _.find(
+                  programStageSectionsByProgram,
+                  (sectionObj: ProgramStageSection) => {
+                    return sectionObj && sectionObj.id === id;
+                  },
+                );
+                return section
+                  ? {
+                      ...section,
+                      dataElements: _.map(
+                        section.dataElements,
+                        (dataElement: any) => {
+                          const dataElementId =
+                            dataElement && dataElement.id ? dataElement.id : '';
+                          const filteredDataElement = _.find(
+                            dataElements,
+                            (dataElementObj: any) =>
+                              dataElementObj &&
+                              dataElementObj.id &&
+                              dataElementObj.id === dataElementId,
+                          );
+                          return filteredDataElement || dataElement;
+                        },
+                      ),
+                    }
+                  : [];
+              }),
             ),
           };
         },
@@ -241,22 +263,31 @@ export class ProgramFormMetadataService {
     return await repository.find({ programId: In(prograIds) });
   }
 
-  async getProgramProgramStageEntities(prograIds: string[]) {
+  async getProgramProgramStageEntities(programIds: string[]) {
     const repository = getRepository(
       ProgramProgramStageEntity,
       CONNECTION_NAME,
     );
-    const all = repository.find();
-    console.log({all})
-    return await repository.find({ programId: In(prograIds) });
+    return await repository.find({ programId: In(programIds) });
   }
 
-  async getProgramStageSectionEntities(programStageIds: string[]) {
+  async getProgramStageSections(programStageIds: string[]) {
     const repository = getRepository(
       ProgramStageSectionEntity,
       CONNECTION_NAME,
     );
-    return await repository.find({ programStageId: In(programStageIds) });
+    const programStageSectionEntities = await repository.find({
+      programStageId: In(programStageIds),
+    });
+    const sectionsIds = _.flattenDeep(
+      _.map(
+        programStageSectionEntities,
+        (programStageSectionEntity: any) => programStageSectionEntity.id || [],
+      ),
+    );
+    return await this.programStageSectionService.getProgramStageSectionsByIds(
+      sectionsIds,
+    );
   }
 
   async getProgramStageEntryFormEntities(programStageIds: string[]) {

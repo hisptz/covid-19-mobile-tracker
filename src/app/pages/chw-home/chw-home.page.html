@@ -18,7 +18,7 @@
   </ion-row>
   <ion-row *ngIf="!(currentOrganisationUnit$ | async)">
     <ion-col>
-      <ion-card>
+      <ion-card (click)="openOrganisationUnitModal($event)" >
         <ion-card-content class="ion-text-center">
           <ion-icon color="warning" size="large" name="alert-circle-outline"></ion-icon>
           <ion-card-subtitle class="ion-margin-top" color="warning">Select Area to view forms</ion-card-subtitle>

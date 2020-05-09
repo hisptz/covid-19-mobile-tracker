@@ -63,12 +63,12 @@ export class ProgramStageSectionService {
     });
   }
 
-  async getProgramStageSections(ids: string[]) {
+  async getProgramStageSectionsByIds(sectionsIds: string[]) {
     const repository = getRepository(
       ProgramStageSectionEntity,
       CONNECTION_NAME,
     );
-    return await repository.find({ id: In(ids) });
+    return await repository.find({ id: In(sectionsIds) });
   }
 
   savingProgramStageSectionsToLocalStorage(

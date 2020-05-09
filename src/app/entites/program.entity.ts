@@ -57,7 +57,7 @@ export class ProgramProgramTrackedEntityAttributeEntity {
   @Column({ nullable: true }) renderOptionsAsRadio: boolean;
   @Column({ nullable: true }) allowFutureDate: boolean;
   @Column({ nullable: true }) searchable: boolean;
-  @Column() displayInList: string;
+  @Column() displayInList: boolean;
 }
 
 @Entity()
