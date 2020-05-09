@@ -84,7 +84,8 @@ export class ChwHomePage implements OnInit {
           return [program];
         }),
       ),
-      (program) => program,
+      (program) => program.id,
     );
+    console.log(JSON.stringify(this.programs));
   }
 }

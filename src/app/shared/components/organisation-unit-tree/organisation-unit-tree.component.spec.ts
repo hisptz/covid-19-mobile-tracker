@@ -9,10 +9,9 @@ describe('OrganisationUnitTreeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OrganisationUnitTreeComponent ],
+      declarations: [OrganisationUnitTreeComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    })
-    .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {

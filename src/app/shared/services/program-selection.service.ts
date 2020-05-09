@@ -23,26 +23,24 @@
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
 import { getRepository, Repository } from 'typeorm';
-import { ProgramEntity, ProgramOrganisationUnitEntity } from 'src/app/entites';
+import { ProgramOrganisationUnitEntity } from 'src/app/entites';
 import { ProgramOrganisationUnit, Program } from 'src/app/models';
 import { CONNECTION_NAME } from 'src/app/constants/db-options';
+import { ProgramFormMetadataService } from './program-form-metadata.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProgramSelectionService {
-  constructor() {}
+  constructor(private programFormMetadataService: ProgramFormMetadataService) {}
 
   async getProgramListBySelectedOrganisationUnitAndRoles(
     organisationUnitId: string,
     programType: string,
     programIdsByUserRoles: string[],
     authorities: string[],
+    shouldIncludeAllMetadata = true,
   ) {
-    const programRepository = getRepository(
-      'ProgramEntity',
-      CONNECTION_NAME,
-    ) as Repository<ProgramEntity>;
     const ProgramOrganisationUnits = await this.getProgramsByOrganisationUnits([
       organisationUnitId,
     ]);
@@ -59,18 +57,14 @@ export class ProgramSelectionService {
       : _.filter(programIds, (id: string) => {
           return programIdsByUserRoles.includes(id);
         });
-    const programs: Program[] = await programRepository.findByIds(ids);
-    return _.sortBy(
-      _.map(
-        _.filter(programs, (program: Program) => {
-          return program.programType === programType;
-        }),
-        (program: Program) => {
-          const { id, displayName } = program;
-          return { ...program, code: id, name: displayName };
-        },
-      ),
-      'name',
+    const programs: any[] = await this.programFormMetadataService.getProgramByIds(
+      ids,
+      shouldIncludeAllMetadata,
+    );
+    return _.filter(
+      _.sortBy(programs, 'name'),
+      (program: Program) =>
+        program && program.programType && program.programType === programType,
     );
   }
 
