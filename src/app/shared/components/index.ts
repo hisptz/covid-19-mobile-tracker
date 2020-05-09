@@ -20,6 +20,8 @@ import { OrganisationUnitInputComponent } from './input-fields/organisation-unit
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { OrganisationUnitTreeComponent } from './organisation-unit-tree/organisation-unit-tree.component';
 import { modals } from 'src/app/modals';
+import { TrackedEntityInputsComponent } from './tracked-entity-inputs/tracked-entity-inputs';
+import { ProgramRuleActionMessageComponent } from './program-rule-action-message/program-rule-action-message';
 
 export const components: any[] = [
   LanguageListComponent,
@@ -43,5 +45,7 @@ export const components: any[] = [
   OrganisationUnitInputComponent,
   ProgressBarComponent,
   OrganisationUnitTreeComponent,
+  TrackedEntityInputsComponent,
+  ProgramRuleActionMessageComponent,
 ];
 export const entryComponents: any[] = [LanguageListComponent, ...modals];

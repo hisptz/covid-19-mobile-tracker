@@ -1,4 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { Store, select } from '@ngrx/store';
+import { State } from 'src/app/store';
+import { Observable, of } from 'rxjs';
+import { Program, CurrentUser } from 'src/app/models';
+import {
+  getCurrentProgram,
+  getCurrentProgramTrackedEntityAttribute,
+  getCurrentTrackedEntityInstance,
+} from 'src/app/store/selectors/selections.selectors';
+import { Router } from '@angular/router';
+import { take } from 'rxjs/operators';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-manage-tracked-entity-profile',
@@ -6,7 +18,133 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./manage-tracked-entity-profile.page.scss'],
 })
 export class ManageTrackedEntityProfilePage implements OnInit {
-  constructor() {}
+  currentProgram$: Observable<Program>;
+  currentProgramTrackedEntityAttribute$: Observable<any>;
+  currentTrackedEntityInstance$: Observable<any>;
+  hiddenFields: any;
+  trackedEntityAttributesSavingStatusClass: any;
+  dataObject: any;
+  trackedEntityAttributeValuesObject: any;
+  isFormReady: boolean;
+  currentUser$: Observable<CurrentUser>;
+  constructor(
+    private store: Store<State>,
+    private userService: UserService,
+    private router: Router,
+  ) {}
 
-  ngOnInit() {}
+  async ngOnInit() {
+    // TODO: This will need programs rule
+    this.hiddenFields = {};
+    this.trackedEntityAttributesSavingStatusClass = {};
+    this.dataObject = {};
+    this.currentProgram$ = this.store.pipe(select(getCurrentProgram));
+    this.currentProgram$.pipe(take(1)).subscribe((currentProgram: Program) => {
+      if (!currentProgram) {
+        this.router.navigate(['/chw-home']);
+      }
+    });
+
+    this.currentProgramTrackedEntityAttribute$ = this.store.pipe(
+      select(getCurrentProgramTrackedEntityAttribute),
+    );
+    this.currentTrackedEntityInstance$ = this.store.pipe(
+      select(getCurrentTrackedEntityInstance),
+    );
+
+    const user = await this.userService.getCurrentUser();
+
+    this.currentUser$ = of(user);
+  }
+
+  isALlRequiredFieldHasValue(
+    programTrackedEntityAttributes,
+    trackedEntityAttributeValuesObject,
+  ) {
+    let result = Object.keys(trackedEntityAttributeValuesObject).length > 0;
+    programTrackedEntityAttributes.map((programTrackedEntityAttribute: any) => {
+      const {
+        mandatory,
+        trackedEntityAttribute,
+      } = programTrackedEntityAttribute;
+      if (mandatory && trackedEntityAttribute && trackedEntityAttribute.id) {
+        if (!trackedEntityAttributeValuesObject[trackedEntityAttribute.id]) {
+          result = false;
+        }
+      }
+    });
+    // if (result) {
+    //   const { displayIncidentDate } = this.currentProgram;
+    //   if (this.enrollmentDate === '') {
+    //     // this.appProvider.setNormalNotification(
+    //     //   this.currentProgram.enrollmentDateLabel + ' is mandatory field',
+    //     // );
+    //     result = false;
+    //   }
+    //   if (result && displayIncidentDate && this.enrollmentDate !== '') {
+    //     if (this.incidentDate === '') {
+    //       this.appProvider.setNormalNotification(
+    //         this.currentProgram.incidentDateLabel + ' is mandatory field',
+    //       );
+    //       result = false;
+    //     }
+    //   }
+    // }
+    return result;
+  }
+
+  onUpdateAttributesValue(
+    data: any,
+    programTrackedEntityAttributes,
+    shouldSkipProgramRules: boolean = false,
+    shoulOnlyCheckDates: boolean = false,
+  ) {
+    if (!shoulOnlyCheckDates) {
+      const { id, value } = data;
+      const hasNoOldValue =
+        this.dataObject && this.dataObject[id] ? false : true;
+      const oldValue = !hasNoOldValue ? this.dataObject[id].value : value;
+      if (oldValue !== value || hasNoOldValue) {
+        this.dataObject[id] = data;
+      }
+    }
+    if (!shouldSkipProgramRules) {
+      // this.evaluatingProgramRules();
+    }
+    const trackedEntityAttributeValuesObject = {};
+    Object.keys(this.dataObject).map((key) => {
+      const id = key.split('-')[0];
+      const { value } = this.dataObject[key];
+      if (value) {
+        trackedEntityAttributeValuesObject[id] = value;
+      }
+    });
+    this.isFormReady = this.isALlRequiredFieldHasValue(
+      programTrackedEntityAttributes,
+      trackedEntityAttributeValuesObject,
+    );
+    if (this.isFormReady) {
+      const { id } = data;
+      const currentTrackedEntityId = id ? id : 'currentTrackedEntityId';
+      this.trackedEntityAttributeValuesObject = trackedEntityAttributeValuesObject;
+    }
+  }
+
+  onSave(e, trackedEntityInstance) {
+    e.stopPropagation();
+    const trackedEntityAttributeValuesKeys = Object.keys(
+      this.trackedEntityAttributeValuesObject,
+    );
+    const newTrackedEntityInstance = {
+      ...trackedEntityInstance,
+      attributes: (trackedEntityAttributeValuesKeys || []).map((key) => {
+        return {
+          attribute: key,
+          value: this.trackedEntityAttributeValuesObject[key],
+        };
+      }),
+    };
+
+    console.log(trackedEntityInstance, newTrackedEntityInstance);
+  }
 }

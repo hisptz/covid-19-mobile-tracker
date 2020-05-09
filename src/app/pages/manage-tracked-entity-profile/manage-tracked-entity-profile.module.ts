@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { ManageTrackedEntityProfilePageRoutingModule } from './manage-tracked-entity-profile-routing.module';
 
 import { ManageTrackedEntityProfilePage } from './manage-tracked-entity-profile.page';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { ManageTrackedEntityProfilePage } from './manage-tracked-entity-profile.
     FormsModule,
     IonicModule,
     ManageTrackedEntityProfilePageRoutingModule,
+    SharedModule,
   ],
   declarations: [ManageTrackedEntityProfilePage],
 })

@@ -20,18 +20,21 @@ import { createReducer, on } from '@ngrx/store';
 import {
   setCurrentOrgUnit,
   setCurrentProgram,
+  setCurrentTrackedEntityInstance,
 } from '../actions/selections-actions';
 
 export interface SelectionsState {
   currentOrganisationUnit: OrganisationUnit;
   currentProgram: Program;
   currentProgramTrackedEntityAttribute: any;
+  currentTrackedEntityInstance: any;
 }
 
 const initialSelectionsState: SelectionsState = {
   currentOrganisationUnit: null,
   currentProgram: null,
   currentProgramTrackedEntityAttribute: null,
+  currentTrackedEntityInstance: null,
 };
 
 const reducer = createReducer(
@@ -46,6 +49,13 @@ const reducer = createReducer(
       ...state,
       currentProgram,
       currentProgramTrackedEntityAttribute,
+    }),
+  ),
+  on(
+    setCurrentTrackedEntityInstance,
+    (state, { currentTrackedEntityInstance }) => ({
+      ...state,
+      currentTrackedEntityInstance,
     }),
   ),
 );

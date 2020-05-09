@@ -81,6 +81,10 @@ export class ChwHomePage implements OnInit {
       _.flatten(
         DEFAULT_CHW_PROGRAMS.map((defaultProgram: any) => {
           const program = _.find(programs, ['id', defaultProgram.id]);
+
+          if (!program) {
+            return null;
+          }
           const programTrackedEntityAttributes = (
             defaultProgram.trackedEntityAttributeIds || []
           )
