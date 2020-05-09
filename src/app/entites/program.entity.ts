@@ -160,8 +160,8 @@ export class EnrollmentEntity {
   @Column() enrollmentDate: string;
   @Column() incidentDate: string;
   @Column() status: string;
-  @Column('simple-json') coordinate: Coordinate;
-  @Column('simple-json') attributes: string;
-  @Column('simple-json') events: string;
+  @Column({ nullable: true, type: 'simple-json' }) coordinate: Coordinate;
+  @Column({ nullable: true, type: 'simple-json' }) attributes: string;
+  @Column({ nullable: true, type: 'simple-json' }) events: string;
   @Column() syncStatus: string;
 }

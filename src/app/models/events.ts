@@ -36,7 +36,7 @@ export interface Events {
   attributeCc: string;
   notes: string;
   eventType: string;
-  coordinate: Coordinate;
+  coordinate?: Coordinate;
   dataValues: EventDataValue[];
   trackedEntityInstance?: string;
 }

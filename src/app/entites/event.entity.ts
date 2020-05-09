@@ -40,7 +40,7 @@ export class EventEntity {
   @Column() attributeCc: string;
   @Column() notes: string;
   @Column() eventType: string;
-  @Column('simple-json') coordinate: Coordinate;
-  @Column('simple-json') dataValues: EventDataValue;
+  @Column({ nullable: true, type: 'simple-json' }) coordinate: Coordinate;
+  @Column({ type: 'simple-json' }) dataValues: EventDataValue;
   @Column() trackedEntityInstance: string;
 }
