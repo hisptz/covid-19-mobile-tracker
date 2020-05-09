@@ -44,7 +44,7 @@ export interface Program {
   trackedEntity?: any;
   trackedEntityType?: any;
   attributeValues?: any;
-  selectedAttribute?: string;
+  currentProgramTrackedEntityAttribute?: any;
   programTrackedEntityAttributes?: any;
   programStages?: ProgramProgramStage;
 }

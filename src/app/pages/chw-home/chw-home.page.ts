@@ -60,7 +60,8 @@ export class ChwHomePage implements OnInit {
     this.store.dispatch(
       setCurrentProgram({
         currentProgram,
-        currentProgramSourceAttribute: currentProgram.selectedAttribute,
+        currentProgramSourceAttribute:
+          currentProgram.currentProgramTrackedEntityAttribute,
       }),
     );
 
@@ -75,17 +76,41 @@ export class ChwHomePage implements OnInit {
       currentUser ? currentUser.programs : [],
       currentUser ? currentUser.authorities : [],
     );
-    console.log({ programs });
-    // this.programs = _.filter(
-    //   _.flatten(
-    //     DEFAULT_CHW_PROGRAMS.map((defaultProgram: any) => {
-    //       const program = _.find(programs, ['id', defaultProgram.id]);
-    //       // TODO: Add implementation to split program based on selected source attributes
-    //       return [program];
-    //     }),
-    //   ),
-    //   (program) => program,
-    // );
-    // console.log(JSON.stringify(this.programs));
+
+    this.programs = _.filter(
+      _.flatten(
+        DEFAULT_CHW_PROGRAMS.map((defaultProgram: any) => {
+          const program = _.find(programs, ['id', defaultProgram.id]);
+          const programTrackedEntityAttributes = (
+            defaultProgram.trackedEntityAttributeIds || []
+          )
+            .map((trackedEntityAttributeId: string) => {
+              const programTrackedEntityAttribute = _.find(
+                program.programTrackedEntityAttributes,
+                ['id', trackedEntityAttributeId],
+              );
+
+              if (!programTrackedEntityAttribute) {
+                return null;
+              }
+
+              return {
+                ...program,
+                id: `${program.id}_${trackedEntityAttributeId}`,
+                displayName: programTrackedEntityAttribute.trackedEntityAttribute
+                  ? programTrackedEntityAttribute.trackedEntityAttribute.name
+                  : '',
+                currentTrackedEntityAttribute: programTrackedEntityAttribute,
+              };
+            })
+            .filter((programItem: Program) => programItem !== null);
+
+          return programTrackedEntityAttributes.length > 0
+            ? programTrackedEntityAttributes
+            : [program];
+        }),
+      ),
+      (program) => program,
+    );
   }
 }
