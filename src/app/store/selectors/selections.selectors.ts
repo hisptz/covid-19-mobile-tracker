@@ -1,6 +1,6 @@
 import { createSelector } from '@ngrx/store';
 import { getRootState, State } from '../reducers';
-import { OrganisationState } from '../reducers/org-unit.reducer';
+import { SelectionsState } from '../reducers/selections.reducer';
 import { OrganisationUnit } from 'src/app/models';
 
 /**
@@ -19,14 +19,14 @@ import { OrganisationUnit } from 'src/app/models';
  * You should have received a copy of the GNU Lesser General Public License
  * along with lab. If not, see <http://www.gnu.org/licenses/>.
  */
-export const getOrganisationUnitState = createSelector(
+export const getSelectionsState = createSelector(
   getRootState,
-  (state: State) => state.organisationUnit,
+  (state: State) => state.selections,
 );
 
 export const getCurrentOrganisationUnit = createSelector(
-  getOrganisationUnitState,
-  (organisationUnitState: OrganisationState) =>
+  getSelectionsState,
+  (organisationUnitState: SelectionsState) =>
     organisationUnitState.currentOrganisationUnit,
 );
 
@@ -34,4 +34,15 @@ export const getCurrentOrganisationUnitIds = createSelector(
   getCurrentOrganisationUnit,
   (organisationUnit: OrganisationUnit) =>
     organisationUnit ? [organisationUnit.id] : [],
+);
+
+export const getCurrentProgram = createSelector(
+  getSelectionsState,
+  (selectionsState: SelectionsState) => selectionsState.currentProgram,
+);
+
+export const getCurrentProgramAttribute = createSelector(
+  getSelectionsState,
+  (selectionsState: SelectionsState) =>
+    selectionsState.currentProgramSourceAttribute,
 );

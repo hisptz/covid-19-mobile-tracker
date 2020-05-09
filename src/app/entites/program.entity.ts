@@ -57,7 +57,7 @@ export class ProgramProgramTrackedEntityAttributeEntity {
   @Column({ nullable: true }) renderOptionsAsRadio: boolean;
   @Column({ nullable: true }) allowFutureDate: boolean;
   @Column({ nullable: true }) searchable: boolean;
-  @Column() displayInList: string;
+  @Column() displayInList: boolean;
 }
 
 @Entity()
@@ -125,15 +125,6 @@ export class TrackerRegistrationFormEntity {
 export class ProgramStageEntryFormEntity {
   @PrimaryColumn() id: string;
   @Column() dataEntryForm: string;
-}
-
-@Entity()
-export class ProgramTrackedEntityAttributeEntity {
-  @PrimaryColumn() id: string;
-  @Column() programId: string;
-  @Column() sortOrder: number;
-  @Column() displayInList: boolean;
-  @Column() mandatory: boolean;
 }
 
 @Entity()

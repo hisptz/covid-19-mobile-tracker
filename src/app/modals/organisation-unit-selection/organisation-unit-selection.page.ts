@@ -31,7 +31,7 @@ import { AppColorObject, CurrentUser, OrganisationUnit } from 'src/app/models';
 import { OrganisationUnitService } from 'src/app/shared/services/organisation-unit.service';
 import { ToasterMessagesService } from 'src/app/shared/services/toaster-messages.service';
 import { UserService } from 'src/app/shared/services/user.service';
-import { getCurrentOrganisationUnitIds } from 'src/app/store/selectors/organisation-unit.selectors';
+import { getCurrentOrganisationUnitIds } from 'src/app/store/selectors/selections.selectors';
 
 import {
   getCurrentUserColorSettings,

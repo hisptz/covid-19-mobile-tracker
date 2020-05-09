@@ -44,6 +44,9 @@ export interface Program {
   trackedEntity?: any;
   trackedEntityType?: any;
   attributeValues?: any;
+  selectedAttribute?: string;
+  programTrackedEntityAttributes?: any;
+  programStages?: ProgramProgramStage;
 }
 
 export interface ProgramProgramTrackedEntityAttribute {
@@ -74,7 +77,7 @@ export interface ProgramIndicator {
 
 export interface ProgramProgramStage {
   id: string;
-  programId: string;
+  programId?: string;
   name: string;
   sortOrder: number;
   executionDateLabel: string;

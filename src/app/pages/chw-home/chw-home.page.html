@@ -18,7 +18,7 @@
   </ion-row>
   <ion-row *ngIf="!(currentOrganisationUnit$ | async)">
     <ion-col>
-      <ion-card>
+      <ion-card (click)="openOrganisationUnitModal($event)" >
         <ion-card-content class="ion-text-center">
           <ion-icon color="warning" size="large" name="alert-circle-outline"></ion-icon>
           <ion-card-subtitle class="ion-margin-top" color="warning">Select Area to view forms</ion-card-subtitle>
@@ -29,25 +29,15 @@
   <ion-row *ngIf="currentOrganisationUnit$ | async">
     <ion-col>
       <ion-list class="ion-padding-top">
-        <ion-item [routerLink]="['/tracked-entity-list']">
+        <ion-item *ngFor="let program of programs" (click)="onSelectProgram($event, program)">
           <ion-avatar slot="start" *ngIf="false">
             <img src="assets/icon/rumor.png">
           </ion-avatar>
           <ion-label>
-            <h2 class="ion-padding-bottom">Rumor Tracing</h2>
+            <h2 class="ion-padding-bottom">{{program.displayName}}</h2>
             <p>34 Rumors</p>
           </ion-label>
-          <ion-icon color="success" name="sync"></ion-icon>
-        </ion-item>
-        <ion-item [routerLink]="['/tracked-entity-list']">
-          <ion-avatar slot="start" *ngIf="false">
-            <img src="assets/icon/rumor.png">
-          </ion-avatar>
-          <ion-label>
-            <h2 class="ion-padding-bottom">Suspect followup and contact tracing</h2>
-            <p>34 Suspects, 100 Contacts</p>
-          </ion-label>
-          <ion-icon color="warning" name="alert-circle"></ion-icon>
+          <!-- <ion-icon color="success" name="sync"></ion-icon> -->
         </ion-item>
       </ion-list>
     </ion-col>

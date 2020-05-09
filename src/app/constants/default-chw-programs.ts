@@ -15,26 +15,13 @@
  * along with lab. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { OrganisationUnit } from 'src/app/models';
-import { createReducer, on } from '@ngrx/store';
-import { setCurrentOrgUnit } from '../actions/organisation-unit-actions';
-
-export interface OrganisationState {
-  currentOrganisationUnit: OrganisationUnit;
-}
-
-const initialOrganisationUnitState: OrganisationState = {
-  currentOrganisationUnit: null,
-};
-
-const reducer = createReducer(
-  initialOrganisationUnitState,
-  on(setCurrentOrgUnit, (state, { currentOrganisationUnit }) => ({
-    ...state,
-    currentOrganisationUnit,
-  })),
-);
-
-export function organisationUnitReducer(state: OrganisationState, action) {
-  return reducer(state, action);
-}
+export const DEFAULT_CHW_PROGRAMS: any[] = [
+  {
+    id: 'LGJoObFBwXP',
+  },
+  {
+    id: 'uYjxkTbwRNf',
+    useAttributeList: true,
+    attributeIds: ['bXiW7NXmLeQ', 'fMhTMx4AQP2', 'fqUUeAddlNM', 'M4FJs4udgif'],
+  },
+];
