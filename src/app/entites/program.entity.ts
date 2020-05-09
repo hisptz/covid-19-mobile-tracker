@@ -132,10 +132,10 @@ export class TrackedEntityInstanceEntity {
   @PrimaryColumn() id: string;
   @Column() trackedEntity: string;
   @Column() orgUnit: string;
-  @Column() orgUnitName: string;
+  @Column({ nullable: true }) orgUnitName: string;
   @Column() trackedEntityInstance: string;
-  @Column() deleted: boolean;
-  @Column() inactive: boolean;
+  @Column({ nullable: true }) deleted: boolean;
+  @Column({ nullable: true }) inactive: boolean;
   @Column('simple-json') enrollments: string;
   @Column('simple-json') relationships: string;
   @Column() syncStatus: string;

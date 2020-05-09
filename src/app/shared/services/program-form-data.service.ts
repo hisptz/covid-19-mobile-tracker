@@ -22,7 +22,7 @@
  */
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
-import { getRepository, Repository, In } from 'typeorm';
+import { getRepository,  In } from 'typeorm';
 import {
   EnrollmentEntity,
   TrackedEntityAttributeValueEntity,
@@ -42,7 +42,6 @@ export class ProgramFormDataService {
 
   discoveringTrackedEntityInstancesFromServer(
     organisationUnitId: string,
-    orgUnitName: string,
     programId: string,
     pageSize = 100,
   ): Observable<any> {
@@ -60,7 +59,6 @@ export class ProgramFormDataService {
                 trackedEntityInstanceObj.trackedEntityInstance;
               return {
                 ...trackedEntityInstanceObj,
-                orgUnitName,
                 syncStatus,
                 trackedEntity:
                   trackedEntityInstanceObj.trackedEntity ||
@@ -131,8 +129,8 @@ export class ProgramFormDataService {
         _.map(trackedEntityInstances, (trackedEntityInstanceObj: any) => {
           return _.map(
             trackedEntityInstanceObj.enrollments || [],
-            (enrollment: any) => {
-              return { ...enrollment, events: [] };
+            (enrollmentObj: any) => {
+              return { ...enrollmentObj,id :enrollmentObj.enrollment ,events: [] };
             },
           );
         }),
@@ -141,7 +139,11 @@ export class ProgramFormDataService {
         _.map(trackedEntityInstances, (trackedEntityInstanceObj: any) => {
           return _.map(
             trackedEntityInstanceObj.enrollments || [],
-            (enrollment: any) => enrollment.events || [],
+            (enrollment: any) => {
+              return _.map(enrollment.events || [], (eventObj: any) => {
+                return { ...eventObj, id: eventObj.event || '' };
+              });
+            },
           );
         }),
       );
@@ -152,11 +154,128 @@ export class ProgramFormDataService {
             trackedEntityInstanceObj,
             'attributes',
           );
-          return { ...trackedEntityInstanceObj, enrollments: [] };
+          return {
+            ...trackedEntityInstanceObj,
+            id: trackedEntityInstanceObj.trackedEntityInstance,
+            enrollments: [],
+          };
         },
       );
-      console.log({ trackedEntityInstances, events, enrollments, attributes });
+      await this.savingTrackedEntityInsanceAttributes(attributes);
+      await this.savingTrackedEntityInsanceEnrollements(enrollments);
+      await this.savingTrackedEntityInsanceEnrollementEvents(events);
+      await this.savingTrackedEntityInstances(trackedEntityInstances);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async getSavedTrackedEntityInstancesFromLocalStorage(
+    organisationUnitId: string,
+    programId: string,
+  ) {
+    const repository = getRepository(
+      TrackedEntityInstanceEntity,
+      CONNECTION_NAME,
+    );
+    const trackedEntityInstanceEntities = await repository.find({
+      orgUnit: In([organisationUnitId]),
+    });
+    const ids = _.flattenDeep(
+      trackedEntityInstanceEntities,
+      (trackedEntityInstanceEntity: any) =>
+        trackedEntityInstanceEntity.id || [],
+    );
+    const trackedEntityInstances = await this.getSavingTrackedEntityInstancesByIds(
+      ids,
+    );
+    return _.filter(trackedEntityInstances, (trackedEntityInstanceObj) => {
+      const enrollments = _.filter(
+        trackedEntityInstanceObj.enrollments || [],
+        (enrollmentObj: any) =>
+          enrollmentObj &&
+          enrollmentObj.program &&
+          enrollmentObj.program === programId,
+      );
+      return enrollments.length > 0;
+    });
+  }
+
+  async getSavingTrackedEntityInstancesByIds(ids: string[]) {
+    const trackedEntityInstances = [];
+    try {
+      const repository = getRepository(
+        TrackedEntityInstanceEntity,
+        CONNECTION_NAME,
+      );
+      const trackedEntityInstanceEntities = await repository.findByIds(ids);
+      for (const trackedEntityInstanceEntity of trackedEntityInstanceEntities) {
+        const trackedEntityInstance =
+          trackedEntityInstanceEntity.trackedEntityInstance;
+        const attributes = await this.getSavingTrackedEntityInsanceAttributes(
+          trackedEntityInstance,
+        );
+        const enrollments = await this.getSvingTrackedEntityInsanceEnrollements(
+          trackedEntityInstance,
+        );
+        const events = await this.getSavingTrackedEntityInsanceEnrollementEvents(
+          trackedEntityInstance,
+        );
+        trackedEntityInstances.push({
+          ...trackedEntityInstanceEntity,
+          attributes,
+          enrollments: _.flattenDeep(
+            _.map(enrollments, (enrollment: any) => {
+              const program = enrollment.program || '';
+              return {
+                ...enrollment,
+                events: _.map(
+                  _.filter(
+                    events,
+                    (eventObj: any) =>
+                      eventObj &&
+                      eventObj.program &&
+                      eventObj.program === program,
+                  ),
+                  eventObj => {
+                    
+                  }
+                ),
+              };
+            }),
+          ),
+        });
+      }
     } catch (error) {}
+    return trackedEntityInstances;
+  }
+
+  async getSavingTrackedEntityInsanceAttributes(trackedEntityInstance: string) {
+    const repository = getRepository(
+      TrackedEntityAttributeValueEntity,
+      CONNECTION_NAME,
+    );
+    return await repository.find({
+      trackedEntityInstance: In([trackedEntityInstance]),
+    });
+  }
+
+  async getSvingTrackedEntityInsanceEnrollements(
+    trackedEntityInstance: string,
+  ) {
+    const repository = getRepository(EnrollmentEntity, CONNECTION_NAME);
+    return await repository.find({
+      trackedEntityInstance: In([trackedEntityInstance]),
+    });
+  }
+
+  async getSavingTrackedEntityInsanceEnrollementEvents(
+    trackedEntityInstance: string,
+  ) {
+    const repository = getRepository(EventEntity, CONNECTION_NAME);
+    return await repository.find({
+      trackedEntityInstance: In([trackedEntityInstance]),
+    });
   }
 
   async savingTrackedEntityInstances(trackedEntityInstances: any[]) {

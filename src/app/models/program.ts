@@ -134,7 +134,7 @@ export interface TrackedEntityInstance {
   orgUnitName: string;
   trackedEntityInstance: string;
   deleted: boolean;
-  inactive: boolean;
+  inactive?: boolean;
   enrollments: Enrollment[];
   relationships: any[];
   syncStatus: string;
