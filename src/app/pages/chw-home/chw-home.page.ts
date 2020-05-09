@@ -75,17 +75,17 @@ export class ChwHomePage implements OnInit {
       currentUser ? currentUser.programs : [],
       currentUser ? currentUser.authorities : [],
     );
-
-    this.programs = _.filter(
-      _.flatten(
-        DEFAULT_CHW_PROGRAMS.map((defaultProgram: any) => {
-          const program = _.find(programs, ['id', defaultProgram.id]);
-          // TODO: Add implementation to split program based on selected source attributes
-          return [program];
-        }),
-      ),
-      (program) => program.id,
-    );
-    console.log(JSON.stringify(this.programs));
+    console.log({ programs });
+    // this.programs = _.filter(
+    //   _.flatten(
+    //     DEFAULT_CHW_PROGRAMS.map((defaultProgram: any) => {
+    //       const program = _.find(programs, ['id', defaultProgram.id]);
+    //       // TODO: Add implementation to split program based on selected source attributes
+    //       return [program];
+    //     }),
+    //   ),
+    //   (program) => program,
+    // );
+    // console.log(JSON.stringify(this.programs));
   }
 }

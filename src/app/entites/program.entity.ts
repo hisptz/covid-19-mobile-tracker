@@ -128,15 +128,6 @@ export class ProgramStageEntryFormEntity {
 }
 
 @Entity()
-export class ProgramTrackedEntityAttributeEntity {
-  @PrimaryColumn() id: string;
-  @Column() programId: string;
-  @Column() sortOrder: number;
-  @Column() displayInList: boolean;
-  @Column() mandatory: boolean;
-}
-
-@Entity()
 export class TrackedEntityInstanceEntity {
   @PrimaryColumn() id: string;
   @Column() trackedEntity: string;

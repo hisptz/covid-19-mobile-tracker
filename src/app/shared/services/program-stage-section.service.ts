@@ -23,7 +23,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import * as _ from 'lodash';
-import { getRepository, Repository } from 'typeorm';
+import { getRepository, Repository, In } from 'typeorm';
 import { HttpClientService } from './http-client.service';
 import { CurrentUser } from 'src/app/models';
 import { DEFAULT_APP_METADATA } from 'src/app/constants';
@@ -61,6 +61,14 @@ export class ProgramStageSectionService {
           observer.error(error);
         });
     });
+  }
+
+  async getProgramStageSections(ids: string[]) {
+    const repository = getRepository(
+      ProgramStageSectionEntity,
+      CONNECTION_NAME,
+    );
+    return await repository.find({ id: In(ids) });
   }
 
   savingProgramStageSectionsToLocalStorage(

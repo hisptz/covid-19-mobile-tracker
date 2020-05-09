@@ -28,13 +28,15 @@ import {
   ProgramProgramStageEntity,
   ProgramStageSectionEntity,
   ProgramStageEntryFormEntity,
-  ProgramTrackedEntityAttributeEntity,
   TrackedEntityAttributeEntity,
+  ProgramProgramTrackedEntityAttributeEntity,
 } from 'src/app/entites';
 import {
   Program,
   ProgramTrackedEntityAttribute,
   TrackedEntityAttribute,
+  ProgramProgramStage,
+  ProgramStageSection,
 } from 'src/app/models';
 import { CONNECTION_NAME } from 'src/app/constants/db-options';
 import { DataElementService } from './data-element.service';
@@ -53,7 +55,7 @@ export class ProgramFormMetadataService {
       const programTrackedEntityAttributes = await this.getprogramTrackedEntityAttributes(
         ids,
       );
-      const programStages = [];
+      const programStages = await this.getprogramStages(ids);
       programs = shouldIncludeAllMetadata
         ? _.map(programEntites, (programEntity: any) => {
             return {
@@ -73,12 +75,15 @@ export class ProgramFormMetadataService {
       const programTrackedEntityAttributeEntites = await this.getProgramTrackedEntityAttributeEntities(
         programIds,
       );
-      const programTrackedEntityAttributeIs = _.map(
-        programTrackedEntityAttributeEntites,
-        (programTrackedEntityAttributeEntity: ProgramTrackedEntityAttribute) =>
-          programTrackedEntityAttributeEntity.id || '',
+      const programTrackedEntityAttributeIs = _.flattenDeep(
+        _.map(
+          programTrackedEntityAttributeEntites,
+          (
+            programTrackedEntityAttributeEntity: ProgramTrackedEntityAttribute,
+          ) => programTrackedEntityAttributeEntity.id || [],
+        ),
       );
-      const trackedEntityAttributeEntities: any[] = await this.getProgramTrackedEntityAttributeEntities(
+      const trackedEntityAttributeEntities: any[] = await this.getTrackedEntityAttributeEntities(
         programTrackedEntityAttributeIs,
       );
       programTrackedEntityAttributes = _.map(
@@ -86,7 +91,7 @@ export class ProgramFormMetadataService {
         (
           programTrackedEntityAttributeEntity: ProgramTrackedEntityAttribute,
         ) => {
-          const trackedEntityAttribute = _.find(
+          let trackedEntityAttributeObj = _.find(
             trackedEntityAttributeEntities,
             (trackedEntityAttributeEntity: TrackedEntityAttribute) => {
               return (
@@ -99,11 +104,17 @@ export class ProgramFormMetadataService {
               );
             },
           );
+          trackedEntityAttributeObj = trackedEntityAttributeObj
+            ? trackedEntityAttributeObj
+            : {
+                trackedEntityAttribute: {
+                  id: programTrackedEntityAttributeEntity.id,
+                },
+              };
           return {
             ...programTrackedEntityAttributeEntity,
-            trackedEntityAttribute: _.omit(trackedEntityAttribute, [
-              'programTrackedEntityAttributeId',
-            ]),
+            trackedEntityAttribute:
+              trackedEntityAttributeObj.trackedEntityAttribute,
           };
         },
       );
@@ -111,12 +122,99 @@ export class ProgramFormMetadataService {
     return programTrackedEntityAttributes;
   }
 
-  async getprogramStages(programIds: string) {
+  async getprogramStages(programIds: string[]) {
     let programStages = [];
     try {
-      programStages = _.map([], (d) => d);
+      const programProgramStageEntities: any = this.getProgramProgramStageEntities(
+        programIds,
+      );
+      const programStageIds = _.flattenDeep(
+        _.map(
+          programProgramStageEntities,
+          (programProgramStageEntity: ProgramProgramStage) =>
+            programProgramStageEntity.id || [],
+        ),
+      );
+      const dataElements = await this.getProgramStageDataElements(
+        programProgramStageEntities,
+      );
+      const programStageSectionEntities = this.getProgramStageSectionEntities(
+        programStageIds,
+      );
+      programStages = _.map(
+        programProgramStageEntities,
+        (programProgramStageEntity: ProgramProgramStage) => {
+          const {
+            programStageDataElements,
+            programStageSections,
+          } = programProgramStageEntity;
+          return {
+            ...programProgramStageEntity,
+            programStageDataElements: _.map(
+              programStageDataElements,
+              (programStageDataElement) => {
+                const id =
+                  programStageDataElement &&
+                  programStageDataElement.dataElement &&
+                  programStageDataElement.dataElement.id
+                    ? programStageDataElement.dataElement.id
+                    : '';
+                const dataElement = _.find(
+                  dataElements,
+                  (dataElementObj: any) =>
+                    dataElementObj &&
+                    dataElementObj.id &&
+                    dataElementObj.id === id,
+                );
+                return {
+                  ...programStageDataElement,
+                  dataElement: dataElement ? dataElement : { id },
+                };
+              },
+            ),
+            programStageSections: _.map(
+              programStageSections,
+              (programStageSection: any) => {
+                const id =
+                  programStageSection && programStageSection.id
+                    ? programStageSection.id
+                    : '';
+                // const section = _.find(
+                //   programStageSectionEntities,
+                //   (programStageSectionEntity: ProgramStageSection) => {
+                //     const { dataElements } = programStageSection;
+                //   },
+                // );
+                return [];
+              },
+            ),
+          };
+        },
+      );
     } catch (error) {}
     return programStages;
+  }
+
+  async getProgramStageDataElements(programProgramStageEntities) {
+    const dataElementIds = _.map(
+      _.flattenDeep(
+        _.map(
+          programProgramStageEntities,
+          (programProgramStageEntity: ProgramProgramStage) =>
+            programProgramStageEntity.programStageDataElements || [],
+        ),
+      ),
+      (programStageDataElement: any) => {
+        return programStageDataElement &&
+          programStageDataElement.dataElement &&
+          programStageDataElement.dataElement.id
+          ? programStageDataElement.dataElement.id
+          : [];
+      },
+    );
+    return await this.dataElementService.getSavedDataElementsByIds(
+      dataElementIds,
+    );
   }
 
   async getProgramEntities(ids: string[]) {
@@ -137,7 +235,7 @@ export class ProgramFormMetadataService {
 
   async getProgramTrackedEntityAttributeEntities(prograIds: string[]) {
     const repository = getRepository(
-      ProgramTrackedEntityAttributeEntity,
+      ProgramProgramTrackedEntityAttributeEntity,
       CONNECTION_NAME,
     );
     return await repository.find({ programId: In(prograIds) });
@@ -148,6 +246,8 @@ export class ProgramFormMetadataService {
       ProgramProgramStageEntity,
       CONNECTION_NAME,
     );
+    const all = repository.find();
+    console.log({all})
     return await repository.find({ programId: In(prograIds) });
   }
 
