@@ -52,6 +52,7 @@ export class SelectionsEffects {
           ),
         ),
         tap(([{}, trackedEntityInstance]) => {
+          console.log(trackedEntityInstance);
           this.programDataService.savingTrackedEntityInstancesToLocalStorage([
             trackedEntityInstance,
           ]);

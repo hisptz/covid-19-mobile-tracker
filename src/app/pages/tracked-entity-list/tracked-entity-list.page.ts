@@ -149,4 +149,15 @@ export class TrackedEntityListPage implements OnInit {
     );
     this.router.navigate(['/manage-tracked-entity-profile']);
   }
+
+  onSetCurrentTrackedEntityInstance(
+    e,
+    currentTrackedEntityInstance: TrackedEntityInstance,
+  ) {
+    e.stopPropagation();
+    this.store.dispatch(
+      setCurrentTrackedEntityInstance({ currentTrackedEntityInstance }),
+    );
+    this.router.navigate(['/tracked-entity']);
+  }
 }

@@ -13,18 +13,11 @@ export function updateTrackedEntityInstanceWithAtrributes(
   );
   return {
     ...trackedEntityInstance,
-    enrollments: (trackedEntityInstance.enrollments || []).map(
-      (enrollment: Enrollment) => {
-        return {
-          ...enrollment,
-          attributes: (trackedEntityAttributeValuesKeys || []).map((key) => {
-            return {
-              attribute: key,
-              value: trackedEntityAttributeValuesObject[key],
-            };
-          }),
-        };
-      },
-    ),
+    attributes: (trackedEntityAttributeValuesKeys || []).map((key) => {
+      return {
+        attribute: key.split('-')[0],
+        value: trackedEntityAttributeValuesObject[key],
+      };
+    }),
   };
 }

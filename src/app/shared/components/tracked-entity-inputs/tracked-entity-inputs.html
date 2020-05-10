@@ -32,7 +32,7 @@
   </div> -->
   <div *ngIf="trackedEntityAttribute.optionSet"
     [ngClass]="(trackedEntityAttributesSavingStatusClass[trackedEntityAttribute.id +'-trackedEntityAttribute'])?trackedEntityAttributesSavingStatusClass[trackedEntityAttribute.id +'-trackedEntityAttribute']:'input-field-container'">
-    <app-option-set-input [dataEntrySettings]="dataEntrySettings" (change)="updateValue($event)"
+    <app-option-set-input [dataEntrySettings]="dataEntrySettings" (optionSetChange)="updateValue($event)"
       [dataElementId]="trackedEntityAttribute.id" [categoryOptionComboId]="'trackedEntityAttribute'" [data]="data"
       [options]="trackedEntityAttribute.optionSet.options" [label]="fieldLabelKey">
     </app-option-set-input>
@@ -53,7 +53,7 @@
     </div>
     <div
       *ngIf="trackedEntityAttribute.valueType === 'DATE' || trackedEntityAttribute.valueType === 'DATETIME' || trackedEntityAttribute.valueType === 'TIME' ">
-      <app-date-input (change)="updateValue($event)" [valueType]="trackedEntityAttribute.valueType"
+      <app-date-input (valueChange)="updateValue($event)" [valueType]="trackedEntityAttribute.valueType"
         [dataElementId]="trackedEntityAttribute.id" [label]="fieldLabelKey"
         [categoryOptionComboId]="'trackedEntityAttribute'" [data]="data">
       </app-date-input>
@@ -64,43 +64,43 @@
       </app-true-only-input>
     </div>
     <div *ngIf="trackedEntityAttribute.valueType === 'AGE'">
-      <app-age-input (change)="updateValue($event)" [dataElementId]="trackedEntityAttribute.id"
+      <app-age-input (ageChange)="updateValue($event)" [dataElementId]="trackedEntityAttribute.id"
         [categoryOptionComboId]="'trackedEntityAttribute'" [data]="data" [label]="fieldLabelKey">
       </app-age-input>
     </div>
     <div *ngIf="trackedEntityAttribute.valueType === 'BOOLEAN'">
-      <app-boolean-input (change)="updateValue($event)" [dataElementId]="trackedEntityAttribute.id"
+      <app-boolean-input (valueChange)="updateValue($event)" [dataElementId]="trackedEntityAttribute.id"
         [categoryOptionComboId]="'trackedEntityAttribute'" [data]="data">
       </app-boolean-input>
     </div>
     <div *ngIf="trackedEntityAttribute.valueType === 'COORDINATE'">
-      <app-coordinate-input (change)="updateValue($event)" [dataElementId]="trackedEntityAttribute.id"
+      <app-coordinate-input (coordinateChange)="updateValue($event)" [dataElementId]="trackedEntityAttribute.id"
         [categoryOptionComboId]="'trackedEntityAttribute'" [data]="data">
       </app-coordinate-input>
     </div>
     <div *ngIf="trackedEntityAttribute.valueType === 'ORGANISATION_UNIT'">
-      <app-organisation-unit-input (change)="updateValue($event)" [dataElementId]="trackedEntityAttribute.id"
-        [categoryOptionComboId]="'trackedEntityAttribute'" [data]="data">
+      <app-organisation-unit-input (organisationUnitChange)="updateValue($event)"
+        [dataElementId]="trackedEntityAttribute.id" [categoryOptionComboId]="'trackedEntityAttribute'" [data]="data">
       </app-organisation-unit-input>
     </div>
     <div *ngIf="trackedEntityAttribute.valueType === 'UNIT_INTERVAL'">
-      <app-unit-interval-input (change)="updateValue($event)" [dataElementId]="trackedEntityAttribute.id"
+      <app-unit-interval-input (unitIntervalChange)="updateValue($event)" [dataElementId]="trackedEntityAttribute.id"
         [categoryOptionComboId]="'trackedEntityAttribute'" [data]="data">
       </app-unit-interval-input>
     </div>
     <div *ngIf="trackedEntityAttribute.valueType === 'PERCENTAGE'">
-      <app-percentage-input (change)="updateValue($event)" [dataElementId]="trackedEntityAttribute.id"
+      <app-percentage-input (percentageChange)="updateValue($event)" [dataElementId]="trackedEntityAttribute.id"
         [categoryOptionComboId]="'trackedEntityAttribute'" [data]="data">
       </app-percentage-input>
     </div>
     <div *ngIf="trackedEntityAttribute.valueType === 'EMAIL'">
-      <app-email-input (change)="updateValue($event)"
+      <app-email-input (emailChange)="updateValue($event)"
         [(dataValuesSavingStatusClass)]="trackedEntityAttributesSavingStatusClass"
         [dataElementId]="trackedEntityAttribute.id" [categoryOptionComboId]="'trackedEntityAttribute'" [data]="data">
       </app-email-input>
     </div>
     <div *ngIf="trackedEntityAttribute.valueType === 'PHONE_NUMBER'">
-      <app-phone-number-input (change)="updateValue($event)"
+      <app-phone-number-input (phoneNumberChange)="updateValue($event)"
         [(dataValuesSavingStatusClass)]="trackedEntityAttributesSavingStatusClass"
         [dataElementId]="trackedEntityAttribute.id" [categoryOptionComboId]="'trackedEntityAttribute'" [data]="data"
         [label]="fieldLabelKey">

@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button (click)="onClose()"></ion-back-button>
     </ion-buttons>
     <ion-title>Profile</ion-title>
   </ion-toolbar>
@@ -27,7 +27,7 @@
               [currentUser]="params.currentUser" [data]="params.attributeObject || dataObject"
               [(trackedEntityAttributesSavingStatusClass)]="trackedEntityAttributesSavingStatusClass"
               [mandatory]="programTrackedEntityAttribute.mandatory"
-              (onChange)="onUpdateAttributesValue($event, params.program.programTrackedEntityAttributes, params.trackedEntityInstance)">
+              (onChange)="onUpdateAttributesValue($event, params.program.programTrackedEntityAttributes, params.trackedEntityInstance, params.attributeObject)">
             </tracked-entity-inputs>
             <!-- <div *ngIf="errorOrWarningMessage[programTrackedEntityAttribute.trackedEntityAttribute.id]">
               <program-rule-action-message
@@ -36,8 +36,8 @@
             <!-- </div> -->
           </div>
         </div>
-        <ion-button [disabled]="!isFormReady" expand="block" size="large" shape="round" color="success"
-          (click)="onSave($event)">Save</ion-button>
+        <!-- TODO: Disable button when not all required fields are filled in -->
+        <ion-button expand="block" size="large" shape="round" color="success" (click)="onSave($event)">Save</ion-button>
       </form>
 
     </ion-col>

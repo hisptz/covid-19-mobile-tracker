@@ -62,19 +62,16 @@ export const getTrackedEntityInstanceAttributeObject = createSelector(
   (trackedEntityInstance: TrackedEntityInstance) => {
     const attributeObject = {};
 
-    const enrollment: Enrollment = (trackedEntityInstance
-      ? trackedEntityInstance.enrollments || []
-      : [])[0];
-
-    (enrollment ? enrollment.attributes || [] : []).forEach(
-      (attribute: any) => {
-        attributeObject[`${attribute.attribute}-trackedEntityAttribute`] = {
-          id: `${attribute.attribute}-trackedEntityAttribute`,
-          value: attribute.value,
-          status: '',
-        };
-      },
-    );
+    (trackedEntityInstance
+      ? trackedEntityInstance.attributes || []
+      : []
+    ).forEach((attribute: any) => {
+      attributeObject[`${attribute.attribute}-trackedEntityAttribute`] = {
+        id: `${attribute.attribute}-trackedEntityAttribute`,
+        value: attribute.value,
+        status: '',
+      };
+    });
 
     return attributeObject;
   },

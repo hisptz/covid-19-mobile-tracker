@@ -24,7 +24,7 @@ export function generateTrackedEntityInstance(
           attribute:
             program.currentProgramTrackedEntityAttribute.trackedEntityAttribute
               .id,
-          value: true,
+          value: 'true',
         }
       : null;
 
@@ -48,10 +48,11 @@ export function generateTrackedEntityInstance(
         program: program.id.split('_')[0],
         status: 'ACTIVE',
         events: [],
-        attributes: defaultAttribute ? [defaultAttribute] : [],
+        attributes: [],
         syncStatus: 'not-synced',
       },
     ],
     relationships: [],
+    attributes: defaultAttribute ? [defaultAttribute] : [],
   };
 }

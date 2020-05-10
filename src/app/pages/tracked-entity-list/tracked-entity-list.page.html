@@ -10,16 +10,16 @@
 <ion-content
   *ngIf="{program: currentProgram$ | async, organisationUnit: currentOrganisationUnit$ | async} as currentParameters">
   <div *ngIf="isLoading" class="ion-padding">
-        <app-progress-bar [isIndeterminateProcess]="true"
-            [processMessage]="'Loading '">
-        </app-progress-bar>
-    </div>
+    <app-progress-bar [isIndeterminateProcess]="true" [processMessage]="'Loading '">
+    </app-progress-bar>
+  </div>
   <ion-list class="ion-padding-top">
-    <ion-item  *ngFor="let trackedEntityInstance of trackedEntityInstanceList">
+    <ion-item *ngFor="let trackedEntityInstance of trackedEntityInstanceList"
+      (click)="onSetCurrentTrackedEntityInstance($event, trackedEntityInstance)">
       <ion-avatar slot="start" *ngIf="false">
         <img src="assets/icon/rumor.png">
       </ion-avatar>
-      <ion-label [routerLink]="['/tracked-entity']">
+      <ion-label>
         <div *ngFor="let attribute of attributesToDisplay">
           <p> {{ attribute.name }} : {{ trackedEntityInstance[attribute.id] || "" }}</p>
         </div>

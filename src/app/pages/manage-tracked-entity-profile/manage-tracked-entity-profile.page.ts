@@ -123,6 +123,7 @@ export class ManageTrackedEntityProfilePage implements OnInit {
     data: any,
     programTrackedEntityAttributes,
     trackedEntityInstance,
+    attributeObject,
     shouldSkipProgramRules: boolean = false,
     shoulOnlyCheckDates: boolean = false,
   ) {
@@ -156,10 +157,14 @@ export class ManageTrackedEntityProfilePage implements OnInit {
       setCurrentTrackedEntityInstance({
         currentTrackedEntityInstance: updateTrackedEntityInstanceWithAtrributes(
           trackedEntityInstance,
-          trackedEntityAttributeValuesObject,
+          { ...attributeObject, ...this.dataObject },
         ),
       }),
     );
+  }
+
+  onClose() {
+    this.store.dispatch(saveTrackedEntityInstance());
   }
 
   onSave(e) {
