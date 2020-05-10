@@ -94,6 +94,8 @@ export class LoginPage implements OnInit {
     let currentUser = null;
     try {
       currentUser = await this.userService.getCurrentUser();
+      if (currentUser && currentUser.isLogin) {
+      }
     } catch (error) {
     } finally {
       this.currentUser = currentUser

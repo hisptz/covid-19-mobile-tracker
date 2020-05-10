@@ -97,7 +97,9 @@ export class ProgramFormDataService {
           observer.complete();
         })
         .catch((error: any) => {
-          observer.error(error);
+          console.log({ error });
+          observer.next(trackedEntityInstances);
+          observer.complete();
         });
     });
   }
@@ -178,21 +180,24 @@ export class ProgramFormDataService {
     organisationUnitId: string,
     programId: string,
   ) {
-    const repository = getRepository(
-      TrackedEntityInstanceEntity,
-      CONNECTION_NAME,
-    );
-    const trackedEntityInstanceEntities = await repository.find({
-      orgUnit: In([organisationUnitId]),
-    });
-    const ids = _.flattenDeep(
-      trackedEntityInstanceEntities,
-      (trackedEntityInstanceEntity: any) =>
-        trackedEntityInstanceEntity.id || [],
-    );
-    const trackedEntityInstances = await this.getSavingTrackedEntityInstancesByIds(
-      ids,
-    );
+    let trackedEntityInstances = [];
+    try {
+      const repository = getRepository(
+        TrackedEntityInstanceEntity,
+        CONNECTION_NAME,
+      );
+      const trackedEntityInstanceEntities = await repository.find({
+        orgUnit: In([organisationUnitId]),
+      });
+      const ids = _.flattenDeep(
+        trackedEntityInstanceEntities,
+        (trackedEntityInstanceEntity: any) =>
+          trackedEntityInstanceEntity.id || [],
+      );
+      trackedEntityInstances = await this.getSavingTrackedEntityInstancesByIds(
+        ids,
+      );
+    } catch (error) {}
     return _.filter(trackedEntityInstances, (trackedEntityInstanceObj) => {
       const enrollments = _.filter(
         trackedEntityInstanceObj.enrollments || [],
