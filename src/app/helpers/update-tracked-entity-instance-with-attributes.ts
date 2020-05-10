@@ -15,7 +15,7 @@ export function updateTrackedEntityInstanceWithAtrributes(
     ...trackedEntityInstance,
     attributes: (trackedEntityAttributeValuesKeys || [])
       .map((key) => {
-        if (key.split('-')[0] === undefined) {
+        if (key.split('-')[0] === 'undefined') {
           return null;
         }
         return {
