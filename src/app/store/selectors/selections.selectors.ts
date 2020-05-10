@@ -1,7 +1,11 @@
 import { createSelector } from '@ngrx/store';
 import { getRootState, State } from '../reducers';
 import { SelectionsState } from '../reducers/selections.reducer';
-import { OrganisationUnit } from 'src/app/models';
+import {
+  OrganisationUnit,
+  TrackedEntityInstance,
+  Enrollment,
+} from 'src/app/models';
 
 /**
  * Copyright (C) 2020 UDSM DHIS2 PROJECT
@@ -55,19 +59,22 @@ export const getCurrentTrackedEntityInstance = createSelector(
 
 export const getTrackedEntityInstanceAttributeObject = createSelector(
   getCurrentTrackedEntityInstance,
-  (trackedEntityInstance: any) => {
+  (trackedEntityInstance: TrackedEntityInstance) => {
     const attributeObject = {};
 
-    (trackedEntityInstance
-      ? trackedEntityInstance.attributes || []
-      : []
-    ).forEach((attribute: any) => {
-      attributeObject[`${attribute.attribute}-trackedEntityAttribute`] = {
-        id: `${attribute.attribute}-trackedEntityAttribute`,
-        value: attribute.value,
-        status: '',
-      };
-    });
+    const enrollment: Enrollment = (trackedEntityInstance
+      ? trackedEntityInstance.enrollments || []
+      : [])[0];
+
+    (enrollment ? enrollment.attributes || [] : []).forEach(
+      (attribute: any) => {
+        attributeObject[`${attribute.attribute}-trackedEntityAttribute`] = {
+          id: `${attribute.attribute}-trackedEntityAttribute`,
+          value: attribute.value,
+          status: '',
+        };
+      },
+    );
 
     return attributeObject;
   },
