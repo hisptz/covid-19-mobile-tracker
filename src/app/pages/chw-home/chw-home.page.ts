@@ -104,7 +104,7 @@ export class ChwHomePage implements OnInit {
                 displayName: programTrackedEntityAttribute.trackedEntityAttribute
                   ? programTrackedEntityAttribute.trackedEntityAttribute.name
                   : '',
-                currentTrackedEntityAttribute: programTrackedEntityAttribute,
+                currentProgramTrackedEntityAttribute: programTrackedEntityAttribute,
               };
             })
             .filter((programItem: Program) => programItem !== null);

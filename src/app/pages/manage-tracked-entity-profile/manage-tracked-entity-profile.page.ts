@@ -152,7 +152,6 @@ export class ManageTrackedEntityProfilePage implements OnInit {
     );
 
     this.trackedEntityAttributeValuesObject = trackedEntityAttributeValuesObject;
-
     this.store.dispatch(
       setCurrentTrackedEntityInstance({
         currentTrackedEntityInstance: updateTrackedEntityInstanceWithAtrributes(

@@ -54,7 +54,7 @@ export class TrueOnlyInputComponent implements OnInit {
 
   updateValues() {
     const id = `${this.dataElementId}-${this.categoryOptionComboId}`;
-    const status = 'not-sync';
+    const status = 'not-synced';
     const value = this.inputFieldValue ? this.inputFieldValue : '';
     if (
       this.data &&

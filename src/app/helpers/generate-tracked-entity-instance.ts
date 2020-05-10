@@ -14,6 +14,19 @@ export function generateTrackedEntityInstance(
   const date = new Date();
   const incidentDate = date.toISOString().split('T')[0];
 
+  // TODO: This hardcoding is only relevant to this context, need softcoding
+  const defaultAttribute =
+    program &&
+    program.currentProgramTrackedEntityAttribute &&
+    program.currentProgramTrackedEntityAttribute.trackedEntityAttribute
+      ? {
+          attribute:
+            program.currentProgramTrackedEntityAttribute.trackedEntityAttribute
+              .id,
+          value: true,
+        }
+      : null;
+
   return {
     orgUnit,
     trackedEntityInstance,
@@ -34,6 +47,6 @@ export function generateTrackedEntityInstance(
       },
     ],
     relationships: [],
-    attributes: [],
+    attributes: defaultAttribute ? [defaultAttribute] : [],
   };
 }

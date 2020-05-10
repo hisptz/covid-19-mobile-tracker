@@ -58,8 +58,6 @@ export const getTrackedEntityInstanceAttributeObject = createSelector(
   (trackedEntityInstance: any) => {
     const attributeObject = {};
 
-    console.log(trackedEntityInstance);
-
     (trackedEntityInstance
       ? trackedEntityInstance.attributes || []
       : []
