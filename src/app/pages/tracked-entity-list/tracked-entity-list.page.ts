@@ -20,15 +20,16 @@ import { ProgramFormDataService } from 'src/app/shared/services/program-form-dat
 export class TrackedEntityListPage implements OnInit {
   currentProgram$: Observable<Program>;
   currentOrganisationUnit$: Observable<OrganisationUnit>;
-  trackedEntityInstances: any[];
-  isLoading: boolean;
   constructor(
     private store: Store<State>,
     private router: Router,
-    private programDataService: ProgramFormDataService,
+    private programFormDataService: ProgramFormDataService,
   ) {}
 
-  async ngOnInit() {
+  ngOnInit() {
+    this.currentOrganisationUnit$ = this.store.pipe(
+      select(getCurrentOrganisationUnit),
+    );
     this.currentProgram$ = this.store.pipe(select(getCurrentProgram));
 
     this.currentOrganisationUnit$ = this.store.pipe(
@@ -39,22 +40,47 @@ export class TrackedEntityListPage implements OnInit {
         this.router.navigate(['/chw-home']);
       } else {
         this.currentOrganisationUnit$
-          .pipe(
-            switchMap((organisationUnit: OrganisationUnit) => {
-              return this.programDataService.discoveringTrackedEntityInstancesFromServer(
-                organisationUnit.id,
-                currentProgram.id,
+          .pipe(take(1))
+          .subscribe((currentOrganisationUnit: OrganisationUnit) => {
+            if (
+              currentOrganisationUnit &&
+              currentOrganisationUnit.id &&
+              currentProgram.id
+            ) {
+              const programId = currentProgram.id.split('_')[0];
+              const organisationUnitId = currentOrganisationUnit.id;
+              this.discoveringTrackedEntityInstancesFromServer(
+                organisationUnitId,
+                programId,
               );
-            }),
-          )
-          .subscribe(
-            (res) => {
-              console.log(res);
-            },
-            (error) => {},
-          );
+            }
+          });
       }
     });
+  }
+
+  discoveringTrackedEntityInstancesFromServer(
+    organisationUnitId: string,
+    programId: string,
+  ) {
+    // onlinde data
+    this.programFormDataService
+      .discoveringTrackedEntityInstancesFromServer(
+        organisationUnitId,
+        programId,
+      )
+      .subscribe((onlineData) => {
+        console.log({ onlineData });
+      });
+    // data from offline storage
+    this.programFormDataService
+      .getSavedTrackedEntityInstancesFromLocalStorage(
+        organisationUnitId,
+        programId,
+      )
+      .then((offlineData) => {
+        console.log({ offlineData });
+      });
   }
 
   onAddTrackedEntityInstance(e, params: any) {

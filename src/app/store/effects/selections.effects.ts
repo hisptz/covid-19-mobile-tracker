@@ -30,10 +30,15 @@ import { saveTrackedEntityInstance } from '../actions';
 import { Store, select } from '@ngrx/store';
 import { State } from '../reducers';
 import { getCurrentTrackedEntityInstance } from '../selectors/selections.selectors';
+import { ProgramFormMetadataService } from 'src/app/shared/services/program-form-metadata.service';
 
 @Injectable()
 export class SelectionsEffects {
-  constructor(private actions$: Actions, private store: Store<State>) {}
+  constructor(
+    private actions$: Actions,
+    private store: Store<State>,
+    private programDataService: ProgramFormMetadataService,
+  ) {}
 
   saveTrackedEntityInstance$ = createEffect(
     () =>
