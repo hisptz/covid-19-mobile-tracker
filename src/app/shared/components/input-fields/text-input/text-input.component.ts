@@ -37,6 +37,7 @@ export class TextInputComponent implements OnInit {
   @Input() readonly: boolean;
   @Input() barcodeSettings: any;
   @Input() placeholder: string;
+  @Input() label: string;
   @Input() lockingFieldStatus: boolean;
   @Input() updateOnChangeValue: boolean;
 

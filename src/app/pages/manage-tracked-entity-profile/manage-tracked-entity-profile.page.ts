@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { State } from 'src/app/store';
+import { State, setCurrentTrackedEntityInstance } from 'src/app/store';
 import { Observable, of } from 'rxjs';
 import { Program, CurrentUser } from 'src/app/models';
 import {
@@ -93,6 +93,22 @@ export class ManageTrackedEntityProfilePage implements OnInit {
     return result;
   }
 
+  onIncidentDateUpdate(incidentDate: string, trackedEntityInstance) {
+    this.store.dispatch(
+      setCurrentTrackedEntityInstance({
+        currentTrackedEntityInstance: {
+          ...trackedEntityInstance,
+          incidentDate,
+          enrollments: trackedEntityInstance.enrollments.map(
+            (enrollment: any) => {
+              return { ...enrollment, incidentDate };
+            },
+          ),
+        },
+      }),
+    );
+  }
+
   onUpdateAttributesValue(
     data: any,
     programTrackedEntityAttributes,
@@ -124,8 +140,6 @@ export class ManageTrackedEntityProfilePage implements OnInit {
       trackedEntityAttributeValuesObject,
     );
     if (this.isFormReady) {
-      const { id } = data;
-      const currentTrackedEntityId = id ? id : 'currentTrackedEntityId';
       this.trackedEntityAttributeValuesObject = trackedEntityAttributeValuesObject;
     }
   }
@@ -145,6 +159,7 @@ export class ManageTrackedEntityProfilePage implements OnInit {
       }),
     };
 
-    console.log(trackedEntityInstance, newTrackedEntityInstance);
+    console.log(newTrackedEntityInstance);
+    this.router.navigate(['/tracked-entity-list']);
   }
 }

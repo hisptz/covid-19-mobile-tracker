@@ -1,0 +1,13 @@
+<ion-content>
+  <ion-list class="ion-padding-top">
+    <ion-item *ngFor="let programStage of (currentProgram$ | async)?.programStages"
+      (click)="onSetProgramStage($event, programStage)">
+      <ion-avatar slot="start" *ngIf="false">
+        <img src="assets/icon/rumor.png">
+      </ion-avatar>
+      <ion-label>
+        <h2 class="ion-padding-bottom">{{programStage.name}}</h2>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

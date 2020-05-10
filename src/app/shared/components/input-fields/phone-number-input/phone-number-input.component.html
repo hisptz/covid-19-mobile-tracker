@@ -25,6 +25,7 @@
 <ion-row>
     <ion-col>
         <ion-item>
+            <ion-label position="floating">{{label | translate}}</ion-label>
             <ion-input [readonly]="lockingFieldStatus" (ionBlur)="updateValue()" [(ngModel)]="inputFieldValue"
                 type="tel">
             </ion-input>

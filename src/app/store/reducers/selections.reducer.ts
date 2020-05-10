@@ -21,6 +21,8 @@ import {
   setCurrentOrgUnit,
   setCurrentProgram,
   setCurrentTrackedEntityInstance,
+  setCurrentProgramStage,
+  setCurrentEvent,
 } from '../actions/selections-actions';
 
 export interface SelectionsState {
@@ -28,6 +30,8 @@ export interface SelectionsState {
   currentProgram: Program;
   currentProgramTrackedEntityAttribute: any;
   currentTrackedEntityInstance: any;
+  currentProgramStage: any;
+  currentEvent: any;
 }
 
 const initialSelectionsState: SelectionsState = {
@@ -35,6 +39,8 @@ const initialSelectionsState: SelectionsState = {
   currentProgram: null,
   currentProgramTrackedEntityAttribute: null,
   currentTrackedEntityInstance: null,
+  currentProgramStage: null,
+  currentEvent: null,
 };
 
 const reducer = createReducer(
@@ -58,6 +64,14 @@ const reducer = createReducer(
       currentTrackedEntityInstance,
     }),
   ),
+  on(setCurrentProgramStage, (state, { currentProgramStage }) => ({
+    ...state,
+    currentProgramStage,
+  })),
+  on(setCurrentEvent, (state, { currentEvent }) => ({
+    ...state,
+    currentEvent,
+  })),
 );
 
 export function selectionsReducer(state: SelectionsState, action) {

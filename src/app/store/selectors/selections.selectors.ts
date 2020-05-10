@@ -52,3 +52,13 @@ export const getCurrentTrackedEntityInstance = createSelector(
   (selectionsState: SelectionsState) =>
     selectionsState.currentTrackedEntityInstance,
 );
+
+export const getCurrentProgramStage = createSelector(
+  getSelectionsState,
+  (selectionsState: SelectionsState) => selectionsState.currentProgramStage,
+);
+
+export const getCurrentEvent = createSelector(
+  getSelectionsState,
+  (selectionsState: SelectionsState) => selectionsState.currentEvent,
+);

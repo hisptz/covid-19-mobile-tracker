@@ -4,7 +4,10 @@ import { Program, OrganisationUnit } from 'src/app/models';
 import { Store, select } from '@ngrx/store';
 import { State, setCurrentTrackedEntityInstance } from 'src/app/store';
 import { Router } from '@angular/router';
-import { getCurrentProgram } from 'src/app/store/selectors/selections.selectors';
+import {
+  getCurrentProgram,
+  getCurrentOrganisationUnit,
+} from 'src/app/store/selectors/selections.selectors';
 import { take } from 'rxjs/operators';
 import { generateTrackedEntityInstance } from 'src/app/helpers/generate-tracked-entity-instance';
 
@@ -25,6 +28,10 @@ export class TrackedEntityListPage implements OnInit {
         this.router.navigate(['/chw-home']);
       }
     });
+
+    this.currentOrganisationUnit$ = this.store.pipe(
+      select(getCurrentOrganisationUnit),
+    );
   }
 
   onAddTrackedEntityInstance(e, params: any) {

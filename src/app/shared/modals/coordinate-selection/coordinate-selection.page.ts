@@ -26,7 +26,7 @@ import { ModalController, NavParams } from '@ionic/angular';
 
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { State, getCurrentUserColorSettings } from '../../store';
+import { State, getCurrentUserColorSettings } from '../../../store';
 import { AppColorObject } from 'src/app/models';
 import { GeolocationService } from 'src/app/shared/services/geolocation.service';
 import { ToasterMessagesService } from 'src/app/shared/services/toaster-messages.service';

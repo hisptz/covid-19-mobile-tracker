@@ -20,3 +20,17 @@ export const setCurrentTrackedEntityInstance = createAction(
     currentTrackedEntityInstance: any;
   }>(),
 );
+
+export const setCurrentProgramStage = createAction(
+  '[OrgUnit] Set current program stage',
+  props<{
+    currentProgramStage: any;
+  }>(),
+);
+
+export const setCurrentEvent = createAction(
+  '[Selections] Set current event',
+  props<{
+    currentEvent: any;
+  }>(),
+);

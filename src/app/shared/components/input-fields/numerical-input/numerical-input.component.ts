@@ -35,6 +35,7 @@ export class NumericalInputComponent implements OnInit {
   @Input() categoryOptionComboId: string;
   @Input() lockingFieldStatus: boolean;
   @Input() data: any;
+  @Input() label: any;
   @Input() valueType: string;
   @Input() barcodeSettings: BarcodeSetting;
 

@@ -6,8 +6,8 @@ import * as _ from 'lodash';
 import { Observable } from 'rxjs';
 import { DEFAULT_SETTINGS, DEFAULT_USER } from 'src/app/constants';
 import { getAppMetadata } from 'src/app/helpers';
-import { LocalInstanceSelectionPage } from 'src/app/modals/local-instance-selection/local-instance-selection.page';
-import { TranslationSelectionPage } from 'src/app/modals/translation-selection/translation-selection.page';
+import { LocalInstanceSelectionPage } from 'src/app/shared/modals/local-instance-selection/local-instance-selection.page';
+import { TranslationSelectionPage } from 'src/app/shared/modals/translation-selection/translation-selection.page';
 import {
   AppColorObject,
   AppSetting,

@@ -34,6 +34,7 @@ export class RadioButtonComponent implements OnInit {
   @Input() selectedValue: string;
   @Input() lockingFieldStatus: boolean;
   @Input() fieldId: string;
+  @Input() label: string;
   @Input() isTrashButtonDisabled: boolean;
 
   @Output() radioButtonChange = new EventEmitter();
@@ -46,12 +47,12 @@ export class RadioButtonComponent implements OnInit {
 
   clearInput() {
     if (!this.lockingFieldStatus) {
-      this.dataModal[this.fieldId] = '';
-      this.saveValue();
+      this.saveValue('');
     }
   }
 
-  saveValue() {
+  saveValue(value) {
+    this.dataModal[this.fieldId] = value;
     this.selectedValue = this.dataModal[this.fieldId];
     this.radioButtonChange.emit(this.selectedValue);
   }

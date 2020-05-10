@@ -37,7 +37,7 @@ import {
   getCurrentUserColorSettings,
   setCurrentOrgUnit,
   State,
-} from '../../store';
+} from '../../../store';
 import { OrganisationUnitSearchPage } from '../organisation-unit-search/organisation-unit-search.page';
 
 @Component({

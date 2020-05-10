@@ -24,7 +24,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
-import { CoordinateSelectionPage } from 'src/app/modals/coordinate-selection/coordinate-selection.page';
+import { CoordinateSelectionPage } from 'src/app/shared/modals/coordinate-selection/coordinate-selection.page';
 
 @Component({
   selector: 'app-coordinate-input',

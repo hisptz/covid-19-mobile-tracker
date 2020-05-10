@@ -34,6 +34,7 @@ export class TrueOnlyInputComponent implements OnInit {
   @Input() categoryOptionComboId: string;
   @Input() lockingFieldStatus: boolean;
   @Input() data: any;
+  @Input() label: any;
   @Input() colorSettings: any;
   @Output() valueChange = new EventEmitter();
 
