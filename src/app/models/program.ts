@@ -138,12 +138,12 @@ export interface TrackedEntityInstance {
   enrollments: Enrollment[];
   relationships: any[];
   syncStatus: string;
-  attributes?: TrackedEntityAttributeValue;
+  attributes?: TrackedEntityAttributeValue[];
 }
 
 export interface TrackedEntityAttributeValue {
-  id: string;
-  trackedEntityInstance: string;
+  id?: string;
+  trackedEntityInstance?: string;
   attribute: string;
   value: string;
 }
