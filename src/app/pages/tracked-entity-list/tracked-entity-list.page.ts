@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import _ from 'lodash';
 import { Observable } from 'rxjs';
-import { Program, OrganisationUnit } from 'src/app/models';
+import {
+  Program,
+  OrganisationUnit,
+  TrackedEntityInstance,
+} from 'src/app/models';
 import { Store, select } from '@ngrx/store';
 import { State, setCurrentTrackedEntityInstance } from 'src/app/store';
 import { Router } from '@angular/router';
@@ -20,6 +25,9 @@ import { ProgramFormDataService } from 'src/app/shared/services/program-form-dat
 export class TrackedEntityListPage implements OnInit {
   currentProgram$: Observable<Program>;
   currentOrganisationUnit$: Observable<OrganisationUnit>;
+  trackedEntityInstanceList: TrackedEntityInstance[];
+  attributesToDisplay: any[];
+  isLoading: boolean;
   constructor(
     private store: Store<State>,
     private router: Router,
@@ -27,6 +35,7 @@ export class TrackedEntityListPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.isLoading = true;
     this.currentOrganisationUnit$ = this.store.pipe(
       select(getCurrentOrganisationUnit),
     );
@@ -43,6 +52,10 @@ export class TrackedEntityListPage implements OnInit {
               currentOrganisationUnit.id &&
               currentProgram.id
             ) {
+              this.isLoading = true;
+              this.attributesToDisplay = this.getAttributeToDisplay(
+                currentProgram,
+              );
               const programId = currentProgram.id.split('_')[0];
               const organisationUnitId = currentOrganisationUnit.id;
               this.discoveringTrackedEntityInstancesFromServer(
@@ -55,27 +68,68 @@ export class TrackedEntityListPage implements OnInit {
     });
   }
 
+  getAttributeToDisplay(currentProgram: Program) {
+    const numberOfAttribute = 3;
+    let atteibutesToDisplay = _.filter(
+      currentProgram.programTrackedEntityAttributes || [],
+      (programTrackedEntityAttribute: any) =>
+        programTrackedEntityAttribute &&
+        programTrackedEntityAttribute.displayInList,
+    );
+    atteibutesToDisplay =
+      atteibutesToDisplay.length > 0
+        ? _.chunk(atteibutesToDisplay, numberOfAttribute)[0]
+        : currentProgram.programTrackedEntityAttributes || [];
+    return _.flattenDeep(
+      _.map(atteibutesToDisplay, (programTrackedEntityAttribute) => {
+        const trackedEntityAttribute =
+          programTrackedEntityAttribute.trackedEntityAttribute || null;
+        return trackedEntityAttribute
+          ? {
+              id: trackedEntityAttribute.id || '',
+              name:
+                trackedEntityAttribute.formName ||
+                trackedEntityAttribute.name ||
+                '',
+            }
+          : [];
+      }),
+    );
+  }
+
   discoveringTrackedEntityInstancesFromServer(
     organisationUnitId: string,
     programId: string,
   ) {
-    // onlinde data
     this.programFormDataService
-      .discoveringTrackedEntityInstancesFromServer(
+      .discoveringTrackedEntityInstancesFromServerAndLocalStorage(
         organisationUnitId,
         programId,
       )
-      .subscribe((onlineData) => {
-        console.log({ onlineData });
-      });
-    // data from offline storage
-    this.programFormDataService
-      .getSavedTrackedEntityInstancesFromLocalStorage(
-        organisationUnitId,
-        programId,
-      )
-      .then((offlineData) => {
-        console.log({ offlineData });
+      .subscribe((teis: TrackedEntityInstance[]) => {
+        // Todo filter "teis" by attribute value from previous selected source
+        this.trackedEntityInstanceList = _.map(teis, (tei: any) => {
+          const attributes = tei.attributes || [];
+          for (const attributeToDisplay of this.attributesToDisplay) {
+            const filtereAttr = _.find(
+              attributes,
+              (attributeObj: any) =>
+                attributeObj &&
+                attributeObj.attribute &&
+                attributeToDisplay.id === attributeObj.attribute,
+            );
+            if (filtereAttr) {
+              tei[attributeToDisplay.id] = filtereAttr.value;
+            }
+          }
+          // relation specific for contact tracing
+          const relationships = tei.relationships || [];
+          return {
+            ...tei,
+            numberOfContact: relationships.length,
+          };
+        });
+        this.isLoading = false;
       });
   }
 

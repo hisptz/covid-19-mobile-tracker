@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { TrackedEntityListPageRoutingModule } from './tracked-entity-list-routing.module';
 
 import { TrackedEntityListPage } from './tracked-entity-list.page';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { TrackedEntityListPage } from './tracked-entity-list.page';
     FormsModule,
     IonicModule,
     TrackedEntityListPageRoutingModule,
+    SharedModule,
   ],
   declarations: [TrackedEntityListPage],
 })
