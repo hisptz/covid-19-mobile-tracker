@@ -88,6 +88,23 @@ export const getCurrentEvent = createSelector(
   (selectionsState: SelectionsState) => selectionsState.currentEvent,
 );
 
+export const getCurrentEventDataValueObject = createSelector(
+  getCurrentEvent,
+  (event: any) => {
+    const eventObject = {};
+
+    (event ? event.dataValues || [] : []).forEach((dataValue: any) => {
+      eventObject[`${dataValue.dataElement}-dataElement`] = {
+        id: `${dataValue.dataElement}-dataElement`,
+        value: dataValue.value,
+        status: '',
+      };
+    });
+
+    return eventObject;
+  },
+);
+
 export const getCurrentProgramStageEvents = createSelector(
   getCurrentProgramStage,
   getCurrentTrackedEntityInstance,
@@ -107,8 +124,6 @@ export const getCurrentProgramStageEvents = createSelector(
         ),
       ),
     );
-
-    console.log(events);
 
     return events;
   },

@@ -7,8 +7,11 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content
-  *ngIf="{currentProgramStage: currentProgramStage$ | async, currentUser: currentUser$ | async, currentEvent: currentEvent$ | async} as params">
+<ion-content *ngIf="{currentProgramStage: currentProgramStage$ | async, 
+    currentUser: currentUser$ | async, 
+    currentEvent: currentEvent$ | async,
+    eventObject: currentEventDataValueObject$ | async
+  } as params">
   <ion-row *ngIf="params.currentProgramStage && params.currentUser">
     <ion-col>
       <form action="">
@@ -20,14 +23,14 @@
         <div *ngFor="let programStageDataElement of params.currentProgramStage.programStageDataElements">
           <div *ngIf="programStageDataElement.dataElement">
             <event-input-container [dataElement]="programStageDataElement.dataElement"
-              [currentUser]="params.currentUser" [data]="dataObject"
+              [currentUser]="params.currentUser" [data]="params.eventObject || dataObject"
               [dataValuesSavingStatusClass]="dataValuesSavingStatusClass"
-              (onChange)="onUpdateData($event, params.currentEvent)">
+              (onChange)="onUpdateData($event, params.currentEvent, params.eventObject)">
             </event-input-container>
           </div>
         </div>
         <ion-button [disabled]="!isFormReady" expand="block" size="large" shape="round" color="success"
-          (click)="onSave($event, params.currentEvent)">Save</ion-button>
+          (click)="onSave($event)">Save</ion-button>
       </form>
     </ion-col>
   </ion-row>
