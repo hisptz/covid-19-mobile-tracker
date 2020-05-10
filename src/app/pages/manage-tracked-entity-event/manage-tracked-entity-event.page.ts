@@ -2,9 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
-import { State } from 'src/app/store';
+import { State, setCurrentEvent } from 'src/app/store';
 import { Router } from '@angular/router';
-import { getCurrentProgramStage } from 'src/app/store/selectors/selections.selectors';
+import {
+  getCurrentProgramStage,
+  getCurrentEvent,
+} from 'src/app/store/selectors/selections.selectors';
 import { CurrentUser } from 'src/app/models';
 import { UserService } from 'src/app/shared/services/user.service';
 
@@ -15,6 +18,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 })
 export class ManageTrackedEntityEventPage implements OnInit {
   currentProgramStage$: Observable<any>;
+  currentEvent$: Observable<any>;
   currentUser$: Observable<CurrentUser>;
   isFormReady: boolean = true;
   dataObject: any;
@@ -28,6 +32,7 @@ export class ManageTrackedEntityEventPage implements OnInit {
   ngOnInit() {
     this.dataObject = {};
     this.dataValuesSavingStatusClass = {};
+    this.currentEvent$ = this.store.pipe(select(getCurrentEvent));
     this.currentProgramStage$ = this.store.pipe(select(getCurrentProgramStage));
     this.currentProgramStage$
       .pipe(take(1))
@@ -44,10 +49,7 @@ export class ManageTrackedEntityEventPage implements OnInit {
     currentEvent,
     shouldSkipProgramRules: boolean = false,
   ) {
-    const oldEventDate = currentEvent['eventDate'];
-    // currentEvent['eventDate'] = this.eventDate;
-    // currentEvent['dueDate'] = this.eventDate;
-
+    console.log(updatedData);
     const dataValues = [];
     const { id } = updatedData;
     if (id) {
@@ -72,12 +74,22 @@ export class ManageTrackedEntityEventPage implements OnInit {
       }
     });
     if (dataValues && dataValues.length > 0) {
-      currentEvent.dataValues = dataValues;
+      this.store.dispatch(
+        setCurrentEvent({ currentEvent: { ...currentEvent, dataValues } }),
+      );
     }
   }
 
-  onSave(e, programStage) {
-    console.log(programStage);
+  onEventDateUpdate(eventDate: string, currentEvent) {
+    this.store.dispatch(
+      setCurrentEvent({
+        currentEvent: { ...currentEvent, eventDate },
+      }),
+    );
+  }
+
+  onSave(e, currentEvent) {
+    console.log(currentEvent);
     e.stopPropagation();
   }
 }

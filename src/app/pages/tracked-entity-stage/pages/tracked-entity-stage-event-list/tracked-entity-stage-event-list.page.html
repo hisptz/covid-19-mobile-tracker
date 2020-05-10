@@ -1,4 +1,8 @@
-<ion-content>
+<ion-content *ngIf="{
+    currentProgramStage: currentProgramStage$ | async, 
+    currentProgram: currentProgram$ | async, 
+    currentTrackedEntityInstance: currentTrackedEntityInstance$ | async, 
+    currentOrganisationUnit: currentOrganisationUnit$ | async} as params">
   <ion-list class="ion-padding-top">
     <ion-item [routerLink]="['/manage-tracked-entity-event']">
       <ion-avatar slot="start" *ngIf="false">
@@ -34,7 +38,7 @@
     </ion-fab-button>
   </ion-fab>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button [routerLink]="['/manage-tracked-entity-event']">
+    <ion-fab-button (click)="onAddEvent($event, params)">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

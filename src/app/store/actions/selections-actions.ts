@@ -27,3 +27,10 @@ export const setCurrentProgramStage = createAction(
     currentProgramStage: any;
   }>(),
 );
+
+export const setCurrentEvent = createAction(
+  '[Selections] Set current event',
+  props<{
+    currentEvent: any;
+  }>(),
+);

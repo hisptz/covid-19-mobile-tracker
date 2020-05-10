@@ -132,14 +132,15 @@ export class EventInputContainerComponent implements OnInit, OnDestroy {
         this.dataElement.optionSet.options.length +
         ' options to select.';
     }
-    let actionSheet = this.actionSheetCtrl.create({
-      title: title,
-      subTitle: subTitle,
-    });
-    actionSheet.present();
+    // let actionSheet = this.actionSheetCtrl.create({
+    //   title: title,
+    //   subTitle: subTitle,
+    // });
+    // actionSheet.present();
   }
 
   updateValue(updatedValue) {
+    console.log(updatedValue);
     this.dataValuesSavingStatusClass[updatedValue.id] =
       'input-field-container-saving';
     this.onChange.emit(updatedValue);

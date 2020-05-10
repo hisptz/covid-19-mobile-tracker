@@ -7,11 +7,13 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="{currentProgramStage: currentProgramStage$ | async, currentUser: currentUser$ | async} as params">
+<ion-content
+  *ngIf="{currentProgramStage: currentProgramStage$ | async, currentUser: currentUser$ | async, currentEvent: currentEvent$ | async} as params">
   <ion-row *ngIf="params.currentProgramStage && params.currentUser">
     <ion-col>
       <form action="">
-        <app-date-time [mode]="'date'" [label]="'Incident Date'"></app-date-time>
+        <app-date-time [mode]="'date'" [label]="'Incident Date'" [inputValue]="params?.currentEvent?.eventDate"
+          (dateTimeChange)="onEventDateUpdate($event, params?.currentEvent)"></app-date-time>
         <div *ngIf="params.currentProgramStage.captureCoordinates">
           <app-coordinate-input></app-coordinate-input>
         </div>
@@ -19,12 +21,13 @@
           <div *ngIf="programStageDataElement.dataElement">
             <event-input-container [dataElement]="programStageDataElement.dataElement"
               [currentUser]="params.currentUser" [data]="dataObject"
-              [dataValuesSavingStatusClass]="dataValuesSavingStatusClass" (onChange)="onUpdateData($event, {})">
+              [dataValuesSavingStatusClass]="dataValuesSavingStatusClass"
+              (onChange)="onUpdateData($event, params.currentEvent)">
             </event-input-container>
           </div>
         </div>
         <ion-button [disabled]="!isFormReady" expand="block" size="large" shape="round" color="success"
-          (click)="onSave($event, currentProgramStage)">Save</ion-button>
+          (click)="onSave($event, params.currentEvent)">Save</ion-button>
       </form>
     </ion-col>
   </ion-row>
