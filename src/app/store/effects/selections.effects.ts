@@ -30,14 +30,14 @@ import { saveTrackedEntityInstance } from '../actions';
 import { Store, select } from '@ngrx/store';
 import { State } from '../reducers';
 import { getCurrentTrackedEntityInstance } from '../selectors/selections.selectors';
-import { ProgramFormMetadataService } from 'src/app/shared/services/program-form-metadata.service';
+import { ProgramFormDataService } from 'src/app/shared/services/program-form-data.service';
 
 @Injectable()
 export class SelectionsEffects {
   constructor(
     private actions$: Actions,
     private store: Store<State>,
-    private programDataService: ProgramFormMetadataService,
+    private programDataService: ProgramFormDataService,
   ) {}
 
   saveTrackedEntityInstance$ = createEffect(
@@ -52,7 +52,9 @@ export class SelectionsEffects {
           ),
         ),
         tap(([{}, trackedEntityInstance]) => {
-          console.log(trackedEntityInstance);
+          this.programDataService.savingTrackedEntityInstancesToLocalStorage([
+            trackedEntityInstance,
+          ]);
         }),
       ),
     { dispatch: false },
