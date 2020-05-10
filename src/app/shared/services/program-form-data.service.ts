@@ -52,6 +52,7 @@ export class ProgramFormDataService {
       this.httpClientService
         .get(url, true)
         .then((response: any) => {
+          console.log(response);
           trackedEntityInstances = _.map(
             response.trackedEntityInstances || [],
             (trackedEntityInstanceObj: any) => {

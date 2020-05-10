@@ -23,5 +23,6 @@
  */
 
 import { CurrentUserEffects } from './current-user.effects';
+import { SelectionsEffects } from './selections.effects';
 
-export const effects: any[] = [CurrentUserEffects];
+export const effects: any[] = [CurrentUserEffects, SelectionsEffects];

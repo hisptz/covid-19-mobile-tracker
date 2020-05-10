@@ -53,6 +53,28 @@ export const getCurrentTrackedEntityInstance = createSelector(
     selectionsState.currentTrackedEntityInstance,
 );
 
+export const getTrackedEntityInstanceAttributeObject = createSelector(
+  getCurrentTrackedEntityInstance,
+  (trackedEntityInstance: any) => {
+    const attributeObject = {};
+
+    console.log(trackedEntityInstance);
+
+    (trackedEntityInstance
+      ? trackedEntityInstance.attributes || []
+      : []
+    ).forEach((attribute: any) => {
+      attributeObject[`${attribute.attribute}-trackedEntityAttribute`] = {
+        id: `${attribute.attribute}-trackedEntityAttribute`,
+        value: attribute.value,
+        status: '',
+      };
+    });
+
+    return attributeObject;
+  },
+);
+
 export const getCurrentProgramStage = createSelector(
   getSelectionsState,
   (selectionsState: SelectionsState) => selectionsState.currentProgramStage,

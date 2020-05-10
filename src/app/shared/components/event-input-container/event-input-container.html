@@ -32,7 +32,7 @@
     </div> -->
     <div *ngIf="dataElement.optionSet"
         [ngClass]="(dataValuesSavingStatusClass[dataElement.id +'-dataElement'])?dataValuesSavingStatusClass[dataElement.id +'-dataElement']:'input-field-container'">
-        <app-option-set-input [dataEntrySettings]="dataEntrySettings" (change)="updateValue($event)"
+        <app-option-set-input [dataEntrySettings]="dataEntrySettings" (optionSetChange)="updateValue($event)"
             [dataElementId]="dataElement.id" [categoryOptionComboId]="'dataElement'" [data]="data"
             [options]="dataElement.optionSet.options" [label]="fieldLabelKey">
         </app-option-set-input>

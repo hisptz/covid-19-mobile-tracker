@@ -1,16 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { State, setCurrentTrackedEntityInstance } from 'src/app/store';
+import {
+  State,
+  setCurrentTrackedEntityInstance,
+  saveTrackedEntityInstance,
+} from 'src/app/store';
 import { Observable, of } from 'rxjs';
 import { Program, CurrentUser } from 'src/app/models';
 import {
   getCurrentProgram,
   getCurrentProgramTrackedEntityAttribute,
   getCurrentTrackedEntityInstance,
+  getTrackedEntityInstanceAttributeObject,
 } from 'src/app/store/selectors/selections.selectors';
 import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { UserService } from 'src/app/shared/services/user.service';
+import { updateTrackedEntityInstanceWithAtrributes } from 'src/app/helpers/update-tracked-entity-instance-with-attributes';
 
 @Component({
   selector: 'app-manage-tracked-entity-profile',
@@ -21,6 +27,7 @@ export class ManageTrackedEntityProfilePage implements OnInit {
   currentProgram$: Observable<Program>;
   currentProgramTrackedEntityAttribute$: Observable<any>;
   currentTrackedEntityInstance$: Observable<any>;
+  trackedEntityInstanceAttributeValueObject$: Observable<any>;
   hiddenFields: any;
   trackedEntityAttributesSavingStatusClass: any;
   dataObject: any;
@@ -50,6 +57,9 @@ export class ManageTrackedEntityProfilePage implements OnInit {
     );
     this.currentTrackedEntityInstance$ = this.store.pipe(
       select(getCurrentTrackedEntityInstance),
+    );
+    this.trackedEntityInstanceAttributeValueObject$ = this.store.pipe(
+      select(getTrackedEntityInstanceAttributeObject),
     );
 
     const user = await this.userService.getCurrentUser();
@@ -112,6 +122,7 @@ export class ManageTrackedEntityProfilePage implements OnInit {
   onUpdateAttributesValue(
     data: any,
     programTrackedEntityAttributes,
+    trackedEntityInstance,
     shouldSkipProgramRules: boolean = false,
     shoulOnlyCheckDates: boolean = false,
   ) {
@@ -139,27 +150,22 @@ export class ManageTrackedEntityProfilePage implements OnInit {
       programTrackedEntityAttributes,
       trackedEntityAttributeValuesObject,
     );
-    if (this.isFormReady) {
-      this.trackedEntityAttributeValuesObject = trackedEntityAttributeValuesObject;
-    }
+
+    this.trackedEntityAttributeValuesObject = trackedEntityAttributeValuesObject;
+
+    this.store.dispatch(
+      setCurrentTrackedEntityInstance({
+        currentTrackedEntityInstance: updateTrackedEntityInstanceWithAtrributes(
+          trackedEntityInstance,
+          trackedEntityAttributeValuesObject,
+        ),
+      }),
+    );
   }
 
-  onSave(e, trackedEntityInstance) {
+  onSave(e) {
     e.stopPropagation();
-    const trackedEntityAttributeValuesKeys = Object.keys(
-      this.trackedEntityAttributeValuesObject,
-    );
-    const newTrackedEntityInstance = {
-      ...trackedEntityInstance,
-      attributes: (trackedEntityAttributeValuesKeys || []).map((key) => {
-        return {
-          attribute: key,
-          value: this.trackedEntityAttributeValuesObject[key],
-        };
-      }),
-    };
-
-    console.log(newTrackedEntityInstance);
+    this.store.dispatch(saveTrackedEntityInstance());
     this.router.navigate(['/tracked-entity-list']);
   }
 }

@@ -7,8 +7,12 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content
-  *ngIf="{program: currentProgram$ | async, currentUser: currentUser$ | async, trackedEntityInstance: currentTrackedEntityInstance$ | async} as params">
+<ion-content *ngIf="{
+    program: currentProgram$ | async, 
+    currentUser: currentUser$ | async, 
+    trackedEntityInstance: currentTrackedEntityInstance$ | async,
+    attributeObject: trackedEntityInstanceAttributeValueObject$ | async
+  } as params">
   <ion-row *ngIf="params.program && params.trackedEntityInstance" class="ion-padding">
     <ion-col>
       <form>
@@ -20,10 +24,10 @@
           <div
             *ngIf="params.currentUser && programTrackedEntityAttribute && programTrackedEntityAttribute.trackedEntityAttribute && programTrackedEntityAttribute.trackedEntityAttribute.id && !hiddenFields[programTrackedEntityAttribute.trackedEntityAttribute.id]">
             <tracked-entity-inputs [trackedEntityAttribute]="programTrackedEntityAttribute.trackedEntityAttribute"
-              [currentUser]="params.currentUser" [data]="dataObject"
+              [currentUser]="params.currentUser" [data]="params.attributeObject || dataObject"
               [(trackedEntityAttributesSavingStatusClass)]="trackedEntityAttributesSavingStatusClass"
               [mandatory]="programTrackedEntityAttribute.mandatory"
-              (onChange)="onUpdateAttributesValue($event, params.program.programTrackedEntityAttributes)">
+              (onChange)="onUpdateAttributesValue($event, params.program.programTrackedEntityAttributes, params.trackedEntityInstance)">
             </tracked-entity-inputs>
             <!-- <div *ngIf="errorOrWarningMessage[programTrackedEntityAttribute.trackedEntityAttribute.id]">
               <program-rule-action-message
@@ -33,7 +37,7 @@
           </div>
         </div>
         <ion-button [disabled]="!isFormReady" expand="block" size="large" shape="round" color="success"
-          (click)="onSave($event, params.trackedEntityInstance)">Save</ion-button>
+          (click)="onSave($event)">Save</ion-button>
       </form>
 
     </ion-col>

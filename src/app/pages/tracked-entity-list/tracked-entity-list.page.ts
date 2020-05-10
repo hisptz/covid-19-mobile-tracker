@@ -8,8 +8,9 @@ import {
   getCurrentProgram,
   getCurrentOrganisationUnit,
 } from 'src/app/store/selectors/selections.selectors';
-import { take } from 'rxjs/operators';
+import { take, switchMap } from 'rxjs/operators';
 import { generateTrackedEntityInstance } from 'src/app/helpers/generate-tracked-entity-instance';
+import { ProgramFormDataService } from 'src/app/shared/services/program-form-data.service';
 
 @Component({
   selector: 'app-tracked-entity-list',
@@ -19,19 +20,41 @@ import { generateTrackedEntityInstance } from 'src/app/helpers/generate-tracked-
 export class TrackedEntityListPage implements OnInit {
   currentProgram$: Observable<Program>;
   currentOrganisationUnit$: Observable<OrganisationUnit>;
-  constructor(private store: Store<State>, private router: Router) {}
+  trackedEntityInstances: any[];
+  isLoading: boolean;
+  constructor(
+    private store: Store<State>,
+    private router: Router,
+    private programDataService: ProgramFormDataService,
+  ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.currentProgram$ = this.store.pipe(select(getCurrentProgram));
-    this.currentProgram$.pipe(take(1)).subscribe((currentProgram: Program) => {
-      if (!currentProgram) {
-        this.router.navigate(['/chw-home']);
-      }
-    });
 
     this.currentOrganisationUnit$ = this.store.pipe(
       select(getCurrentOrganisationUnit),
     );
+    this.currentProgram$.pipe(take(1)).subscribe((currentProgram: Program) => {
+      if (!currentProgram) {
+        this.router.navigate(['/chw-home']);
+      } else {
+        this.currentOrganisationUnit$
+          .pipe(
+            switchMap((organisationUnit: OrganisationUnit) => {
+              return this.programDataService.discoveringTrackedEntityInstancesFromServer(
+                organisationUnit.id,
+                currentProgram.id,
+              );
+            }),
+          )
+          .subscribe(
+            (res) => {
+              console.log(res);
+            },
+            (error) => {},
+          );
+      }
+    });
   }
 
   onAddTrackedEntityInstance(e, params: any) {

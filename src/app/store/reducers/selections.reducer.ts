@@ -24,6 +24,7 @@ import {
   setCurrentProgramStage,
   setCurrentEvent,
 } from '../actions/selections-actions';
+import { updateTrackedEntityInstanceWithEvent } from 'src/app/helpers/update-tracked-entity-instance-with-events';
 
 export interface SelectionsState {
   currentOrganisationUnit: OrganisationUnit;
@@ -71,6 +72,10 @@ const reducer = createReducer(
   on(setCurrentEvent, (state, { currentEvent }) => ({
     ...state,
     currentEvent,
+    currentTrackedEntityInstance: updateTrackedEntityInstanceWithEvent(
+      state.currentTrackedEntityInstance,
+      currentEvent,
+    ),
   })),
 );
 

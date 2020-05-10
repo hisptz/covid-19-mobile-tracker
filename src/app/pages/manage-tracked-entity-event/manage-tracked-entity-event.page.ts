@@ -2,7 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
-import { State, setCurrentEvent } from 'src/app/store';
+import {
+  State,
+  setCurrentEvent,
+  saveTrackedEntityInstance,
+} from 'src/app/store';
 import { Router } from '@angular/router';
 import {
   getCurrentProgramStage,
@@ -49,9 +53,9 @@ export class ManageTrackedEntityEventPage implements OnInit {
     currentEvent,
     shouldSkipProgramRules: boolean = false,
   ) {
-    console.log(updatedData);
     const dataValues = [];
     const { id } = updatedData;
+    let syncStatus = 'synced';
     if (id) {
       const newValue = updatedData.value;
       const hasNoOldValue =
@@ -60,7 +64,7 @@ export class ManageTrackedEntityEventPage implements OnInit {
           : true;
       const oldValue = !hasNoOldValue ? this.dataObject[id].value : newValue;
       if (oldValue !== newValue || hasNoOldValue) {
-        currentEvent.syncStatus = 'not-synced';
+        syncStatus = 'not-synced';
         this.dataObject[updatedData.id] = updatedData;
       }
     }
@@ -75,7 +79,9 @@ export class ManageTrackedEntityEventPage implements OnInit {
     });
     if (dataValues && dataValues.length > 0) {
       this.store.dispatch(
-        setCurrentEvent({ currentEvent: { ...currentEvent, dataValues } }),
+        setCurrentEvent({
+          currentEvent: { ...currentEvent, dataValues, syncStatus },
+        }),
       );
     }
   }
@@ -89,7 +95,8 @@ export class ManageTrackedEntityEventPage implements OnInit {
   }
 
   onSave(e, currentEvent) {
-    console.log(currentEvent);
     e.stopPropagation();
+    this.store.dispatch(saveTrackedEntityInstance());
+    this.router.navigate(['/tracked-entity/stage/events']);
   }
 }
