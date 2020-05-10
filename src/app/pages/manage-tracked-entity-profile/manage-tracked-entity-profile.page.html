@@ -9,10 +9,13 @@
 
 <ion-content
   *ngIf="{program: currentProgram$ | async, currentUser: currentUser$ | async, trackedEntityInstance: currentTrackedEntityInstance$ | async} as params">
-  <ion-row *ngIf="params.program" class="ion-padding">
+  <ion-row *ngIf="params.program && params.trackedEntityInstance" class="ion-padding">
     <ion-col>
       <form>
-        <app-date-time [mode]="'date'" [label]="'Enrollment Date'"></app-date-time>
+        <app-date-time [mode]="'date'" [label]="'Incident Date'"
+          [inputValue]="params?.trackedEntityInstance?.incidentDate"
+          (dateTimeChange)="onIncidentDateUpdate($event, params?.trackedEntityInstance)">
+        </app-date-time>
         <div *ngFor="let programTrackedEntityAttribute of params.program.programTrackedEntityAttributes">
           <div
             *ngIf="params.currentUser && programTrackedEntityAttribute && programTrackedEntityAttribute.trackedEntityAttribute && programTrackedEntityAttribute.trackedEntityAttribute.id && !hiddenFields[programTrackedEntityAttribute.trackedEntityAttribute.id]">
