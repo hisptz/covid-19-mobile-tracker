@@ -40,6 +40,67 @@ import { HttpClientService } from './http-client.service';
 export class ProgramFormDataService {
   constructor(private httpClientService: HttpClientService) {}
 
+  discoveringTrackedEntityInstancesFromServerAndLocalStorage(
+    organisationUnitId: string,
+    programId: string,
+    pageSize = 100,
+  ): Observable<any> {
+    return new Observable((observer) => {
+      let trackedEntityInstances = [];
+      this.getSavedTrackedEntityInstancesFromLocalStorage(
+        organisationUnitId,
+        programId,
+      ).then((offlineData) => {
+        trackedEntityInstances = offlineData;
+        observer.next(_.flattenDeep(trackedEntityInstances));
+        this.discoveringTrackedEntityInstancesFromServer(
+          organisationUnitId,
+          programId,
+          pageSize,
+        ).subscribe((onlineData) => {
+          this.getMergedTrackedEntityInstances(offlineData, onlineData).then(
+            (teis: TrackedEntityInstance[]) => {
+              trackedEntityInstances = teis;
+              observer.next(_.flattenDeep(trackedEntityInstances));
+              observer.complete();
+            },
+          );
+        });
+      });
+    });
+  }
+
+  async getMergedTrackedEntityInstances(
+    offlineData: TrackedEntityInstance[],
+    onlineData: TrackedEntityInstance[],
+  ) {
+    let filteredOnLineData = [];
+    try {
+      const offllineTeiIds = _.flattenDeep(
+        _.map(
+          offlineData,
+          (tei: TrackedEntityInstance) => tei.trackedEntityInstance || [],
+        ),
+      );
+      filteredOnLineData = _.filter(
+        onlineData,
+        (tei: TrackedEntityInstance) => {
+          return (
+            tei &&
+            tei.trackedEntityInstance &&
+            !offllineTeiIds.includes(tei.trackedEntityInstance)
+          );
+        },
+      );
+      if (filteredOnLineData.length > 0) {
+        await this.savingTrackedEntityInstancesToLocalStorage(
+          filteredOnLineData,
+        );
+      }
+    } catch (error) {}
+    return _.flattenDeep(_.concat(offlineData, filteredOnLineData));
+  }
+
   discoveringTrackedEntityInstancesFromServer(
     organisationUnitId: string,
     programId: string,
