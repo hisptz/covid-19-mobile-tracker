@@ -22,6 +22,7 @@ import { Router } from '@angular/router';
 export class ChwHomePage implements OnInit {
   currentOrganisationUnit$: Observable<OrganisationUnit>;
   programs: Program[];
+  isLoading: boolean;
   constructor(
     private menuCtrl: MenuController,
     private modalController: ModalController,
@@ -32,6 +33,7 @@ export class ChwHomePage implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.isLoading = true;
     this.menuCtrl.enable(true);
     this.currentOrganisationUnit$ = this.store.pipe(
       select(getCurrentOrganisationUnit),
@@ -69,6 +71,7 @@ export class ChwHomePage implements OnInit {
   }
 
   async setPrograms(selectedOrganisationUnit: OrganisationUnit) {
+    this.isLoading = true;
     const currentUser: CurrentUser = await this.userService.getCurrentUser();
     const programs = await this.programService.getProgramListBySelectedOrganisationUnitAndRoles(
       selectedOrganisationUnit.id,
@@ -116,5 +119,6 @@ export class ChwHomePage implements OnInit {
       ),
       (program) => program,
     );
+    this.isLoading = false;
   }
 }
