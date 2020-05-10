@@ -31,7 +31,7 @@ import { Component, OnInit, Input } from '@angular/core';
  */
 @Component({
   selector: 'program-rule-action-message',
-  templateUrl: 'program-rule-action-message.html'
+  templateUrl: 'program-rule-action-message.html',
 })
 export class ProgramRuleActionMessageComponent implements OnInit {
   @Input() programRuleActionMessage: any;
