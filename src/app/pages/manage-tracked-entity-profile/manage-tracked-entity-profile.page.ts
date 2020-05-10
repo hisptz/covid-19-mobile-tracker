@@ -52,10 +52,6 @@ export class ManageTrackedEntityProfilePage implements OnInit {
       select(getCurrentTrackedEntityInstance),
     );
 
-    this.currentTrackedEntityInstance$.subscribe((instance) => {
-      console.log(instance);
-    });
-
     const user = await this.userService.getCurrentUser();
 
     this.currentUser$ = of(user);
@@ -144,8 +140,6 @@ export class ManageTrackedEntityProfilePage implements OnInit {
       trackedEntityAttributeValuesObject,
     );
     if (this.isFormReady) {
-      const { id } = data;
-      const currentTrackedEntityId = id ? id : 'currentTrackedEntityId';
       this.trackedEntityAttributeValuesObject = trackedEntityAttributeValuesObject;
     }
   }
@@ -165,6 +159,7 @@ export class ManageTrackedEntityProfilePage implements OnInit {
       }),
     };
 
-    console.log(trackedEntityInstance, newTrackedEntityInstance);
+    console.log(newTrackedEntityInstance);
+    this.router.navigate(['/tracked-entity-list']);
   }
 }

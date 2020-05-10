@@ -13,7 +13,7 @@ export function generateTrackedEntityInstance(
   const orgUnit = organisationUnit ? organisationUnit.id : undefined;
   const date = new Date();
   const incidentDate = date.toISOString().split('T')[0];
-  console.log(incidentDate);
+
   return {
     orgUnit,
     trackedEntityInstance,
@@ -28,7 +28,7 @@ export function generateTrackedEntityInstance(
         enrollmentDate: incidentDate,
         incidentDate,
         orgUnit,
-        program: program.id,
+        program: program.id.split('_')[0],
         status: 'ACTIVE',
         events: [],
       },
