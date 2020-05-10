@@ -113,7 +113,6 @@ export class ProgramFormDataService {
       this.httpClientService
         .get(url, true)
         .then((response: any) => {
-          console.log(response);
           trackedEntityInstances = _.map(
             response.trackedEntityInstances || [],
             (trackedEntityInstanceObj: any) => {
@@ -229,10 +228,10 @@ export class ProgramFormDataService {
           };
         },
       );
+      await this.savingTrackedEntityInstances(trackedEntityInstances);
       await this.savingTrackedEntityInsanceAttributes(attributes);
       await this.savingTrackedEntityInsanceEnrollements(enrollments);
       await this.savingTrackedEntityInsanceEnrollementEvents(events);
-      await this.savingTrackedEntityInstances(trackedEntityInstances);
     } catch (error) {
       console.log(error);
     }

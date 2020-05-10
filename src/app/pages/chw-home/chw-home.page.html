@@ -28,23 +28,25 @@
   </ion-row>
   <ion-row *ngIf="currentOrganisationUnit$ | async">    
     <ion-col>
-    <div *ngIf="isLoading" class="ion-padding">
-        <app-progress-bar [isIndeterminateProcess]="true"
-            [processMessage]="'Loading '">
-        </app-progress-bar>
-    </div>
-      <ion-list class="ion-padding-top">
-        <ion-item *ngFor="let program of programs" (click)="onSelectProgram($event, program)" detail>
-          <ion-avatar slot="start" *ngIf="false">
-            <img src="assets/icon/rumor.png">
-          </ion-avatar>
-          <ion-label>
-            <h2 class="ion-padding-bottom">{{program.displayName}}</h2>
-            <!--<p>34 Enrolled</p>-->
-          </ion-label>
-          <!-- <ion-icon color="success" name="sync"></ion-icon> -->
-        </ion-item>
-      </ion-list>
+      <div *ngIf="isLoading" class="ion-padding">
+          <app-progress-bar [isIndeterminateProcess]="true"
+              [processMessage]="'Loading '">
+          </app-progress-bar>
+      </div>
+      <div *ngIf="!isLoading" class="ion-padding">
+          <ion-list class="ion-padding-top">
+          <ion-item *ngFor="let program of programs" (click)="onSelectProgram($event, program)" detail>
+            <ion-avatar slot="start" *ngIf="false">
+              <img src="assets/icon/rumor.png">
+            </ion-avatar>
+            <ion-label>
+              <h2 class="ion-padding-bottom">{{program.displayName}}</h2>
+              <!--<p>34 Enrolled</p>-->
+            </ion-label>
+            <!-- <ion-icon color="success" name="sync"></ion-icon> -->
+          </ion-item>
+        </ion-list>
+      </div>      
     </ion-col>
   </ion-row>
 </ion-content>
