@@ -13,11 +13,18 @@ export function updateTrackedEntityInstanceWithAtrributes(
   );
   return {
     ...trackedEntityInstance,
-    attributes: (trackedEntityAttributeValuesKeys || []).map((key) => {
-      return {
-        attribute: key.split('-')[0],
-        value: trackedEntityAttributeValuesObject[key],
-      };
-    }),
+    attributes: (trackedEntityAttributeValuesKeys || [])
+      .map((key) => {
+        if (key.split('-')[0] === undefined) {
+          return null;
+        }
+        return {
+          attribute: key.split('-')[0],
+          value: trackedEntityAttributeValuesObject[key]
+            ? trackedEntityAttributeValuesObject[key].value
+            : '',
+        };
+      })
+      .filter((attribute) => attribute),
   };
 }
