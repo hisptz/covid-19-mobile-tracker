@@ -1,5 +1,7 @@
 import { modals } from '../modals';
 import { CoordinateComponent } from './coordinate/coordinate.component';
+import { EventInputContainerComponent } from './event-input-container/event-input-container';
+import { InputFieldContainerComponent } from './input-field-container/input-field-container.component';
 import { AgeInputComponent } from './input-fields/age-input/age-input.component';
 import { BarcodeInputComponent } from './input-fields/barcode-input/barcode-input.component';
 import { BooleanInputComponent } from './input-fields/boolean-input/boolean-input.component';
@@ -22,7 +24,6 @@ import { OrganisationUnitTreeComponent } from './organisation-unit-tree/organisa
 import { ProgramRuleActionMessageComponent } from './program-rule-action-message/program-rule-action-message';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { TrackedEntityInputsComponent } from './tracked-entity-inputs/tracked-entity-inputs';
-import { InputFieldContainerComponent } from './input-field-container/input-field-container.component';
 
 export const components: any[] = [
   LanguageListComponent,
@@ -49,5 +50,6 @@ export const components: any[] = [
   TrackedEntityInputsComponent,
   ProgramRuleActionMessageComponent,
   CoordinateComponent,
+  EventInputContainerComponent,
 ];
 export const entryComponents: any[] = [LanguageListComponent, ...modals];

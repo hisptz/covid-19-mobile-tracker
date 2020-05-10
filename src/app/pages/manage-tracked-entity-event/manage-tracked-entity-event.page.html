@@ -7,6 +7,25 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <h1>Tracked Entity Event management</h1>
+<ion-content *ngIf="{currentProgramStage: currentProgramStage$ | async, currentUser: currentUser$ | async} as params">
+  <ion-row *ngIf="params.currentProgramStage && params.currentUser">
+    <ion-col>
+      <form action="">
+        <app-date-time [mode]="'date'" [label]="'Incident Date'"></app-date-time>
+        <div *ngIf="params.currentProgramStage.captureCoordinates">
+          <app-coordinate-input></app-coordinate-input>
+        </div>
+        <div *ngFor="let programStageDataElement of params.currentProgramStage.programStageDataElements">
+          <div *ngIf="programStageDataElement.dataElement">
+            <event-input-container [dataElement]="programStageDataElement.dataElement"
+              [currentUser]="params.currentUser" [data]="dataObject"
+              [dataValuesSavingStatusClass]="dataValuesSavingStatusClass" (onChange)="onUpdateData($event, {})">
+            </event-input-container>
+          </div>
+        </div>
+        <ion-button [disabled]="!isFormReady" expand="block" size="large" shape="round" color="success"
+          (click)="onSave($event, currentProgramStage)">Save</ion-button>
+      </form>
+    </ion-col>
+  </ion-row>
 </ion-content>
