@@ -1,20 +1,26 @@
 import { Program } from '../models';
 import * as _ from 'lodash';
 
-export function getAttributeToDisplay(currentProgram: Program) {
-  const numberOfAttribute = 3;
-  let atteibutesToDisplay = _.filter(
+export function getAttributeToDisplay(
+  currentProgram: Program,
+  numberOfAttribute?: number,
+) {
+  let attributesToDisplay = _.filter(
     currentProgram.programTrackedEntityAttributes || [],
     (programTrackedEntityAttribute: any) =>
       programTrackedEntityAttribute &&
       programTrackedEntityAttribute.displayInList,
   );
-  atteibutesToDisplay =
-    atteibutesToDisplay.length > 0
-      ? _.chunk(atteibutesToDisplay, numberOfAttribute)[0]
+
+  attributesToDisplay =
+    attributesToDisplay.length > 0
+      ? _.chunk(
+          attributesToDisplay,
+          numberOfAttribute || attributesToDisplay.length,
+        )[0]
       : currentProgram.programTrackedEntityAttributes || [];
   return _.flattenDeep(
-    _.map(atteibutesToDisplay, (programTrackedEntityAttribute) => {
+    _.map(attributesToDisplay, (programTrackedEntityAttribute) => {
       const trackedEntityAttribute =
         programTrackedEntityAttribute.trackedEntityAttribute || null;
       return trackedEntityAttribute

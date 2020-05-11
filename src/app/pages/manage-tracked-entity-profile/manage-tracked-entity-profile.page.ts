@@ -116,7 +116,11 @@ export class ManageTrackedEntityProfilePage implements OnInit {
           incidentDate,
           enrollments: trackedEntityInstance.enrollments.map(
             (enrollment: any) => {
-              return { ...enrollment, incidentDate };
+              return {
+                ...enrollment,
+                incidentDate,
+                enrollmentDate: incidentDate,
+              };
             },
           ),
         },

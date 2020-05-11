@@ -58,7 +58,10 @@ export class TrackedEntityListPage implements OnInit {
               currentProgram.id
             ) {
               this.isLoading = true;
-              this.attributesToDisplay = getAttributeToDisplay(currentProgram);
+              this.attributesToDisplay = getAttributeToDisplay(
+                currentProgram,
+                3,
+              );
               const programId = currentProgram.id.split('_')[0];
               const organisationUnitId = currentOrganisationUnit.id;
               this.discoveringTrackedEntityInstancesFromServer(
