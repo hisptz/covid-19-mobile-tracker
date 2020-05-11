@@ -78,7 +78,7 @@ export const getTrackedEntityInstanceAttributeObject = createSelector(
   },
 );
 
-export const getCurrentInstanceEnrollmentDate = createSelector(
+export const getTrackedEntityInstanceDates = createSelector(
   getCurrentTrackedEntityInstance,
   (trackedEntityInstance: TrackedEntityInstance) => {
     const enrollment: Enrollment = (trackedEntityInstance
@@ -91,7 +91,10 @@ export const getCurrentInstanceEnrollmentDate = createSelector(
       return date.toISOString().split('T')[0];
     }
 
-    return enrollment.enrollmentDate;
+    return {
+      enrollmentDate: enrollment.enrollmentDate,
+      incidentDate: enrollment.incidentDate,
+    };
   },
 );
 
