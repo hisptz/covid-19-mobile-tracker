@@ -47,12 +47,16 @@ export class ProgramFormDataService {
   ): Observable<any> {
     return new Observable((observer) => {
       let trackedEntityInstances = [];
+      let isCompleted = false;
       this.getSavedTrackedEntityInstancesFromLocalStorage(
         organisationUnitId,
         programId,
       ).then((offlineData) => {
         trackedEntityInstances = offlineData;
-        observer.next(_.flattenDeep(trackedEntityInstances));
+        observer.next({
+          isCompleted,
+          teis: _.flattenDeep(trackedEntityInstances),
+        });
         this.discoveringTrackedEntityInstancesFromServer(
           organisationUnitId,
           programId,
@@ -61,7 +65,11 @@ export class ProgramFormDataService {
           this.getMergedTrackedEntityInstances(offlineData, onlineData).then(
             (teis: TrackedEntityInstance[]) => {
               trackedEntityInstances = teis;
-              observer.next(_.flattenDeep(trackedEntityInstances));
+              isCompleted = true;
+              observer.next({
+                isCompleted,
+                teis: _.flattenDeep(trackedEntityInstances),
+              });
               observer.complete();
             },
           );

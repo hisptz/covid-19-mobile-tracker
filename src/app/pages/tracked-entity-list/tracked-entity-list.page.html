@@ -10,7 +10,7 @@
 <ion-content
   *ngIf="{program: currentProgram$ | async, organisationUnit: currentOrganisationUnit$ | async} as currentParameters">
   <div *ngIf="isLoading" class="ion-padding">
-    <app-progress-bar [isIndeterminateProcess]="true" [processMessage]="'Discovering...'">
+    <app-progress-bar [isIndeterminateProcess]="true" [processMessage]="'Discovering data...'">
     </app-progress-bar>
   </div>
   <ion-list class="ion-padding-top">
