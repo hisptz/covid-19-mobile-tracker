@@ -27,17 +27,17 @@
     </ion-col>
   </ion-row>
   <ion-row *ngIf="currentOrganisationUnit$ | async">
-    <ion-col>
+    <ion-col class="ion-no-padding">
       <div *ngIf="isLoading" class="ion-padding">
         <app-progress-bar [isIndeterminateProcess]="true" [processMessage]="'Discovering forms...'">
         </app-progress-bar>
       </div>
-      <div *ngIf="!isLoading" class="ion-no-padding">
-        <ion-list class="ion-padding-top">
+      <div *ngIf="!isLoading">
+        <ion-list class="ion-no-padding">
           <ion-item *ngFor="let program of programs" (click)="onSelectProgram($event, program)">
-            <ion-label>
-              <h2 class="ion-padding-bottom">{{ program.displayName || program.name }}</h2>
-            </ion-label>
+            <ion-text class="ion-wrap">
+              <h5>{{ program.displayName }}</h5>
+            </ion-text>
           </ion-item>
         </ion-list>
       </div>
