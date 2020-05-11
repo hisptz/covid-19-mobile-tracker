@@ -143,6 +143,16 @@ export class ProgramFormDataService {
                       trackedEntity:
                         enrollmentObj.trackedEntity ||
                         enrollmentObj.trackedEntityType,
+                      events: _.map(
+                        enrollmentObj.events || [],
+                        (eventObj: any) => {
+                          return {
+                            ...eventObj,
+                            id: eventObj.event,
+                            syncStatus,
+                          };
+                        },
+                      ),
                     };
                   },
                 ),
@@ -299,9 +309,26 @@ export class ProgramFormDataService {
         const events = await this.getSavingTrackedEntityInsanceEnrollementEvents(
           trackedEntityInstance,
         );
+        const allSyncStatus = _.uniq(
+          _.flattenDeep(
+            _.concat(
+              trackedEntityInstanceEntity.syncStatus,
+              _.concat(
+                _.map(
+                  enrollments,
+                  (enrollmentObj: any) => enrollmentObj.syncStatus || [],
+                ),
+                _.map(events, (eventObj: any) => eventObj.syncStatus || []),
+              ),
+            ),
+          ),
+        );
+        const syncStatus =
+          allSyncStatus.length === 1 ? allSyncStatus[0] : 'not-synced';
         trackedEntityInstances.push({
           ...trackedEntityInstanceEntity,
           attributes,
+          syncStatus,
           enrollments: _.flattenDeep(
             _.map(enrollments, (enrollment: any) => {
               const program = enrollment.program || '';
@@ -315,7 +342,7 @@ export class ProgramFormDataService {
                       eventObj.program &&
                       eventObj.program === program,
                   ),
-                  (eventObj) => {
+                  (eventObj: any) => {
                     return { ...{}, ...eventObj };
                   },
                 ),
