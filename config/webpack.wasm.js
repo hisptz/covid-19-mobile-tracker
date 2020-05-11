@@ -11,7 +11,7 @@ module.exports = {
       'window.SQL': 'sql.js',
     }),
     // Copy the wasm file to the output dir
-    new CopyPlugin([{ from: 'node_modules/sql.js/dist/sql-wasm.wasm' }]),
+    new CopyPlugin([{ from: 'node_modules/sql.js/dist/sql-wasm.js' }]),
   ],
   node: {
     fs: 'empty',

@@ -26,30 +26,39 @@
     <ion-col>
         <div>
             <div *ngIf="valueType == 'INTEGER' || valueType == 'NUMBER'">
-                <ion-item lines="none">
-                    <ion-input [readonly]="lockingFieldStatus" type="number" (ionBlur)="updateValues()" [(ngModel)]="inputFieldValue"></ion-input>
+                <ion-item>
+                    <ion-label position="floating">{{label | translate}}</ion-label>
+                    <ion-input [readonly]="lockingFieldStatus" type="number" (ionBlur)="updateValues()"
+                        [(ngModel)]="inputFieldValue"></ion-input>
                 </ion-item>
             </div>
             <div *ngIf="valueType == 'INTEGER_POSITIVE'">
-                <ion-item lines="none">
-                    <ion-input [readonly]="lockingFieldStatus" type="number" min="1" (ionBlur)="updateValues()" [(ngModel)]="inputFieldValue"></ion-input>
+                <ion-item>
+                    <ion-label position="floating">{{label | translate}}</ion-label>
+                    <ion-input [readonly]="lockingFieldStatus" type="number" min="1" (ionBlur)="updateValues()"
+                        [(ngModel)]="inputFieldValue"></ion-input>
                 </ion-item>
             </div>
             <div *ngIf="valueType == 'INTEGER_NEGATIVE'">
-                <ion-item lines="none">
-                    <ion-input [readonly]="lockingFieldStatus" type="number" max="-1" (ionBlur)="updateValues()" [(ngModel)]="inputFieldValue"></ion-input>
+                <ion-item>
+                    <ion-label position="floating">{{label | translate}}</ion-label>
+                    <ion-input [readonly]="lockingFieldStatus" type="number" max="-1" (ionBlur)="updateValues()"
+                        [(ngModel)]="inputFieldValue"></ion-input>
                 </ion-item>
             </div>
             <div *ngIf="valueType == 'INTEGER_ZERO_OR_POSITIVE'">
-                <ion-item lines="none">
-                    <ion-input [readonly]="lockingFieldStatus" type="number" min="0" (ionBlur)="updateValues()" [(ngModel)]="inputFieldValue"></ion-input>
+                <ion-item>
+                    <ion-label position="floating">{{label | translate}}</ion-label>
+                    <ion-input [readonly]="lockingFieldStatus" type="number" min="0" (ionBlur)="updateValues()"
+                        [(ngModel)]="inputFieldValue"></ion-input>
                 </ion-item>
             </div>
         </div>
     </ion-col>
     <ion-col size="auto" *ngIf="showBarcodeScanner">
         <div class="ion-float-right">
-            <app-barcode-input [lockingFieldStatus]="lockingFieldStatus" [barcodeSettings]="barcodeSettings" (barcodeReaderChange)="onChangeBarcodeReader($event)">
+            <app-barcode-input [lockingFieldStatus]="lockingFieldStatus" [barcodeSettings]="barcodeSettings"
+                (barcodeReaderChange)="onChangeBarcodeReader($event)">
             </app-barcode-input>
         </div>
     </ion-col>

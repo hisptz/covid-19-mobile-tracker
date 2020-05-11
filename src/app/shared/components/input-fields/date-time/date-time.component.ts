@@ -32,6 +32,7 @@ import { DatePicker } from '@ionic-native/date-picker/ngx';
 })
 export class DateTimeComponent implements OnInit {
   @Input() mode: string;
+  @Input() label: string;
   @Input() lockingFieldStatus: boolean;
   @Input() inputValue: string;
   @Input() withoutHorizontalPadding: boolean;

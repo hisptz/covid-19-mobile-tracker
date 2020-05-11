@@ -44,6 +44,9 @@ export interface Program {
   trackedEntity?: any;
   trackedEntityType?: any;
   attributeValues?: any;
+  currentProgramTrackedEntityAttribute?: any;
+  programTrackedEntityAttributes?: any;
+  programStages?: ProgramProgramStage;
 }
 
 export interface ProgramProgramTrackedEntityAttribute {
@@ -74,7 +77,7 @@ export interface ProgramIndicator {
 
 export interface ProgramProgramStage {
   id: string;
-  programId: string;
+  programId?: string;
   name: string;
   sortOrder: number;
   executionDateLabel: string;
@@ -131,15 +134,16 @@ export interface TrackedEntityInstance {
   orgUnitName: string;
   trackedEntityInstance: string;
   deleted: boolean;
-  inactive: boolean;
-  enrollments: any;
-  relationships: any;
+  inactive?: boolean;
+  enrollments: Enrollment[];
+  relationships: any[];
   syncStatus: string;
+  attributes?: TrackedEntityAttributeValue[];
 }
 
 export interface TrackedEntityAttributeValue {
-  id: string;
-  trackedEntityInstance: string;
+  id?: string;
+  trackedEntityInstance?: string;
   attribute: string;
   value: string;
 }
@@ -154,8 +158,8 @@ export interface Enrollment {
   enrollmentDate: string;
   incidentDate: string;
   status: string;
-  coordinate: Coordinate;
+  coordinate?: Coordinate;
   attributes: any;
-  events: any;
+  events: any[];
   syncStatus: string;
 }

@@ -28,6 +28,7 @@ import { HttpClientService } from './http-client.service';
 import { CurrentUser } from 'src/app/models';
 import { DataStoreEntity } from 'src/app/entites';
 import * as async from 'async';
+import { CONNECTION_NAME } from 'src/app/constants/db-options';
 
 @Injectable({
   providedIn: 'root',
@@ -146,7 +147,7 @@ export class DataStoreManagerService {
 
   savingDataStoreDataToLocalStorage(dataStoreData: any[]): Observable<any> {
     return new Observable((observer) => {
-      const repository = getRepository(DataStoreEntity);
+      const repository = getRepository(DataStoreEntity, CONNECTION_NAME);
       const chunk = 10;
       repository
         .save(dataStoreData, { chunk })

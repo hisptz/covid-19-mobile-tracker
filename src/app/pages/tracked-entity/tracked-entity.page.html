@@ -1,15 +1,14 @@
 <ion-header class="ion-no-border">
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-button (click)="onViewTrackedEntityList($event)">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
     </ion-buttons>
-    <ion-title>243040405-COVID</ion-title>
+    <ion-title>Tracked Entity</ion-title>
     <ion-buttons slot="end">
       <ion-button [routerLink]="['/manage-tracked-entity-profile']">
         <ion-icon name="pencil"></ion-icon>
-      </ion-button>
-      <ion-button>
-        <ion-icon name="trash"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -25,8 +24,8 @@
       </ion-tab-button>
 
       <ion-tab-button tab="stage">
-        <ion-icon name="heart"></ion-icon>
-        <ion-label>Status</ion-label>
+        <ion-icon name="albums"></ion-icon>
+        <ion-label>Stage</ion-label>
       </ion-tab-button>
 
       <ion-tab-button tab="relationship">

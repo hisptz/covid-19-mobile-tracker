@@ -22,3 +22,4 @@
  *
  */
 export * from './current-user.actions';
+export * from './selections-actions';

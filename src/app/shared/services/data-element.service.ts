@@ -29,6 +29,7 @@ import { CurrentUser, DataElement, CategoryCombo } from 'src/app/models';
 import { DEFAULT_APP_METADATA } from 'src/app/constants';
 import { DataElementEntity } from 'src/app/entites';
 import { CategoryComboService } from './category-combo.service';
+import { CONNECTION_NAME } from 'src/app/constants/db-options';
 
 @Injectable({
   providedIn: 'root',
@@ -195,7 +196,7 @@ export class DataElementService {
   }
 
   savingdataElementsToLocalStorage(dataElements: any[]): Observable<any> {
-    const repository = getRepository(DataElementEntity);
+    const repository = getRepository(DataElementEntity, CONNECTION_NAME);
     const chunk = 500;
     return new Observable((observer) => {
       repository
@@ -211,7 +212,7 @@ export class DataElementService {
   }
 
   async getSavedDataElementsByIds(dataElementIds: string[]) {
-    const repository = getRepository(DataElementEntity);
+    const repository = getRepository(DataElementEntity, CONNECTION_NAME);
     const dataElements = await repository.findByIds(dataElementIds);
     const categoryComboIds = _.uniq(
       _.flattenDeep(

@@ -34,6 +34,7 @@ export class TrueOnlyInputComponent implements OnInit {
   @Input() categoryOptionComboId: string;
   @Input() lockingFieldStatus: boolean;
   @Input() data: any;
+  @Input() label: any;
   @Input() colorSettings: any;
   @Output() valueChange = new EventEmitter();
 
@@ -53,7 +54,7 @@ export class TrueOnlyInputComponent implements OnInit {
 
   updateValues() {
     const id = `${this.dataElementId}-${this.categoryOptionComboId}`;
-    const status = 'not-sync';
+    const status = 'not-synced';
     const value = this.inputFieldValue ? this.inputFieldValue : '';
     if (
       this.data &&

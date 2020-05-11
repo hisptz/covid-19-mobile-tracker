@@ -1,12 +1,45 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button (click)="onClose()"></ion-back-button>
     </ion-buttons>
     <ion-title>Profile</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <h2>Tracked Entity Profile management</h2>
+<ion-content *ngIf="{
+    program: currentProgram$ | async, 
+    currentUser: currentUser$ | async, 
+    trackedEntityInstance: currentTrackedEntityInstance$ | async,
+    attributeObject: trackedEntityInstanceAttributeValueObject$ | async
+  } as params">
+  <ion-row *ngIf="params.program && params.trackedEntityInstance" class="ion-padding">
+    <ion-col>
+      <form>
+        <app-date-time [mode]="'date'" [label]="'Incident Date'"
+          [inputValue]="params?.trackedEntityInstance?.incidentDate"
+          (dateTimeChange)="onIncidentDateUpdate($event, params?.trackedEntityInstance)">
+        </app-date-time>
+        <div *ngFor="let programTrackedEntityAttribute of params.program.programTrackedEntityAttributes">
+          <div
+            *ngIf="params.currentUser && programTrackedEntityAttribute && programTrackedEntityAttribute.trackedEntityAttribute && programTrackedEntityAttribute.trackedEntityAttribute.id && !hiddenFields[programTrackedEntityAttribute.trackedEntityAttribute.id]">
+            <tracked-entity-inputs [trackedEntityAttribute]="programTrackedEntityAttribute.trackedEntityAttribute"
+              [currentUser]="params.currentUser" [data]="params.attributeObject || dataObject"
+              [(trackedEntityAttributesSavingStatusClass)]="trackedEntityAttributesSavingStatusClass"
+              [mandatory]="programTrackedEntityAttribute.mandatory"
+              (onChange)="onUpdateAttributesValue($event, params.program.programTrackedEntityAttributes, params.trackedEntityInstance, params.attributeObject)">
+            </tracked-entity-inputs>
+            <!-- <div *ngIf="errorOrWarningMessage[programTrackedEntityAttribute.trackedEntityAttribute.id]">
+              <program-rule-action-message
+                [programRuleActionMessage]="errorOrWarningMessage[programTrackedEntityAttribute.trackedEntityAttribute.id]"
+                [isEventCompleted]="isEventCompleted"></program-rule-action-message> -->
+            <!-- </div> -->
+          </div>
+        </div>
+        <!-- TODO: Disable button when not all required fields are filled in -->
+        <ion-button expand="block" size="large" shape="round" color="success" (click)="onSave($event)">Save</ion-button>
+      </form>
+
+    </ion-col>
+  </ion-row>
 </ion-content>

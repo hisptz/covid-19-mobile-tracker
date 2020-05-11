@@ -6,8 +6,8 @@ import * as _ from 'lodash';
 import { Observable } from 'rxjs';
 import { DEFAULT_SETTINGS, DEFAULT_USER } from 'src/app/constants';
 import { getAppMetadata } from 'src/app/helpers';
-import { LocalInstanceSelectionPage } from 'src/app/modals/local-instance-selection/local-instance-selection.page';
-import { TranslationSelectionPage } from 'src/app/modals/translation-selection/translation-selection.page';
+import { LocalInstanceSelectionPage } from 'src/app/shared/modals/local-instance-selection/local-instance-selection.page';
+import { TranslationSelectionPage } from 'src/app/shared/modals/translation-selection/translation-selection.page';
 import {
   AppColorObject,
   AppSetting,
@@ -30,6 +30,7 @@ import {
   State,
 } from 'src/app/store';
 import { Router } from '@angular/router';
+import { AppConfigService } from 'src/app/shared/services/app-config.service';
 
 @Component({
   selector: 'app-login',
@@ -57,6 +58,7 @@ export class LoginPage implements OnInit {
   offlineIcon: string;
 
   colorSettings$: Observable<AppColorObject>;
+  isLoading: boolean;
 
   constructor(
     private backgroundMode: BackgroundMode,
@@ -70,8 +72,9 @@ export class LoginPage implements OnInit {
     private navCtrl: NavController,
     private modalController: ModalController,
     private store: Store<State>,
-    private router: Router,
+    private appConfigService: AppConfigService,
   ) {
+    this.isLoading = true;
     this.colorSettings$ = this.store.select(getCurrentUserColorSettings);
     this.appIcon = 'assets/img/logo.png';
     this.offlineIcon = 'assets/icon/offline.png';
@@ -94,12 +97,32 @@ export class LoginPage implements OnInit {
     let currentUser = null;
     try {
       currentUser = await this.userService.getCurrentUser();
-    } catch (error) {
-    } finally {
-      this.currentUser = currentUser
-        ? { ...currentUser, password: '', progressTracker: {} }
-        : DEFAULT_USER;
-    }
+      if (currentUser) {
+        const {
+          currentLanguage,
+          colorSettings,
+          isLogin,
+          currentDatabase,
+        } = currentUser;
+        if (isLogin) {
+          const langCode: string = currentLanguage ? currentLanguage : `en`;
+          this.translationService.setCurrentUserLanguage(langCode);
+          if (colorSettings) {
+            this.store.dispatch(SetCurrentUserColorSettings({ colorSettings }));
+          }
+          if (currentDatabase) {
+            await this.appConfigService.initateDataBaseConnection(
+              currentDatabase,
+            );
+          }
+          this.navCtrl.navigateRoot('/chw-home');
+        }
+      }
+    } catch (error) {}
+    this.currentUser = currentUser
+      ? { ...currentUser, password: '', progressTracker: {} }
+      : DEFAULT_USER;
+    this.isLoading = false;
   }
 
   async getAndSetLocalInstance() {
@@ -215,23 +238,25 @@ export class LoginPage implements OnInit {
     this.onCancelLoginProcess();
   }
 
-  async onSuccessLogin(data) {
+  async onSuccessLogin(data, skipCurrentUserPropertiesUpdate = false) {
     const { currentUser } = data;
     const loggedInInInstance =
       currentUser.serverUrl.split('://').length > 1
         ? this.currentUser.serverUrl.split('://')[1]
         : this.currentUser.serverUrl;
-    const hashedKeyForOfflineAuthentication = this.encryptionService.getHashedKeyForOfflineAuthentication(
-      currentUser,
-    );
-    const password = this.encryptionService.encode(currentUser.password);
-    this.currentUser = _.assign({}, this.currentUser, {
-      ...currentUser,
-      hashedKeyForOfflineAuthentication,
-      password,
-      isPasswordEncode: true,
-      isLogin: true,
-    });
+    if (!skipCurrentUserPropertiesUpdate) {
+      const hashedKeyForOfflineAuthentication = this.encryptionService.getHashedKeyForOfflineAuthentication(
+        currentUser,
+      );
+      const password = this.encryptionService.encode(currentUser.password);
+      this.currentUser = _.assign({}, this.currentUser, {
+        ...currentUser,
+        hashedKeyForOfflineAuthentication,
+        password,
+        isPasswordEncode: true,
+        isLogin: true,
+      });
+    }
     try {
       await this.reCheckingAppSetting(currentUser);
       await this.localInstanceServices.setLocalInstanceInstances(
@@ -254,7 +279,7 @@ export class LoginPage implements OnInit {
         'top',
       );
     } finally {
-      await this.backgroundMode.disable();
+      this.backgroundMode.disable();
     }
   }
 

@@ -39,6 +39,7 @@ export class AgeInputComponent implements OnInit {
   @Input() dataElementId: string;
   @Input() categoryOptionComboId: string;
   @Input() data: any;
+  @Input() label: any;
   @Input() lockingFieldStatus: boolean;
 
   @Output() ageChange = new EventEmitter();

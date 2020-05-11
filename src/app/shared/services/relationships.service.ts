@@ -28,6 +28,7 @@ import { getRepository } from 'typeorm';
 import { HttpClientService } from './http-client.service';
 import { CurrentUser } from 'src/app/models';
 import { RelationshipTypeEntity } from 'src/app/entites';
+import { CONNECTION_NAME } from 'src/app/constants/db-options';
 
 @Injectable({
   providedIn: 'root',
@@ -57,7 +58,7 @@ export class RelationshipsService {
 
   savingRelationshipTypesMetadata(relationShips: any[]): Observable<any> {
     return new Observable((observer) => {
-      const repository = getRepository(RelationshipTypeEntity);
+      const repository = getRepository(RelationshipTypeEntity, CONNECTION_NAME);
       const chunk = 50;
       repository
         .save(relationShips, { chunk })

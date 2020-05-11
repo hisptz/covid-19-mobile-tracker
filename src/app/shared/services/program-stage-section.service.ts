@@ -23,11 +23,12 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import * as _ from 'lodash';
-import { getRepository, Repository } from 'typeorm';
+import { getRepository, Repository, In } from 'typeorm';
 import { HttpClientService } from './http-client.service';
 import { CurrentUser } from 'src/app/models';
 import { DEFAULT_APP_METADATA } from 'src/app/constants';
 import { ProgramStageSectionEntity } from 'src/app/entites';
+import { CONNECTION_NAME } from 'src/app/constants/db-options';
 
 @Injectable({
   providedIn: 'root',
@@ -62,10 +63,21 @@ export class ProgramStageSectionService {
     });
   }
 
+  async getProgramStageSectionsByIds(sectionsIds: string[]) {
+    const repository = getRepository(
+      ProgramStageSectionEntity,
+      CONNECTION_NAME,
+    );
+    return await repository.find({ id: In(sectionsIds) });
+  }
+
   savingProgramStageSectionsToLocalStorage(
     programStageSections: any[],
   ): Observable<any> {
-    const repository = getRepository(ProgramStageSectionEntity);
+    const repository = getRepository(
+      ProgramStageSectionEntity,
+      CONNECTION_NAME,
+    );
     const chunk = 50;
     const programStageSectionData = _.flattenDeep(
       _.map(

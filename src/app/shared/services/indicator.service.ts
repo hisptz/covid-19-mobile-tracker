@@ -27,6 +27,7 @@ import { getRepository } from 'typeorm';
 import { HttpClientService } from './http-client.service';
 import { CurrentUser } from 'src/app/models';
 import { IndicatorEntity } from 'src/app/entites';
+import { CONNECTION_NAME } from 'src/app/constants/db-options';
 
 @Injectable({
   providedIn: 'root',
@@ -54,13 +55,13 @@ export class IndicatorService {
   }
 
   async getAggregateIndicators(indicatorIds: string[]) {
-    const repository = getRepository(IndicatorEntity);
+    const repository = getRepository(IndicatorEntity, CONNECTION_NAME);
     return await repository.findByIds(indicatorIds);
   }
 
   savingIndicatorsToLocalStorage(indicators: any[]): Observable<any> {
     return new Observable((observer) => {
-      const repository = getRepository(IndicatorEntity);
+      const repository = getRepository(IndicatorEntity, CONNECTION_NAME);
       const chunk = 100;
       repository
         .save(indicators, { chunk })

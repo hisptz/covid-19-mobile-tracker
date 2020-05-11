@@ -24,7 +24,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import * as _ from 'lodash';
-import { OptionSetSelectionPage } from 'src/app/modals/option-set-selection/option-set-selection.page';
+import { OptionSetSelectionPage } from 'src/app/shared/modals/option-set-selection/option-set-selection.page';
 import { Option, EntryFormSetting } from 'src/app/models';
 import { DEFAULT_SETTINGS } from 'src/app/constants';
 
@@ -39,6 +39,7 @@ export class OptionSetInputComponent implements OnInit {
   @Input() optionListTitle: string;
   @Input() dataEntrySettings: EntryFormSetting;
   @Input() data: any;
+  @Input() label: any;
   @Input() options: Option[];
   @Input() lockingFieldStatus: boolean;
   @Input() isTrashButtonDisabled: boolean;

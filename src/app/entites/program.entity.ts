@@ -57,7 +57,7 @@ export class ProgramProgramTrackedEntityAttributeEntity {
   @Column({ nullable: true }) renderOptionsAsRadio: boolean;
   @Column({ nullable: true }) allowFutureDate: boolean;
   @Column({ nullable: true }) searchable: boolean;
-  @Column() displayInList: string;
+  @Column() displayInList: boolean;
 }
 
 @Entity()
@@ -128,23 +128,14 @@ export class ProgramStageEntryFormEntity {
 }
 
 @Entity()
-export class ProgramTrackedEntityAttributeEntity {
-  @PrimaryColumn() id: string;
-  @Column() programId: string;
-  @Column() sortOrder: number;
-  @Column() displayInList: boolean;
-  @Column() mandatory: boolean;
-}
-
-@Entity()
 export class TrackedEntityInstanceEntity {
   @PrimaryColumn() id: string;
   @Column() trackedEntity: string;
   @Column() orgUnit: string;
-  @Column() orgUnitName: string;
+  @Column({ nullable: true }) orgUnitName: string;
   @Column() trackedEntityInstance: string;
-  @Column() deleted: boolean;
-  @Column() inactive: boolean;
+  @Column({ nullable: true }) deleted: boolean;
+  @Column({ nullable: true }) inactive: boolean;
   @Column('simple-json') enrollments: string;
   @Column('simple-json') relationships: string;
   @Column() syncStatus: string;
@@ -169,8 +160,8 @@ export class EnrollmentEntity {
   @Column() enrollmentDate: string;
   @Column() incidentDate: string;
   @Column() status: string;
-  @Column('simple-json') coordinate: Coordinate;
-  @Column('simple-json') attributes: string;
-  @Column('simple-json') events: string;
+  @Column({ nullable: true, type: 'simple-json' }) coordinate: Coordinate;
+  @Column({ nullable: true, type: 'simple-json' }) attributes: string;
+  @Column({ nullable: true, type: 'simple-json' }) events: string;
   @Column() syncStatus: string;
 }

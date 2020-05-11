@@ -24,19 +24,19 @@
 export interface Events {
   id: string;
   program: string;
-  programName: string;
+  programName?: string;
   programStage: string;
   orgUnit: string;
-  orgUnitName: string;
+  orgUnitName?: string;
   status: string;
   eventDate: string;
   dueDate: string;
   deleted: string;
   attributeCategoryOptions: string;
-  attributeCc: string;
-  notes: string;
-  eventType: string;
-  coordinate: Coordinate;
+  attributeCc?: string;
+  notes?: string;
+  eventType?: string;
+  coordinate?: Coordinate;
   dataValues: EventDataValue[];
   trackedEntityInstance?: string;
 }

@@ -3,37 +3,34 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Tracked Entities</ion-title>
+    <ion-title>{{(currentProgram$ | async)?.displayName}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content
+  *ngIf="{program: currentProgram$ | async, organisationUnit: currentOrganisationUnit$ | async} as currentParameters">
+  <div *ngIf="isLoading" class="ion-padding">
+    <app-progress-bar [isIndeterminateProcess]="true" [processMessage]="'Loading '">
+    </app-progress-bar>
+  </div>
   <ion-list class="ion-padding-top">
-    <ion-item [routerLink]="['/tracked-entity']">
+    <ion-item *ngFor="let trackedEntityInstance of trackedEntityInstanceList"
+      (click)="onSetCurrentTrackedEntityInstance($event, trackedEntityInstance)">
       <ion-avatar slot="start" *ngIf="false">
         <img src="assets/icon/rumor.png">
       </ion-avatar>
       <ion-label>
-        <h2 class="ion-padding-bottom">243040405-COVID</h2>
-        <p>34 Contacts</p>
+        <div *ngFor="let attribute of attributesToDisplay">
+          <p> {{ attribute.name }} : {{ trackedEntityInstance[attribute.id] || "" }}</p>
+        </div>
+        <p>{{ trackedEntityInstance.numberOfContact }} Contacts </p>
       </ion-label>
       <ion-icon color="success" name="sync"></ion-icon>
     </ion-item>
-    <ion-item [routerLink]="['/tracked-entity']">
-      <ion-avatar slot="start" *ngIf="false">
-        <img src="assets/icon/rumor.png">
-      </ion-avatar>
-      <ion-label>
-        <h2 class="ion-padding-bottom">243040405-COVID</h2>
-        <p>34 Contacts</p>
-      </ion-label>
-      <ion-icon color="warning" name="alert-circle"></ion-icon>
-    </ion-item>
-
   </ion-list>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button [routerLink]="['/manage-tracked-entity-profile']">
+    <ion-fab-button (click)="onAddTrackedEntityInstance($event, currentParameters)">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
