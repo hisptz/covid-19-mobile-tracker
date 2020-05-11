@@ -78,6 +78,23 @@ export const getTrackedEntityInstanceAttributeObject = createSelector(
   },
 );
 
+export const getCurrentInstanceEnrollmentDate = createSelector(
+  getCurrentTrackedEntityInstance,
+  (trackedEntityInstance: TrackedEntityInstance) => {
+    const enrollment: Enrollment = (trackedEntityInstance
+      ? trackedEntityInstance.enrollments || []
+      : [])[0];
+
+    if (!enrollment) {
+      const date = new Date();
+
+      return date.toISOString().split('T')[0];
+    }
+
+    return enrollment.enrollmentDate;
+  },
+);
+
 export const getCurrentProgramStage = createSelector(
   getSelectionsState,
   (selectionsState: SelectionsState) => selectionsState.currentProgramStage,

@@ -47,7 +47,6 @@ export class TrackedEntityStageEventListPage implements OnInit {
   }
   onManageEvent(e, currentEvent: any) {
     e.stopPropagation();
-    console.log(currentEvent);
     this.store.dispatch(setCurrentEvent({ currentEvent }));
     this.router.navigate(['/manage-tracked-entity-event']);
   }

@@ -16,6 +16,7 @@ import {
 import { take, switchMap } from 'rxjs/operators';
 import { generateTrackedEntityInstance } from 'src/app/helpers/generate-tracked-entity-instance';
 import { ProgramFormDataService } from 'src/app/shared/services/program-form-data.service';
+import { getAttributeToDisplay } from 'src/app/helpers/get-attributes-to-display';
 
 @Component({
   selector: 'app-tracked-entity-list',
@@ -57,9 +58,7 @@ export class TrackedEntityListPage implements OnInit {
               currentProgram.id
             ) {
               this.isLoading = true;
-              this.attributesToDisplay = this.getAttributeToDisplay(
-                currentProgram,
-              );
+              this.attributesToDisplay = getAttributeToDisplay(currentProgram);
               const programId = currentProgram.id.split('_')[0];
               const organisationUnitId = currentOrganisationUnit.id;
               this.discoveringTrackedEntityInstancesFromServer(
@@ -70,35 +69,6 @@ export class TrackedEntityListPage implements OnInit {
           });
       }
     });
-  }
-
-  getAttributeToDisplay(currentProgram: Program) {
-    const numberOfAttribute = 3;
-    let atteibutesToDisplay = _.filter(
-      currentProgram.programTrackedEntityAttributes || [],
-      (programTrackedEntityAttribute: any) =>
-        programTrackedEntityAttribute &&
-        programTrackedEntityAttribute.displayInList,
-    );
-    atteibutesToDisplay =
-      atteibutesToDisplay.length > 0
-        ? _.chunk(atteibutesToDisplay, numberOfAttribute)[0]
-        : currentProgram.programTrackedEntityAttributes || [];
-    return _.flattenDeep(
-      _.map(atteibutesToDisplay, (programTrackedEntityAttribute) => {
-        const trackedEntityAttribute =
-          programTrackedEntityAttribute.trackedEntityAttribute || null;
-        return trackedEntityAttribute
-          ? {
-              id: trackedEntityAttribute.id || '',
-              name:
-                trackedEntityAttribute.formName ||
-                trackedEntityAttribute.name ||
-                '',
-            }
-          : [];
-      }),
-    );
   }
 
   discoveringTrackedEntityInstancesFromServer(

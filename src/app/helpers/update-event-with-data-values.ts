@@ -6,7 +6,7 @@ export function updateEventWithDataValues(event: any, eventObject) {
   const dataValuesKeys = Object.keys(eventObject);
   return {
     ...event,
-    dataValue: (dataValuesKeys || [])
+    dataValues: (dataValuesKeys || [])
       .map((key) => {
         if (key.split('-')[0] === 'undefined') {
           return null;

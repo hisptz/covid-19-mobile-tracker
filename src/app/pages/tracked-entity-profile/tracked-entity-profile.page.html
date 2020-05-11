@@ -1,3 +1,9 @@
 <ion-content>
-  <h1 class="ion-margin-top ion-text-center">Profile page</h1>
+  <ion-row *ngIf="currentTrackedEntityInstance$ | async as trackedEntityInstance">
+    <ion-col>
+      <div *ngFor="let attribute of attributesToDisplay">
+        <p> {{ attribute.name }} : {{ trackedEntityInstance[attribute.id] || "" }}</p>
+      </div>
+    </ion-col>
+  </ion-row>
 </ion-content>

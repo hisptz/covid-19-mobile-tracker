@@ -26,15 +26,14 @@
       </ion-card>
     </ion-col>
   </ion-row>
-  <ion-row *ngIf="currentOrganisationUnit$ | async">    
+  <ion-row *ngIf="currentOrganisationUnit$ | async">
     <ion-col>
       <div *ngIf="isLoading" class="ion-padding">
-          <app-progress-bar [isIndeterminateProcess]="true"
-              [processMessage]="'Loading '">
-          </app-progress-bar>
+        <app-progress-bar [isIndeterminateProcess]="true" [processMessage]="'Loading '">
+        </app-progress-bar>
       </div>
-      <div *ngIf="!isLoading" class="ion-padding">
-          <ion-list class="ion-padding-top">
+      <div *ngIf="!isLoading" class="ion-no-padding">
+        <ion-list class="ion-padding-top">
           <ion-item *ngFor="let program of programs" (click)="onSelectProgram($event, program)" detail>
             <ion-avatar slot="start" *ngIf="false">
               <img src="assets/icon/rumor.png">
@@ -46,7 +45,7 @@
             <!-- <ion-icon color="success" name="sync"></ion-icon> -->
           </ion-item>
         </ion-list>
-      </div>      
+      </div>
     </ion-col>
   </ion-row>
 </ion-content>

@@ -12,6 +12,7 @@ import {
   getCurrentProgramTrackedEntityAttribute,
   getCurrentTrackedEntityInstance,
   getTrackedEntityInstanceAttributeObject,
+  getCurrentInstanceEnrollmentDate,
 } from 'src/app/store/selectors/selections.selectors';
 import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
@@ -28,6 +29,7 @@ export class ManageTrackedEntityProfilePage implements OnInit {
   currentProgramTrackedEntityAttribute$: Observable<any>;
   currentTrackedEntityInstance$: Observable<any>;
   trackedEntityInstanceAttributeValueObject$: Observable<any>;
+  enrollmentDate$: Observable<String>;
   hiddenFields: any;
   trackedEntityAttributesSavingStatusClass: any;
   dataObject: any;
@@ -46,6 +48,9 @@ export class ManageTrackedEntityProfilePage implements OnInit {
     this.trackedEntityAttributesSavingStatusClass = {};
     this.dataObject = {};
     this.currentProgram$ = this.store.pipe(select(getCurrentProgram));
+    this.enrollmentDate$ = this.store.pipe(
+      select(getCurrentInstanceEnrollmentDate),
+    );
     this.currentProgram$.pipe(take(1)).subscribe((currentProgram: Program) => {
       if (!currentProgram) {
         this.router.navigate(['/chw-home']);

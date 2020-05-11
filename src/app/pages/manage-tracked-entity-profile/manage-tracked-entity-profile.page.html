@@ -16,8 +16,7 @@
   <ion-row *ngIf="params.program && params.trackedEntityInstance" class="ion-padding">
     <ion-col>
       <form>
-        <app-date-time [mode]="'date'" [label]="'Incident Date'"
-          [inputValue]="params?.trackedEntityInstance?.incidentDate"
+        <app-date-time [mode]="'date'" [label]="'Incident Date'" [inputValue]="enrollmentDate$ | async"
           (dateTimeChange)="onIncidentDateUpdate($event, params?.trackedEntityInstance)">
         </app-date-time>
         <div *ngFor="let programTrackedEntityAttribute of params.program.programTrackedEntityAttributes">
