@@ -35,7 +35,6 @@ export class TrackedEntityListPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.isLoading = true;
     this.currentOrganisationUnit$ = this.store.pipe(
       select(getCurrentOrganisationUnit),
     );
@@ -44,6 +43,15 @@ export class TrackedEntityListPage implements OnInit {
     this.currentOrganisationUnit$ = this.store.pipe(
       select(getCurrentOrganisationUnit),
     );
+    this.currentProgram$.pipe(take(1)).subscribe((currentProgram: Program) => {
+      if (!currentProgram) {
+        this.router.navigate(['/chw-home']);
+      }
+    });
+  }
+
+  ionViewWillEnter() {
+    this.isLoading = true;
     this.currentProgram$.pipe(take(1)).subscribe((currentProgram: Program) => {
       if (!currentProgram) {
         this.router.navigate(['/chw-home']);
@@ -110,8 +118,8 @@ export class TrackedEntityListPage implements OnInit {
         organisationUnitId,
         programId,
       )
-      .subscribe((teis: TrackedEntityInstance[]) => {
-        // Todo filter "teis" by attribute value from previous selected source
+      .subscribe((response: any) => {
+        const { isCompleted, teis } = response;
         this.trackedEntityInstanceList = _.map(teis, (tei: any) => {
           const attributes = tei.attributes || [];
           for (const attributeToDisplay of this.attributesToDisplay) {
@@ -133,7 +141,7 @@ export class TrackedEntityListPage implements OnInit {
             numberOfContact: relationships.length,
           };
         });
-        this.isLoading = false;
+        this.isLoading = !isCompleted;
       });
   }
 

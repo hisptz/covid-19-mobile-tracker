@@ -9,8 +9,8 @@ describe('TrackedEntityInstanceTitleComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TrackedEntityInstanceTitleComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [TrackedEntityInstanceTitleComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TrackedEntityInstanceTitleComponent);
