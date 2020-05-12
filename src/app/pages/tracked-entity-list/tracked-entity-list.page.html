@@ -13,6 +13,14 @@
     <app-progress-bar [isIndeterminateProcess]="true" [processMessage]="'Discovering data...'">
     </app-progress-bar>
   </div>
+  <div *ngIf="!isLoading && trackedEntityInstanceList && trackedEntityInstanceList.length === 0">
+      <ion-card (click)="onAddTrackedEntityInstance($event, currentParameters)">
+        <ion-card-content class="ion-text-center">
+          <ion-icon color="warning" size="large" name="alert-circle-outline"></ion-icon>
+          <ion-card-subtitle class="ion-margin-top" color="warning">Click plus sign to button below to add data</ion-card-subtitle>
+        </ion-card-content>
+      </ion-card>
+  </div>
   <ion-list>
     <ion-item *ngFor="let trackedEntityInstance of trackedEntityInstanceList"
       (click)="onSetCurrentTrackedEntityInstance($event, trackedEntityInstance)">

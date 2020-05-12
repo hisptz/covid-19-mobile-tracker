@@ -139,6 +139,9 @@ export class ProgramFormDataService {
         organisationUnitId,
         programId,
       ).then((offlineData) => {
+        offlineData = _.filter(offlineData, (tei: any) => {
+          return tei && tei.orgUnit && tei.orgUnit === organisationUnitId;
+        });
         trackedEntityInstances = offlineData;
         observer.next({
           isCompleted,
@@ -149,6 +152,9 @@ export class ProgramFormDataService {
           programId,
           pageSize,
         ).subscribe((onlineData) => {
+          onlineData = _.filter(onlineData, (tei: any) => {
+            return tei && tei.orgUnit && tei.orgUnit === organisationUnitId;
+          });
           this.getMergedTrackedEntityInstances(offlineData, onlineData).then(
             (teis: TrackedEntityInstance[]) => {
               trackedEntityInstances = teis;
@@ -263,7 +269,6 @@ export class ProgramFormDataService {
           observer.complete();
         })
         .catch((error: any) => {
-          console.log({ error });
           observer.next(trackedEntityInstances);
           observer.complete();
         });
@@ -313,6 +318,7 @@ export class ProgramFormDataService {
             trackedEntityInstanceObj.enrollments || [],
             (enrollment: any) => {
               return _.map(enrollment.events || [], (eventObj: any) => {
+                console.log(eventObj);
                 return { ...eventObj, id: eventObj.event || '' };
               });
             },

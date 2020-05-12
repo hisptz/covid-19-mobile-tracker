@@ -16,7 +16,7 @@
       </ion-item>
     </ion-col>
   </ion-row>
-  <ion-row *ngIf="!(currentOrganisationUnit$ | async)">
+  <ion-row *ngIf="!(currentOrganisationUnit$ | async) || (!isLoading && programs && programs.length === 0)">
     <ion-col>
       <ion-card (click)="openOrganisationUnitModal($event)">
         <ion-card-content class="ion-text-center">

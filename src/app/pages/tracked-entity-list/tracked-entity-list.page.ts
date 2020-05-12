@@ -107,12 +107,16 @@ export class TrackedEntityListPage implements OnInit {
               tei[attributeToDisplay.id] = filtereAttr.value;
             }
           }
-          // relation specific for contact tracing
           const relationships = tei.relationships || [];
           return {
             ...tei,
             numberOfContact: relationships.length,
           };
+        });
+        console.log({
+          organisationUnitId,
+          programId,
+          data: this.trackedEntityInstanceList,
         });
         this.isLoading = !isCompleted;
       });
