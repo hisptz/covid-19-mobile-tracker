@@ -23,6 +23,8 @@
  */
 export interface Events {
   id: string;
+  event?: string;
+  enrollment?: string;
   program: string;
   programName?: string;
   programStage: string;

@@ -27,6 +27,7 @@
           [inputValue]="params?.trackedEntityInstanceDates?.incidentDate"
           (dateTimeChange)="onTrackedEntityDatesUpdate($event, params?.trackedEntityInstance, 'incidentDate')">
         </app-date-time>
+        <!-- TODO: Add support to disabled form fields when saving data -->
         <div
           *ngFor="let programTrackedEntityAttribute of params.program.programTrackedEntityAttributes | sortBy:'sortOrder'">
           <div

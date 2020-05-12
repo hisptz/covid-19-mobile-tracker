@@ -39,11 +39,13 @@ export class TrackedEntityStageEventListPage implements OnInit {
     );
     this.eventList$ = this.store.pipe(select(getCurrentProgramStageEvents));
 
-    this.currentProgram$.pipe(take(1)).subscribe((currentProgram: any) => {
-      if (!currentProgram) {
-        this.router.navigate(['/chw-home']);
-      }
-    });
+    this.currentProgramStage$
+      .pipe(take(1))
+      .subscribe((currentProgramState: any) => {
+        if (!currentProgramState) {
+          this.router.navigate(['/chw-home']);
+        }
+      });
   }
   onManageEvent(e, currentEvent: any) {
     e.stopPropagation();

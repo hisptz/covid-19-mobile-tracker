@@ -11,10 +11,7 @@ export function updateTrackedEntityInstanceWithEvent(
       if (updatedEvent.enrollment !== enrollment.enrollment) {
         return enrollment;
       }
-      const availableEvent = _.find(enrollment.events, [
-        'event',
-        updatedEvent.event,
-      ]);
+      const availableEvent = _.find(enrollment.events, ['id', updatedEvent.id]);
 
       const availableEventIndex = enrollment.events.indexOf(availableEvent);
       return {
