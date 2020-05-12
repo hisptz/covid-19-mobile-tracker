@@ -46,7 +46,8 @@ export class CoordinateInputComponent implements OnInit {
   constructor(private modalController: ModalController) {}
 
   ngOnInit() {
-    this.data = this.data || { 'de-co': { value: `[-7.013668,38.34447]` } };
+    this.data = this.data;
+    this.position = { lat: '', lng: '' };
     const id = `${this.dataElementId}-${this.categoryOptionComboId}`;
     if (this.data && this.data[id]) {
       try {

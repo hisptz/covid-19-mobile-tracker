@@ -28,9 +28,20 @@ import { ProgramFormDataService } from './program-form-data.service';
   providedIn: 'root',
 })
 export class SynchronizationService {
+  subscription: any;
+
   constructor(private programFormDataService: ProgramFormDataService) {}
 
+  stopSynchronization() {
+    if (this.subscription) {
+      clearInterval(this.subscription);
+    }
+  }
+
   startSynchronization() {
+    // this.stopSynchronization();
+    // this.subscription = setInterval(() => { }, 1000 * 60 * 3);
+
     this.getOfflineDataForSync().then((data) => {
       this.syncOfflineData(data).then(() => {});
     });
@@ -49,7 +60,23 @@ export class SynchronizationService {
             data && data.syncStatus && data.syncStatus !== 'synced',
         ),
         (trackedEntityInstanceObj: any) => {
-          return trackedEntityInstanceObj;
+          const { trackedEntity } = trackedEntityInstanceObj;
+          delete trackedEntityInstanceObj.id;
+          delete trackedEntityInstanceObj.orgUnitName;
+          delete trackedEntityInstanceObj.syncStatus;
+          return {
+            ...trackedEntityInstanceObj,
+            trackedEntityType: trackedEntity,
+            enrollments: [],
+            attributes: _.map(
+              trackedEntityInstanceObj.attributes || [],
+              (attribute: any) => {
+                delete attribute.trackedEntityInstance;
+                delete attribute.id;
+                return { ...{}, ...attribute };
+              },
+            ),
+          };
         },
       ),
     };
@@ -65,7 +92,9 @@ export class SynchronizationService {
           );
         }
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(JSON.stringify(error));
+    }
     return;
   }
 }

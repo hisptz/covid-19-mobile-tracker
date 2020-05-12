@@ -43,10 +43,15 @@ export class ProgramFormDataService {
   async syncOfflineTrackedEntityInstancesToServer(
     trackedEntityInstances: any[],
   ) {
-    // TODO upload data in chunk
-    const url = `api/trackedEntityInstances?strategy=CREATE_AND_UPDATE`;
-    const teiResponse = await this.httpClientService.post(url, trackedEntityInstances);
-    console.log(teiResponse);
+    const pageSize = 20;
+    const url = `/api/trackedEntityInstances?strategy=CREATE_AND_UPDATE`;
+    for (const data of _.chunk(trackedEntityInstances, pageSize)) {
+      console.log(JSON.stringify(data));
+      const teiResponse = await this.httpClientService.post(url, {
+        trackedEntityInstances: data,
+      });
+      console.log(teiResponse);
+    }
   }
 
   discoveringTrackedEntityInstancesFromServerAndLocalStorage(

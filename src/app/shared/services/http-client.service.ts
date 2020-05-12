@@ -172,12 +172,16 @@ export class HttpClientService {
             const headers = this.http.getBasicAuthHeader(username, password);
             this.http.setDataSerializer('json');
             apiUrl =
-              user.serverUrl +
+              sanitizedUser.serverUrl +
               this.getUrlBasedOnDhisVersion(url, sanitizedUser);
             this.http
               .post(apiUrl, data, headers)
               .then((response) => {
-                resolve(response);
+                const responseData =
+                  response && response.data
+                    ? JSON.parse(response.data)
+                    : response;
+                resolve(responseData);
               })
               .catch((error: any) => {
                 reject(error);
@@ -204,12 +208,16 @@ export class HttpClientService {
             const headers = this.http.getBasicAuthHeader(username, password);
             this.http.setDataSerializer('json');
             apiUrl =
-              user.serverUrl +
+              sanitizedUser.serverUrl +
               this.getUrlBasedOnDhisVersion(url, sanitizedUser);
             this.http
               .put(apiUrl, data, headers)
               .then((response) => {
-                resolve(response);
+                const responseData =
+                  response && response.data
+                    ? JSON.parse(response.data)
+                    : response;
+                resolve(responseData);
               })
               .catch((error: any) => {
                 reject(error);
@@ -236,12 +244,16 @@ export class HttpClientService {
             const headers = this.http.getBasicAuthHeader(username, password);
             this.http.setDataSerializer('json');
             apiUrl =
-              user.serverUrl +
+              sanitizedUser.serverUrl +
               this.getUrlBasedOnDhisVersion(url, sanitizedUser);
             this.http
               .delete(apiUrl, {}, headers)
               .then((response) => {
-                resolve(response);
+                const data =
+                  response && response.data
+                    ? JSON.parse(response.data)
+                    : response;
+                resolve(data);
               })
               .catch((error: any) => {
                 reject(error);

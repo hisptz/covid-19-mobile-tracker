@@ -21,7 +21,7 @@
  * @author Joseph Chingalo <profschingalo@gmail.com>
  *
  */
-import { Injectable } from '@angular/core';
+import { Injectable, ɵConsole } from '@angular/core';
 import * as _ from 'lodash';
 import { LocalStorageService } from './local-storage.service';
 import { CurrentUser } from 'src/app/models';
