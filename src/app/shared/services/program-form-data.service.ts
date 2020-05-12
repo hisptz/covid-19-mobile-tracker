@@ -46,12 +46,55 @@ export class ProgramFormDataService {
     const pageSize = 20;
     const url = `/api/trackedEntityInstances?strategy=CREATE_AND_UPDATE`;
     for (const data of _.chunk(trackedEntityInstances, pageSize)) {
-      console.log(JSON.stringify(data));
       const teiResponse = await this.httpClientService.post(url, {
         trackedEntityInstances: data,
       });
-      console.log(teiResponse);
+      const syncedReference = this.getSyncedReferenceIds(teiResponse);
+      console.log({ syncedReference });
     }
+  }
+
+  getSyncedReferenceIds(teiResponse) {
+    const response = teiResponse.response || {};
+    const importSummaries = response.importSummaries || [];
+    return _.flattenDeep(
+      _.map(importSummaries, (importSummary) => {
+        if (importSummary.status === 'SUCCESS' && importSummary.reference) {
+          const tieId = importSummary.reference;
+          const enrollmentImportSummaries =
+            importSummary.enrollments &&
+            importSummary.enrollments.importSummaries
+              ? importSummary.enrollments.importSummaries
+              : [];
+          return _.concat(
+            tieId,
+            _.map(enrollmentImportSummaries, (enrollmentImportSummary) => {
+              if (
+                enrollmentImportSummary.status === 'SUCCESS' &&
+                enrollmentImportSummary.reference
+              ) {
+                const enrollmentId = enrollmentImportSummary.reference;
+                const eventImportSummaries =
+                  enrollmentImportSummary.events &&
+                  enrollmentImportSummary.events.importSummaries
+                    ? enrollmentImportSummary.events.importSummaries
+                    : [];
+                return _.concat(
+                  enrollmentId,
+                  _.map(eventImportSummaries, (eventImportSummary: any) => {
+                    return eventImportSummary.reference || [];
+                  }),
+                );
+              } else {
+                return [];
+              }
+            }),
+          );
+        } else {
+          return [];
+        }
+      }),
+    );
   }
 
   discoveringTrackedEntityInstancesFromServerAndLocalStorage(

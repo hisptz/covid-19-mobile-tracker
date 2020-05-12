@@ -61,13 +61,21 @@ export class SynchronizationService {
         ),
         (trackedEntityInstanceObj: any) => {
           const { trackedEntity } = trackedEntityInstanceObj;
-          delete trackedEntityInstanceObj.id;
-          delete trackedEntityInstanceObj.orgUnitName;
-          delete trackedEntityInstanceObj.syncStatus;
           return {
             ...trackedEntityInstanceObj,
             trackedEntityType: trackedEntity,
-            enrollments: [],
+            enrollments: _.map(
+              trackedEntityInstanceObj.enrollments || [],
+              (enrollmentObj: any) => {
+                return {
+                  ...enrollmentObj,
+                  trackedEntityType: trackedEntity,
+                  events: _.map(enrollmentObj.events || [], (eventObj: any) => {
+                    return { ...eventObj, event: eventObj.id || '' };
+                  }),
+                };
+              },
+            ),
             attributes: _.map(
               trackedEntityInstanceObj.attributes || [],
               (attribute: any) => {
