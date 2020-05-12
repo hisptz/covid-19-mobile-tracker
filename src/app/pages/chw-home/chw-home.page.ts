@@ -77,6 +77,7 @@ export class ChwHomePage implements OnInit {
       currentUser ? currentUser.programs : [],
       currentUser ? currentUser.authorities : [],
     );
+    console.log(this.programs);
     this.isLoading = false;
   }
 }

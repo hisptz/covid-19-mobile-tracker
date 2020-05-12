@@ -41,6 +41,7 @@ import {
 import { CONNECTION_NAME } from 'src/app/constants/db-options';
 import { DataElementService } from './data-element.service';
 import { ProgramStageSectionService } from './program-stage-section.service';
+import { ProgramRuleEngineService } from './program-rule-engine.service';
 
 @Injectable({
   providedIn: 'root',
@@ -49,18 +50,23 @@ export class ProgramFormMetadataService {
   constructor(
     private dataElementService: DataElementService,
     private programStageSectionService: ProgramStageSectionService,
+    private programRuleEngineService: ProgramRuleEngineService,
   ) {}
 
   async getProgramByIds(ids: string[], shouldIncludeAllMetadata = true) {
     let programs = [];
     try {
       // TODO Entry forms
-      // TODO get program rules
       const programEntites: Program[] = await this.getProgramEntities(ids);
       const programTrackedEntityAttributes = await this.getprogramTrackedEntityAttributes(
         ids,
       );
       const programStages = await this.getprogramStages(ids);
+      const {
+        programRuleActions,
+        programRules,
+        programRuleVariables,
+      } = await this.programRuleEngineService.getAllProgramRulesMetadata(ids);
       programs = shouldIncludeAllMetadata
         ? _.map(programEntites, (programEntity: any) => {
             const id = programEntity.id || '';
@@ -83,6 +89,33 @@ export class ProgramFormMetadataService {
                   programStage.programId === id
                 );
               }),
+              programRuleActions: _.filter(
+                programRuleActions,
+                (programRuleAction: any) => {
+                  return (
+                    programRuleAction &&
+                    programRuleAction.programId &&
+                    programRuleAction.programId === id
+                  );
+                },
+              ),
+              programRules: _.filter(programRules, (programRule: any) => {
+                return (
+                  programRule &&
+                  programRule.programId &&
+                  programRule.programId === id
+                );
+              }),
+              programRuleVariables: _.filter(
+                programRuleVariables,
+                (programRuleVariable: any) => {
+                  return (
+                    programRuleVariable &&
+                    programRuleVariable.programId &&
+                    programRuleVariable.programId === id
+                  );
+                },
+              ),
             };
           })
         : programEntites;

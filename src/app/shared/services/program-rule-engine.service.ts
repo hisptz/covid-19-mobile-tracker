@@ -25,7 +25,12 @@ import { Observable } from 'rxjs';
 import * as _ from 'lodash';
 import { getRepository } from 'typeorm';
 import { HttpClientService } from './http-client.service';
-import { CurrentUser } from 'src/app/models';
+import {
+  CurrentUser,
+  ProgramRuleAction,
+  ProgramRuleVariable,
+  ProgramRule,
+} from 'src/app/models';
 import { DEFAULT_APP_METADATA } from 'src/app/constants';
 import {
   ProgramRuleEntity,
@@ -117,6 +122,117 @@ export class ProgramRuleEngineService {
           observer.error(error);
         });
     });
+  }
+
+  async getAllProgramRulesMetadata(programIds: string[]) {
+    const programRuleActions = [];
+    const programRules = [];
+    const programRuleVariables = [];
+    try {
+      for (const programId of programIds) {
+        const programRuleMetaData = await this.getProgramRulesMetadataByProgramId(
+          programId,
+        );
+        programRuleActions.push(
+          _.map(
+            programRuleMetaData.programRuleActions || [],
+            (programRuleAction: any) => {
+              return { ...programRuleAction, programId };
+            },
+          ),
+        );
+        programRules.push(
+          _.map(programRuleMetaData.programRules || [], (programRule: any) => {
+            return { ...programRule, programId };
+          }),
+        );
+        programRuleVariables.push(
+          _.map(
+            programRuleMetaData.programRuleVariables || [],
+            (programRuleVariable: any) => {
+              return { ...programRuleVariable, programId };
+            },
+          ),
+        );
+      }
+    } catch (error) {}
+    return {
+      programRuleActions,
+      programRules,
+      programRuleVariables,
+    };
+  }
+
+  async getProgramRulesMetadataByProgramId(programId: string) {
+    let programRuleActions = [];
+    let programRules = [];
+    let programRuleVariables = [];
+    try {
+      programRules = await this.getProgramRules([programId]);
+      programRuleVariables = await this.getProgramRuleVaribales([programId]);
+      const programRuleIds = _.flattenDeep(
+        programRules,
+        (programRule) => programRule.id || [],
+      );
+      programRuleActions = await this.getProgramRuleActions(programRuleIds);
+    } catch (error) {}
+    return {
+      programRuleActions,
+      programRules,
+      programRuleVariables,
+    };
+  }
+
+  async getProgramRuleVaribales(programIds: string[]) {
+    const repository = getRepository(
+      ProgramRuleVariableEntity,
+      CONNECTION_NAME,
+    );
+    const allEntities = repository.find();
+    console.log({ allEntities, programIds });
+    return programIds
+      ? _.filter(allEntities, (entity: ProgramRuleVariable) => {
+          return (
+            entity &&
+            entity.program &&
+            entity.program.id &&
+            programIds.includes(entity.program.id)
+          );
+        })
+      : _.map(allEntities, (entity: any) => {
+          return { ...{}, ...entity };
+        });
+  }
+
+  async getProgramRules(programIds: string[]) {
+    const repository = getRepository(ProgramRuleEntity, CONNECTION_NAME);
+    const allEntities = repository.find();
+    console.log({ allEntities, programIds });
+    return programIds
+      ? _.filter(allEntities, (entity: ProgramRule) => {
+          return (
+            entity &&
+            entity.program &&
+            entity.program.id &&
+            programIds.includes(entity.program.id)
+          );
+        })
+      : _.map(allEntities, (entity: any) => {
+          return { ...{}, ...entity };
+        });
+  }
+
+  async getProgramRuleActions(programRuleIds: string[]) {
+    const repository = getRepository(ProgramRuleActionEntity, CONNECTION_NAME);
+    const allEntities = repository.find();
+    console.log({ allEntities, programRuleIds });
+    return programRuleIds
+      ? _.filter(allEntities, (entity: ProgramRuleAction) => {
+          return false;
+        })
+      : _.map(allEntities, (entity: any) => {
+          return { ...{}, ...entity };
+        });
   }
 
   savingProgramRulesToLocalStorage(programRules: any[]): Observable<any> {

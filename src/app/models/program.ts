@@ -22,6 +22,11 @@
  *
  */
 import { Coordinate } from 'src/app/models';
+import {
+  ProgramRuleAction,
+  ProgramRule,
+  ProgramRuleVariable,
+} from './program-rule';
 
 export interface Program {
   id: string;
@@ -47,6 +52,9 @@ export interface Program {
   currentProgramTrackedEntityAttribute?: any;
   programTrackedEntityAttributes?: any;
   programStages?: ProgramProgramStage;
+  programRuleActions?: ProgramRuleAction[];
+  programRules?: ProgramRule[];
+  ProgramRuleVariables?: ProgramRuleVariable[];
 }
 
 export interface ProgramProgramTrackedEntityAttribute {
