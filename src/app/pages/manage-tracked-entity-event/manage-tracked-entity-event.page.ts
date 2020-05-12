@@ -16,6 +16,7 @@ import {
 import { CurrentUser } from 'src/app/models';
 import { UserService } from 'src/app/shared/services/user.service';
 import { updateEventWithDataValues } from 'src/app/helpers/update-event-with-data-values';
+import * as d2Rule from '@iapps/dhis2-program-rule-engine';
 
 @Component({
   selector: 'app-manage-tracked-entity-event',
@@ -60,6 +61,7 @@ export class ManageTrackedEntityEventPage implements OnInit {
     eventObject,
     shouldSkipProgramRules: boolean = false,
   ) {
+    console.log(d2Rule.execute({}, {}, [], [], {}));
     this.dataObject[updatedData.id] = updatedData;
 
     this.store.dispatch(
