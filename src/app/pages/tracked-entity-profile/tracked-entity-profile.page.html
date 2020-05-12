@@ -9,7 +9,7 @@
       <ion-list>
         <ion-item lines="none">
           <ion-label>
-            <h5>{{ params.program.enrollmentDateLabel }}:</h5>
+            <h5>{{ params.program.enrollmentDateLabel || 'Enrollment Date' }}:</h5>
           </ion-label>
           <ion-label>
             <h5>{{ params?.trackedEntityInstanceDates?.enrollmentDate }}</h5>
@@ -17,7 +17,7 @@
         </ion-item>
         <ion-item lines="none">
           <ion-label>
-            <h5>{{ params.program.incidentDateLabel }}:</h5>
+            <h5>{{ params.program.incidentDateLabel || 'Incident Date' }}:</h5>
           </ion-label>
           <ion-label>
             <h5>{{ params?.trackedEntityInstanceDates?.incidentDate }}</h5>

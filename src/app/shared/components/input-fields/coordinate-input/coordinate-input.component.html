@@ -35,8 +35,10 @@
         </div>
     </ion-col>
     <ion-col size="auto">
-        <ion-button [disabled]="lockingFieldStatus" class="locate-button" fill="clear" (click)="openCoordinateSelctionModal()">
-            <ion-icon slot="icon-only" name="locate" [color]="(colorSettings$ | async).colorAttributes.secondary"></ion-icon>
+        <ion-button [disabled]="lockingFieldStatus" class="locate-button" fill="clear"
+            (click)="openCoordinateSelctionModal()">
+            <ion-icon slot="icon-only" name="locate" [color]="colorSettings?.colorAttributes?.secondary">
+            </ion-icon>
         </ion-button>
     </ion-col>
 </ion-row>
