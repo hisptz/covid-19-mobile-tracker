@@ -25,13 +25,13 @@
 <ion-row>
     <ion-col>
         <ion-list>
-            <ion-radio-group>
+            <ion-radio-group [value]="selectedValue">
                 <ion-list-header>
                     <ion-label>{{label | translate}}</ion-label>
                 </ion-list-header>
                 <ion-item *ngFor="let option of options">
                     <ion-label>{{option.name}}</ion-label>
-                    <ion-radio slot="start" [name]="fieldId" [value]="option.code" [disabled]="lockingFieldStatus"
+                    <ion-radio slot="start" [value]="option.code" [disabled]="lockingFieldStatus"
                         (ionFocus)="saveValue(option.code)">
                     </ion-radio>
                 </ion-item>
