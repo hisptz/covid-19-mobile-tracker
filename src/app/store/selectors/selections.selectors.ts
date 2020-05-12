@@ -5,8 +5,10 @@ import {
   OrganisationUnit,
   TrackedEntityInstance,
   Enrollment,
+  Program,
 } from 'src/app/models';
 import * as _ from 'lodash';
+import { getAttributeToDisplay } from 'src/app/helpers/get-attributes-to-display';
 
 /**
  * Copyright (C) 2020 UDSM DHIS2 PROJECT
@@ -96,6 +98,11 @@ export const getTrackedEntityInstanceDates = createSelector(
       incidentDate: enrollment.incidentDate,
     };
   },
+);
+
+export const getTrackedAttributeToDisplay = createSelector(
+  getCurrentProgram,
+  (program: Program) => getAttributeToDisplay(program),
 );
 
 export const getCurrentProgramStage = createSelector(

@@ -4,7 +4,10 @@ import * as _ from 'lodash';
 export function getAttributeToDisplay(
   currentProgram: Program,
   numberOfAttribute?: number,
-) {
+): any[] {
+  if (!currentProgram) {
+    return [];
+  }
   let attributesToDisplay = _.filter(
     currentProgram.programTrackedEntityAttributes || [],
     (programTrackedEntityAttribute: any) =>

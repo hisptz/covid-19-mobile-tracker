@@ -1,9 +1,37 @@
-<ion-content>
-  <ion-row *ngIf="currentTrackedEntityInstance$ | async as trackedEntityInstance">
+<ion-content *ngIf="{
+    trackedEntityInstance: currentTrackedEntityInstance$ | async, 
+    program: currentProgram$ | async, 
+    trackedEntityInstanceDates: trackedEntityInstanceDates$ | async,
+    attributesToDisplay: attributesToDisplay$  | async
+   } as params">
+  <ion-row *ngIf="params.program && params.trackedEntityInstanceDates && params.attributesToDisplay">
     <ion-col>
-      <div *ngFor="let attribute of attributesToDisplay">
-        <p> {{ attribute.name }} : {{ trackedEntityInstance[attribute.id] || "" }}</p>
-      </div>
+      <ion-list>
+        <ion-item lines="none">
+          <ion-label>
+            <h5>{{ params.program.enrollmentDateLabel }}:</h5>
+          </ion-label>
+          <ion-label>
+            <h5>{{ params?.trackedEntityInstanceDates?.enrollmentDate }}</h5>
+          </ion-label>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>
+            <h5>{{ params.program.incidentDateLabel }}:</h5>
+          </ion-label>
+          <ion-label>
+            <h5>{{ params?.trackedEntityInstanceDates?.incidentDate }}</h5>
+          </ion-label>
+        </ion-item>
+        <ion-item lines="none" *ngFor="let attribute of params.attributesToDisplay">
+          <ion-label>
+            <h5>{{ attribute.name }}:</h5>
+          </ion-label>
+          <ion-label>
+            <h5>{{ params?.trackedEntityInstance[attribute.id] || "" }}</h5>
+          </ion-label>
+        </ion-item>
+      </ion-list>
     </ion-col>
   </ion-row>
 </ion-content>

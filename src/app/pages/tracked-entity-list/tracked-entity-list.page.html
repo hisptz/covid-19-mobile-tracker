@@ -13,16 +13,18 @@
     <app-progress-bar [isIndeterminateProcess]="true" [processMessage]="'Discovering data...'">
     </app-progress-bar>
   </div>
-  <ion-list class="ion-padding-top">
+  <ion-list>
     <ion-item *ngFor="let trackedEntityInstance of trackedEntityInstanceList"
       (click)="onSetCurrentTrackedEntityInstance($event, trackedEntityInstance)">
       <ion-label>
-        <div *ngFor="let attribute of attributesToDisplay">
-          <p> {{ attribute.name }} : {{ trackedEntityInstance[attribute.id] || "" }}</p>
-        </div>
+        <h2 *ngFor="let attribute of attributesToDisplay"> {{ attribute.name }} :
+          {{ trackedEntityInstance[attribute.id] || "" }}</h2>
         <p>{{ trackedEntityInstance.numberOfContact }} Contacts </p>
       </ion-label>
-      <ion-icon [color]="(trackedEntityInstance.syncStatus && trackedEntityInstance.syncStatus === 'synced')?'success' : 'warning'" [name]="(trackedEntityInstance.syncStatus && trackedEntityInstance.syncStatus === 'synced')?'sync' :'alert-circle'"></ion-icon>
+      <ion-icon
+        [color]="(trackedEntityInstance.syncStatus && trackedEntityInstance.syncStatus === 'synced')?'success' : 'warning'"
+        [name]="(trackedEntityInstance.syncStatus && trackedEntityInstance.syncStatus === 'synced')?'sync' :'alert-circle'">
+      </ion-icon>
     </ion-item>
   </ion-list>
 
