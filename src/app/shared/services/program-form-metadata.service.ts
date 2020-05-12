@@ -55,6 +55,7 @@ export class ProgramFormMetadataService {
     let programs = [];
     try {
       // TODO Entry forms
+      // TODO get program rules
       const programEntites: Program[] = await this.getProgramEntities(ids);
       const programTrackedEntityAttributes = await this.getprogramTrackedEntityAttributes(
         ids,
@@ -62,10 +63,26 @@ export class ProgramFormMetadataService {
       const programStages = await this.getprogramStages(ids);
       programs = shouldIncludeAllMetadata
         ? _.map(programEntites, (programEntity: any) => {
+            const id = programEntity.id || '';
             return {
               ...programEntity,
-              programTrackedEntityAttributes,
-              programStages,
+              programTrackedEntityAttributes: _.filter(
+                programTrackedEntityAttributes,
+                (programTrackedEntityAttribute: any) => {
+                  return (
+                    programTrackedEntityAttribute &&
+                    programTrackedEntityAttribute.programId &&
+                    programTrackedEntityAttribute.programId === id
+                  );
+                },
+              ),
+              programStages: _.filter(programStages, (programStage: any) => {
+                return (
+                  programStage &&
+                  programStage.programId &&
+                  programStage.programId === id
+                );
+              }),
             };
           })
         : programEntites;
