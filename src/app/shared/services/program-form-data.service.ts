@@ -40,6 +40,15 @@ import { HttpClientService } from './http-client.service';
 export class ProgramFormDataService {
   constructor(private httpClientService: HttpClientService) {}
 
+  async syncOfflineTrackedEntityInstancesToServer(
+    trackedEntityInstances: any[],
+  ) {
+    // TODO upload data in chunk
+    const url = `api/trackedEntityInstances?strategy=CREATE_AND_UPDATE`;
+    const teiResponse = await this.httpClientService.post(url, trackedEntityInstances);
+    console.log(teiResponse);
+  }
+
   discoveringTrackedEntityInstancesFromServerAndLocalStorage(
     organisationUnitId: string,
     programId: string,
@@ -265,9 +274,11 @@ export class ProgramFormDataService {
         TrackedEntityInstanceEntity,
         CONNECTION_NAME,
       );
-      const trackedEntityInstanceEntities = await repository.find({
-        orgUnit: In([organisationUnitId]),
-      });
+      const trackedEntityInstanceEntities = organisationUnitId
+        ? await repository.find({
+            orgUnit: In([organisationUnitId]),
+          })
+        : await repository.find();
       const ids = _.flattenDeep(
         trackedEntityInstanceEntities,
         (trackedEntityInstanceEntity: any) =>
@@ -277,16 +288,18 @@ export class ProgramFormDataService {
         ids,
       );
     } catch (error) {}
-    return _.filter(trackedEntityInstances, (trackedEntityInstanceObj) => {
-      const enrollments = _.filter(
-        trackedEntityInstanceObj.enrollments || [],
-        (enrollmentObj: any) =>
-          enrollmentObj &&
-          enrollmentObj.program &&
-          enrollmentObj.program === programId,
-      );
-      return enrollments.length > 0;
-    });
+    return programId
+      ? _.filter(trackedEntityInstances, (trackedEntityInstanceObj: any) => {
+          const enrollments = _.filter(
+            trackedEntityInstanceObj.enrollments || [],
+            (enrollmentObj: any) =>
+              enrollmentObj &&
+              enrollmentObj.program &&
+              enrollmentObj.program === programId,
+          );
+          return enrollments.length > 0;
+        })
+      : trackedEntityInstances;
   }
 
   async getSavingTrackedEntityInstancesByIds(ids: string[]) {
@@ -296,7 +309,10 @@ export class ProgramFormDataService {
         TrackedEntityInstanceEntity,
         CONNECTION_NAME,
       );
-      const trackedEntityInstanceEntities = await repository.findByIds(ids);
+      const trackedEntityInstanceEntities =
+        ids && ids.length > 0
+          ? await repository.findByIds(ids)
+          : await repository.find();
       for (const trackedEntityInstanceEntity of trackedEntityInstanceEntities) {
         const trackedEntityInstance =
           trackedEntityInstanceEntity.trackedEntityInstance;
