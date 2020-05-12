@@ -40,6 +40,93 @@ import { HttpClientService } from './http-client.service';
 export class ProgramFormDataService {
   constructor(private httpClientService: HttpClientService) {}
 
+  async syncOfflineTrackedEntityInstancesToServer(
+    trackedEntityInstances: any[],
+  ) {
+    const pageSize = 20;
+    const syncStatus = 'synced';
+    const url = `/api/trackedEntityInstances?strategy=CREATE_AND_UPDATE`;
+    for (const data of _.chunk(trackedEntityInstances, pageSize)) {
+      const teiResponse = await this.httpClientService.post(url, {
+        trackedEntityInstances: data,
+      });
+      const syncedReference = this.getSyncedReferenceIds(teiResponse);
+      const updateTeis = _.flattenDeep(
+        _.map(data, (trackedEntityInstanceObj: any) => {
+          return {
+            ...trackedEntityInstanceObj,
+            syncStatus: syncedReference.includes(trackedEntityInstanceObj.id)
+              ? syncStatus
+              : trackedEntityInstanceObj.syncStatus,
+            enrollments: _.map(
+              trackedEntityInstanceObj.enrollments || [],
+              (enrollmentObj: any) => {
+                return {
+                  ...enrollmentObj,
+                  syncStatus: syncedReference.includes(enrollmentObj.id)
+                    ? syncStatus
+                    : enrollmentObj.syncStatus,
+                  events: _.map(enrollmentObj.events || [], (eventObj: any) => {
+                    return {
+                      ...eventObj,
+                      syncStatus: syncedReference.includes(eventObj.id)
+                        ? syncStatus
+                        : trackedEntityInstanceObj.syncStatus,
+                    };
+                  }),
+                };
+              },
+            ),
+          };
+        }),
+      );
+      this.savingTrackedEntityInstancesToLocalStorage(updateTeis);
+    }
+  }
+
+  getSyncedReferenceIds(teiResponse) {
+    const response = teiResponse.response || {};
+    const importSummaries = response.importSummaries || [];
+    return _.flattenDeep(
+      _.map(importSummaries, (importSummary) => {
+        if (importSummary.status === 'SUCCESS' && importSummary.reference) {
+          const tieId = importSummary.reference;
+          const enrollmentImportSummaries =
+            importSummary.enrollments &&
+            importSummary.enrollments.importSummaries
+              ? importSummary.enrollments.importSummaries
+              : [];
+          return _.concat(
+            tieId,
+            _.map(enrollmentImportSummaries, (enrollmentImportSummary) => {
+              if (
+                enrollmentImportSummary.status === 'SUCCESS' &&
+                enrollmentImportSummary.reference
+              ) {
+                const enrollmentId = enrollmentImportSummary.reference;
+                const eventImportSummaries =
+                  enrollmentImportSummary.events &&
+                  enrollmentImportSummary.events.importSummaries
+                    ? enrollmentImportSummary.events.importSummaries
+                    : [];
+                return _.concat(
+                  enrollmentId,
+                  _.map(eventImportSummaries, (eventImportSummary: any) => {
+                    return eventImportSummary.reference || [];
+                  }),
+                );
+              } else {
+                return [];
+              }
+            }),
+          );
+        } else {
+          return [];
+        }
+      }),
+    );
+  }
+
   discoveringTrackedEntityInstancesFromServerAndLocalStorage(
     organisationUnitId: string,
     programId: string,
@@ -265,9 +352,11 @@ export class ProgramFormDataService {
         TrackedEntityInstanceEntity,
         CONNECTION_NAME,
       );
-      const trackedEntityInstanceEntities = await repository.find({
-        orgUnit: In([organisationUnitId]),
-      });
+      const trackedEntityInstanceEntities = organisationUnitId
+        ? await repository.find({
+            orgUnit: In([organisationUnitId]),
+          })
+        : await repository.find();
       const ids = _.flattenDeep(
         trackedEntityInstanceEntities,
         (trackedEntityInstanceEntity: any) =>
@@ -277,16 +366,18 @@ export class ProgramFormDataService {
         ids,
       );
     } catch (error) {}
-    return _.filter(trackedEntityInstances, (trackedEntityInstanceObj) => {
-      const enrollments = _.filter(
-        trackedEntityInstanceObj.enrollments || [],
-        (enrollmentObj: any) =>
-          enrollmentObj &&
-          enrollmentObj.program &&
-          enrollmentObj.program === programId,
-      );
-      return enrollments.length > 0;
-    });
+    return programId
+      ? _.filter(trackedEntityInstances, (trackedEntityInstanceObj: any) => {
+          const enrollments = _.filter(
+            trackedEntityInstanceObj.enrollments || [],
+            (enrollmentObj: any) =>
+              enrollmentObj &&
+              enrollmentObj.program &&
+              enrollmentObj.program === programId,
+          );
+          return enrollments.length > 0;
+        })
+      : trackedEntityInstances;
   }
 
   async getSavingTrackedEntityInstancesByIds(ids: string[]) {
@@ -296,7 +387,10 @@ export class ProgramFormDataService {
         TrackedEntityInstanceEntity,
         CONNECTION_NAME,
       );
-      const trackedEntityInstanceEntities = await repository.findByIds(ids);
+      const trackedEntityInstanceEntities =
+        ids && ids.length > 0
+          ? await repository.findByIds(ids)
+          : await repository.find();
       for (const trackedEntityInstanceEntity of trackedEntityInstanceEntities) {
         const trackedEntityInstance =
           trackedEntityInstanceEntity.trackedEntityInstance;

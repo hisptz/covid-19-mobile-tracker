@@ -38,12 +38,9 @@ export class RadioButtonComponent implements OnInit {
   @Input() isTrashButtonDisabled: boolean;
 
   @Output() radioButtonChange = new EventEmitter();
-  dataModal: any = {};
   constructor() {}
 
-  ngOnInit() {
-    this.dataModal[this.fieldId] = this.selectedValue;
-  }
+  ngOnInit() {}
 
   clearInput() {
     if (!this.lockingFieldStatus) {
@@ -51,9 +48,8 @@ export class RadioButtonComponent implements OnInit {
     }
   }
 
-  saveValue(value) {
-    this.dataModal[this.fieldId] = value;
-    this.selectedValue = this.dataModal[this.fieldId];
+  saveValue(value: any) {
+    this.selectedValue = value;
     this.radioButtonChange.emit(this.selectedValue);
   }
 }
