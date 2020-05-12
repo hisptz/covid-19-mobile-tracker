@@ -157,9 +157,9 @@ export class ProgramRuleEngineService {
       }
     } catch (error) {}
     return {
-      programRuleActions,
-      programRules,
-      programRuleVariables,
+      programRuleActions: _.flattenDeep(programRuleActions),
+      programRules: _.flattenDeep(programRuleActions),
+      programRuleVariables: _.flattenDeep(programRuleVariables),
     };
   }
 
@@ -171,8 +171,7 @@ export class ProgramRuleEngineService {
       programRules = await this.getProgramRules([programId]);
       programRuleVariables = await this.getProgramRuleVaribales([programId]);
       const programRuleIds = _.flattenDeep(
-        programRules,
-        (programRule) => programRule.id || [],
+        _.map(programRules, (programRule: any) => programRule.id || []),
       );
       programRuleActions = await this.getProgramRuleActions(programRuleIds);
     } catch (error) {}
@@ -188,8 +187,7 @@ export class ProgramRuleEngineService {
       ProgramRuleVariableEntity,
       CONNECTION_NAME,
     );
-    const allEntities = repository.find();
-    console.log({ allEntities, programIds });
+    const allEntities = await repository.find();
     return programIds
       ? _.filter(allEntities, (entity: ProgramRuleVariable) => {
           return (
@@ -206,8 +204,7 @@ export class ProgramRuleEngineService {
 
   async getProgramRules(programIds: string[]) {
     const repository = getRepository(ProgramRuleEntity, CONNECTION_NAME);
-    const allEntities = repository.find();
-    console.log({ allEntities, programIds });
+    const allEntities = await repository.find();
     return programIds
       ? _.filter(allEntities, (entity: ProgramRule) => {
           return (
@@ -224,11 +221,15 @@ export class ProgramRuleEngineService {
 
   async getProgramRuleActions(programRuleIds: string[]) {
     const repository = getRepository(ProgramRuleActionEntity, CONNECTION_NAME);
-    const allEntities = repository.find();
-    console.log({ allEntities, programRuleIds });
+    const allEntities = await repository.find();
     return programRuleIds
       ? _.filter(allEntities, (entity: ProgramRuleAction) => {
-          return false;
+          return (
+            entity &&
+            entity.programRule &&
+            entity.programRule.id &&
+            programRuleIds.includes(entity.programRule.id)
+          );
         })
       : _.map(allEntities, (entity: any) => {
           return { ...{}, ...entity };
