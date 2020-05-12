@@ -39,12 +39,13 @@ export class SynchronizationService {
   }
 
   startSynchronization() {
-    // this.stopSynchronization();
-    // this.subscription = setInterval(() => { }, 1000 * 60 * 3);
-
-    this.getOfflineDataForSync().then((data) => {
-      this.syncOfflineData(data).then(() => {});
-    });
+    const time = 1000 * 60 * 3;
+    this.stopSynchronization();
+    this.subscription = setInterval(() => {
+      this.getOfflineDataForSync().then((data) => {
+        this.syncOfflineData(data).then(() => {});
+      });
+    }, time);
   }
 
   async getOfflineDataForSync() {

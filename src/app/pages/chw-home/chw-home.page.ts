@@ -8,7 +8,6 @@ import { getCurrentOrganisationUnit } from 'src/app/store/selectors/selections.s
 import { OrganisationUnitSelectionPage } from 'src/app/shared/modals/organisation-unit-selection/organisation-unit-selection.page';
 import { ProgramSelectionService } from 'src/app/shared/services/program-selection.service';
 import { UserService } from 'src/app/shared/services/user.service';
-import { DEFAULT_CHW_PROGRAMS } from 'src/app/constants/default-chw-programs';
 import * as _ from 'lodash';
 import { Router } from '@angular/router';
 import { SynchronizationService } from 'src/app/shared/services/synchronization.service';
@@ -66,7 +65,6 @@ export class ChwHomePage implements OnInit {
           currentProgram.currentProgramTrackedEntityAttribute,
       }),
     );
-
     this.router.navigate(['/tracked-entity-list']);
   }
 
@@ -79,7 +77,6 @@ export class ChwHomePage implements OnInit {
       currentUser ? currentUser.programs : [],
       currentUser ? currentUser.authorities : [],
     );
-    console.log(this.programs);
     this.isLoading = false;
   }
 }
