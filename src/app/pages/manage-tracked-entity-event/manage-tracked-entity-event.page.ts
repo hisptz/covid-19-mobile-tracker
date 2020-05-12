@@ -12,6 +12,7 @@ import {
   getCurrentProgramStage,
   getCurrentEvent,
   getCurrentEventDataValueObject,
+  getTrackedEntityInstanceSavingStatus,
 } from 'src/app/store/selectors/selections.selectors';
 import { CurrentUser } from 'src/app/models';
 import { UserService } from 'src/app/shared/services/user.service';
@@ -28,6 +29,7 @@ export class ManageTrackedEntityEventPage implements OnInit {
   currentEvent$: Observable<any>;
   currentUser$: Observable<CurrentUser>;
   currentEventDataValueObject$: Observable<any>;
+  isSavingInstance$: Observable<boolean>;
   isFormReady: boolean = true;
   dataObject: any;
   dataValuesSavingStatusClass: any;
@@ -45,6 +47,10 @@ export class ManageTrackedEntityEventPage implements OnInit {
       select(getCurrentEventDataValueObject),
     );
     this.currentProgramStage$ = this.store.pipe(select(getCurrentProgramStage));
+    this.isSavingInstance$ = this.store.pipe(
+      select(getTrackedEntityInstanceSavingStatus),
+    );
+
     this.currentProgramStage$
       .pipe(take(1))
       .subscribe((currentProgramStage: any) => {

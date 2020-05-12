@@ -64,6 +64,7 @@ export class SelectionsEffects {
           } catch (e) {
             console.log(e);
           }
+          // TODO: Add support for pop notification to show saving progress
           this.store.dispatch(saveTrackedEntityInstanceComplete());
           this.router.navigate(['/tracked-entity-list']);
         }),

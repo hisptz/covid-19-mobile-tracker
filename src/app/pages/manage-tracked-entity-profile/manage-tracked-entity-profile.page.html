@@ -15,7 +15,7 @@
     trackedEntityInstanceDates: trackedEntityInstanceDates$ | async,
     isSavingInstance: isSavingInstance$ | async
   } as params">
-  <app-progress-bar *ngIf="params.isSavingInstance" [isIndeterminateProcess]="true"></app-progress-bar>
+  <app-progress-bar *ngIf="params?.isSavingInstance" [isIndeterminateProcess]="true"></app-progress-bar>
   <ion-row *ngIf="params.program && params.trackedEntityInstance">
     <ion-col>
       <form>
