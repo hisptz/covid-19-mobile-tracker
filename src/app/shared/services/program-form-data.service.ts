@@ -44,13 +44,43 @@ export class ProgramFormDataService {
     trackedEntityInstances: any[],
   ) {
     const pageSize = 20;
+    const syncStatus = 'synced';
     const url = `/api/trackedEntityInstances?strategy=CREATE_AND_UPDATE`;
     for (const data of _.chunk(trackedEntityInstances, pageSize)) {
       const teiResponse = await this.httpClientService.post(url, {
         trackedEntityInstances: data,
       });
       const syncedReference = this.getSyncedReferenceIds(teiResponse);
-      console.log({ syncedReference });
+      const updateTeis = _.flattenDeep(
+        _.map(data, (trackedEntityInstanceObj: any) => {
+          return {
+            ...trackedEntityInstanceObj,
+            syncStatus: syncedReference.includes(trackedEntityInstanceObj.id)
+              ? syncStatus
+              : trackedEntityInstanceObj.syncStatus,
+            enrollments: _.map(
+              trackedEntityInstanceObj.enrollments || [],
+              (enrollmentObj: any) => {
+                return {
+                  ...enrollmentObj,
+                  syncStatus: syncedReference.includes(enrollmentObj.id)
+                    ? syncStatus
+                    : enrollmentObj.syncStatus,
+                  events: _.map(enrollmentObj.events || [], (eventObj: any) => {
+                    return {
+                      ...eventObj,
+                      syncStatus: syncedReference.includes(eventObj.id)
+                        ? syncStatus
+                        : trackedEntityInstanceObj.syncStatus,
+                    };
+                  }),
+                };
+              },
+            ),
+          };
+        }),
+      );
+      this.savingTrackedEntityInstancesToLocalStorage(updateTeis);
     }
   }
 
