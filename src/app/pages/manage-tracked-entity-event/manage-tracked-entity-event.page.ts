@@ -88,6 +88,6 @@ export class ManageTrackedEntityEventPage implements OnInit {
   onSave(e) {
     e.stopPropagation();
     this.store.dispatch(saveTrackedEntityInstance());
-    this.router.navigate(['/tracked-entity/stage/events']);
+    // this.router.navigate(['/tracked-entity/stage/events']);
   }
 }

@@ -12,9 +12,11 @@
     currentUser: currentUser$ | async, 
     trackedEntityInstance: currentTrackedEntityInstance$ | async,
     attributeObject: trackedEntityInstanceAttributeValueObject$ | async,
-    trackedEntityInstanceDates: trackedEntityInstanceDates$ | async
+    trackedEntityInstanceDates: trackedEntityInstanceDates$ | async,
+    isSavingInstance: isSavingInstance$ | async
   } as params">
-  <ion-row *ngIf="params.program && params.trackedEntityInstance" class="ion-padding">
+  <app-progress-bar *ngIf="params.isSavingInstance" [isIndeterminateProcess]="true"></app-progress-bar>
+  <ion-row *ngIf="params.program && params.trackedEntityInstance">
     <ion-col>
       <form>
         <app-date-time [mode]="'date'" [label]="params.program.enrollmentDateLabel"
@@ -48,7 +50,8 @@
   </ion-row>
   <!-- TODO: Disable button when not all required fields are filled in -->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button expand="block" size="large" shape="round" color="success" (click)="onSave($event)">
+    <ion-fab-button [disabled]="params.isSavingInstance" expand="block" size="large" shape="round" color="success"
+      (click)="onSave($event)">
       <ion-icon name="save"></ion-icon>
     </ion-fab-button>
   </ion-fab>

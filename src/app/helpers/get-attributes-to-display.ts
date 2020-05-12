@@ -15,8 +15,6 @@ export function getAttributeToDisplay(
       programTrackedEntityAttribute.displayInList,
   );
 
-  console.log(currentProgram);
-
   attributesToDisplay =
     attributesToDisplay.length > 0
       ? _.chunk(

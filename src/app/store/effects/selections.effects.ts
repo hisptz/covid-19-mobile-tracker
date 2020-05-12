@@ -26,17 +26,22 @@ import * as currentUserAction from '../actions/current-user.actions';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { switchMap, concatMap, withLatestFrom, tap } from 'rxjs/operators';
-import { saveTrackedEntityInstance } from '../actions';
+import {
+  saveTrackedEntityInstance,
+  saveTrackedEntityInstanceComplete,
+} from '../actions';
 import { Store, select } from '@ngrx/store';
 import { State } from '../reducers';
 import { getCurrentTrackedEntityInstance } from '../selectors/selections.selectors';
 import { ProgramFormDataService } from 'src/app/shared/services/program-form-data.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class SelectionsEffects {
   constructor(
     private actions$: Actions,
     private store: Store<State>,
+    private router: Router,
     private programDataService: ProgramFormDataService,
   ) {}
 
@@ -51,11 +56,16 @@ export class SelectionsEffects {
             ),
           ),
         ),
-        tap(([{}, trackedEntityInstance]) => {
-          console.log(trackedEntityInstance);
-          this.programDataService.savingTrackedEntityInstancesToLocalStorage([
-            trackedEntityInstance,
-          ]);
+        tap(async ([{}, trackedEntityInstance]) => {
+          try {
+            await this.programDataService.savingTrackedEntityInstancesToLocalStorage(
+              [trackedEntityInstance],
+            );
+          } catch (e) {
+            console.log(e);
+          }
+          this.store.dispatch(saveTrackedEntityInstanceComplete());
+          this.router.navigate(['/tracked-entity-list']);
         }),
       ),
     { dispatch: false },

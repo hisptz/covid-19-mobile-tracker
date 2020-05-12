@@ -155,3 +155,9 @@ export const getCurrentProgramStageEvents = createSelector(
     return events;
   },
 );
+
+export const getTrackedEntityInstanceSavingStatus = createSelector(
+  getSelectionsState,
+  (selectionState: SelectionsState) =>
+    selectionState.isSavingTrackedEntityInstance,
+);
