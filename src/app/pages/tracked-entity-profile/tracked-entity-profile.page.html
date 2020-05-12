@@ -13,17 +13,17 @@
           </ion-label>
           <div class="ion-justify-content-end">
             <ion-label>
-              {{ params?.trackedEntityInstanceDates?.enrollmentDate }}
+              {{ params?.trackedEntityInstanceDates?.enrollmentDate | date:"yyyy-MM-dd" }}
             </ion-label>
           </div>
         </ion-item>
         <ion-item lines="none" class="border-bottom">
           <ion-label class="ion-text-uppercase">
-            {{ params.program.incidentDateLabel || 'Incident Date' }}
+            {{ params.program.incidentDateLabel || 'Incident Date'}}
           </ion-label>
           <div class="ion-justify-content-end">
             <ion-label>
-              {{ params?.trackedEntityInstanceDates?.incidentDate }}
+              {{ params?.trackedEntityInstanceDates?.incidentDate | date:"yyyy-MM-dd" }}
             </ion-label>
           </div>
         </ion-item>

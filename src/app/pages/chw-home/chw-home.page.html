@@ -34,9 +34,13 @@
       </div>
       <div *ngIf="!isLoading">
         <ion-list class="ion-no-padding">
-          <ion-item *ngFor="let program of programs" (click)="onSelectProgram($event, program)">
-            <ion-text class="ion-wrap ion-padding-bottom">
-              <h5>{{ program.displayName }}</h5>
+          <ion-item lines="none" class="border-bottom" *ngFor="let program of programs"
+            (click)="onSelectProgram($event, program)">
+            <ion-avatar slot="start">
+              <div class="avatar-placeholder"></div>
+            </ion-avatar>
+            <ion-text class="ion-wrap">
+              <h6>{{ program.displayName }}</h6>
             </ion-text>
           </ion-item>
         </ion-list>
