@@ -7,29 +7,35 @@
   <ion-row *ngIf="params.program && params.trackedEntityInstanceDates && params.attributesToDisplay">
     <ion-col>
       <ion-list>
-        <ion-item lines="none">
-          <ion-label>
-            <h5>{{ params.program.enrollmentDateLabel || 'Enrollment Date' }}:</h5>
+        <ion-item lines="none" class="border-bottom">
+          <ion-label class="ion-text-uppercase">
+            {{ params.program.enrollmentDateLabel || 'Enrollment Date' }}
           </ion-label>
-          <ion-label>
-            <h5>{{ params?.trackedEntityInstanceDates?.enrollmentDate }}</h5>
-          </ion-label>
+          <div class="ion-justify-content-end">
+            <ion-label>
+              {{ params?.trackedEntityInstanceDates?.enrollmentDate }}
+            </ion-label>
+          </div>
         </ion-item>
-        <ion-item lines="none">
-          <ion-label>
-            <h5>{{ params.program.incidentDateLabel || 'Incident Date' }}:</h5>
+        <ion-item lines="none" class="border-bottom">
+          <ion-label class="ion-text-uppercase">
+            {{ params.program.incidentDateLabel || 'Incident Date' }}
           </ion-label>
-          <ion-label>
-            <h5>{{ params?.trackedEntityInstanceDates?.incidentDate }}</h5>
-          </ion-label>
+          <div class="ion-justify-content-end">
+            <ion-label>
+              {{ params?.trackedEntityInstanceDates?.incidentDate }}
+            </ion-label>
+          </div>
         </ion-item>
-        <ion-item lines="none" *ngFor="let attribute of params.attributesToDisplay">
-          <ion-label>
-            <h5>{{ attribute.name }}:</h5>
+        <ion-item lines="none" class="border-bottom" *ngFor="let attribute of params.attributesToDisplay">
+          <ion-label class="ion-text-uppercase">
+            {{ attribute.name }}
           </ion-label>
-          <ion-label>
-            <h5>{{ params?.trackedEntityInstance[attribute.id] || "" }}</h5>
-          </ion-label>
+          <div class="ion-justify-content-end">
+            <ion-label>
+              {{ params?.trackedEntityInstance[attribute.id] || "" }}
+            </ion-label>
+          </div>
         </ion-item>
       </ion-list>
     </ion-col>

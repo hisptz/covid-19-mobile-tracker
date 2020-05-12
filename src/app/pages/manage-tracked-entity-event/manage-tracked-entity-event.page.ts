@@ -57,10 +57,10 @@ export class ManageTrackedEntityEventPage implements OnInit {
   }
   onUpdateData(
     updatedData: any,
-    currentEvent,
-    eventObject,
+    params,
     shouldSkipProgramRules: boolean = false,
   ) {
+    const { currentEvent, eventObject } = params;
     console.log(d2Rule.execute({}, {}, [], [], {}));
     this.dataObject[updatedData.id] = updatedData;
 

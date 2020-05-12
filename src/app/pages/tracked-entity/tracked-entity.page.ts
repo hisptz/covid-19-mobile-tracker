@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Program } from 'src/app/models';
 import { Router } from '@angular/router';
+import { Platform, IonRouterOutlet } from '@ionic/angular';
 
 @Component({
   selector: 'app-tracked-entity',
@@ -9,12 +10,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./tracked-entity.page.scss'],
 })
 export class TrackedEntityPage implements OnInit {
-  constructor(private router: Router) {}
+  @ViewChildren(IonRouterOutlet) routerOutlets: QueryList<IonRouterOutlet>;
+  constructor(private platform: Platform, private router: Router) {
+    this.platform.backButton.subscribe(() => {
+      this.routerOutlets.forEach((outlet: IonRouterOutlet) => {
+        if (outlet && outlet.canGoBack()) {
+          outlet.pop();
+        }
+      });
+    });
+  }
 
   ngOnInit() {}
-
-  onViewTrackedEntityList(e) {
-    e.stopPropagation();
-    this.router.navigate(['/tracked-entity-list']);
-  }
 }
