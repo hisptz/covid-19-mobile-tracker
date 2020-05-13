@@ -318,8 +318,10 @@ export class ProgramFormDataService {
             trackedEntityInstanceObj.enrollments || [],
             (enrollment: any) => {
               return _.map(enrollment.events || [], (eventObj: any) => {
-                console.log(eventObj);
-                return { ...eventObj, id: eventObj.event || '' };
+                return {
+                  ...eventObj,
+                  id: eventObj.id ? eventObj.id : eventObj.event || '',
+                };
               });
             },
           );

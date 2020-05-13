@@ -113,11 +113,6 @@ export class TrackedEntityListPage implements OnInit {
             numberOfContact: relationships.length,
           };
         });
-        console.log({
-          organisationUnitId,
-          programId,
-          data: this.trackedEntityInstanceList,
-        });
         this.isLoading = !isCompleted;
       });
   }
