@@ -38,3 +38,4 @@ export * from './program.entity';
 export * from './program-rule.entity';
 export * from './relationship-types.entity';
 export * from './event.entity';
+export * from './attribute-reserved-value.entity';

@@ -21,8 +21,13 @@
  * @author Joseph Chingalo <profschingalo@gmail.com>
  *
  */
-export * from './app-metadata';
-export * from './entry-form-selection';
-export * from './data-entry-form';
-export * from './get-atttributes-with-reserved-value';
-export * from './generate-uid';
+import { Entity, PrimaryColumn, Column } from 'typeorm';
+
+@Entity()
+export class AttributeReservedValueEntity {
+  @PrimaryColumn() id: string;
+  @Column() attribute: string;
+  @Column() value: string;
+  @Column() expiryDate: string;
+  @Column() created: string;
+}
