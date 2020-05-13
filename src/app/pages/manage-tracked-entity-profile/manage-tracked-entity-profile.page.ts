@@ -18,6 +18,7 @@ import {
 import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { UserService } from 'src/app/shared/services/user.service';
+import * as d2Rule from '@iapps/dhis2-program-rule-engine';
 import { updateTrackedEntityInstanceWithAtrributes } from 'src/app/helpers/update-tracked-entity-instance-with-attributes';
 
 @Component({
@@ -167,6 +168,9 @@ export class ManageTrackedEntityProfilePage implements OnInit {
       programTrackedEntityAttributes,
       trackedEntityAttributeValuesObject,
     );
+
+    console.log(attributeObject);
+    console.log(d2Rule.execute());
 
     this.trackedEntityAttributeValuesObject = trackedEntityAttributeValuesObject;
     this.store.dispatch(
