@@ -379,8 +379,10 @@ export class ProgramFormDataService {
         );
         const values = _.uniq(
           _.flattenDeep(
-            filteredAttributes,
-            (attributeObj: any) => attributeObj.value || [],
+            _.map(
+              filteredAttributes,
+              (attributeObj: any) => attributeObj.value || [],
+            ),
           ),
         );
         return (
@@ -390,7 +392,6 @@ export class ProgramFormDataService {
         );
       },
     );
-    console.log({ expiriedAttributeReservedValues, attributeIds, attributes });
     await this.attributeReservedValueManagerService.clearExpiredAttributeReservedValues(
       expiriedAttributeReservedValues,
     );

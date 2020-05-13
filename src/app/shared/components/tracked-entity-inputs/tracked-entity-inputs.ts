@@ -146,7 +146,9 @@ export class TrackedEntityInputsComponent implements OnInit {
             status: '',
           };
           this.data[fieldId] = updatedValue;
-          this.updateValue(updatedValue);
+          if (Object.keys(this.data).length > 1) {
+            this.updateValue(updatedValue);
+          }
         }
       }
     } catch (error) {}
