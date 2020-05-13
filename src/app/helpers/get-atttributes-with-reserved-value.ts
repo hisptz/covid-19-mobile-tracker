@@ -21,22 +21,39 @@
  * @author Joseph Chingalo <profschingalo@gmail.com>
  *
  */
-import { Program, ProgramProgramTrackedEntityAttribute } from '../models';
+import { Program, AttributeReservedValue } from '../models';
 import * as _ from 'lodash';
 
 export function getAttributesWithReservedValues(programs: Program[]) {
   return _.uniq(
-    _.flattenDeep(programs, (program: Program) => {
-      return _.map(
-        program.programTrackedEntityAttributes || [],
-        (programTrackedEntityAttribute: any) => {
-          return programTrackedEntityAttribute &&
-            programTrackedEntityAttribute.trackedEntityAttribute &&
-            programTrackedEntityAttribute.trackedEntityAttribute.generated
-            ? programTrackedEntityAttribute.trackedEntityAttribute.id || []
-            : [];
-        },
-      );
-    }),
+    _.flattenDeep(
+      _.map(programs, (program: Program) => {
+        return _.map(
+          program.programTrackedEntityAttributes || [],
+          (programTrackedEntityAttribute: any) => {
+            return programTrackedEntityAttribute &&
+              programTrackedEntityAttribute.trackedEntityAttribute &&
+              programTrackedEntityAttribute.trackedEntityAttribute.generated
+              ? programTrackedEntityAttribute.trackedEntityAttribute.id || []
+              : [];
+          },
+        );
+      }),
+    ),
+  );
+}
+
+export function getExpiriedAttributeReservedValues(
+  attributeReservedValues: AttributeReservedValue[],
+) {
+  return _.flattenDeep(
+    _.filter(
+      attributeReservedValues,
+      (attributeReservedValue: AttributeReservedValue) => {
+        const expiryDate = new Date(attributeReservedValue.expiryDate);
+        const today = new Date();
+        return today >= expiryDate;
+      },
+    ),
   );
 }
