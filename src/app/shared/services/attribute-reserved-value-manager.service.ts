@@ -67,26 +67,27 @@ export class AttributeReservedValueManagerService {
           await this.clearExpiredAttributeReservedValues(
             expiriedAttributeReservedValues,
           );
-          const generatedAttributeReservedValues = await this.getGeneratedAttributeValuesFromServer(
+          let generatedAttributeReservedValues = await this.getGeneratedAttributeValuesFromServer(
             attribute,
             numberToReserve,
+          );
+          generatedAttributeReservedValues = _.map(
+            generatedAttributeReservedValues,
+            (generatedAttributeReservedValue: any) => {
+              return {
+                ...generatedAttributeReservedValue,
+                id: generateUid(),
+                attribute,
+              };
+            },
           );
           await this.saveGeneratedAttributeReservedValues(
             generatedAttributeReservedValues,
           );
-          alert(
-            JSON.stringify({
-              numberToReserve,
-              MAXIMUM_RESERVED_VALUES,
-              attributeReservedValues,
-              expiriedAttributeReservedValues,
-              generatedAttributeReservedValues,
-            }),
-          );
         }
       }
     } catch (error) {
-      console.log({ error });
+      console.log(error);
     }
   }
 
@@ -98,7 +99,6 @@ export class AttributeReservedValueManagerService {
     try {
       const url = `/api/trackedEntityAttributes/${attribute}/generateAndReserve?numberToReserve=${numberToReserve}`;
       const response = await this.httpClientService.get(url, true);
-      alert(JSON.stringify(response));
       generatedValues.push(response);
     } catch (error) {}
     return _.flattenDeep(generatedValues);
@@ -125,7 +125,7 @@ export class AttributeReservedValueManagerService {
     } catch (error) {}
   }
 
-  async getAttributeReservedValues(attribute: string) {
+  async getAttributeReservedValues(attribute?: string) {
     const repository = getRepository(
       AttributeReservedValueEntity,
       CONNECTION_NAME,

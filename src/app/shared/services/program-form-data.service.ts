@@ -33,12 +33,16 @@ import { TrackedEntityInstance } from 'src/app/models';
 import { CONNECTION_NAME } from 'src/app/constants/db-options';
 import { Observable } from 'rxjs';
 import { HttpClientService } from './http-client.service';
+import { AttributeReservedValueManagerService } from './attribute-reserved-value-manager.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProgramFormDataService {
-  constructor(private httpClientService: HttpClientService) {}
+  constructor(
+    private httpClientService: HttpClientService,
+    private attributeReservedValueManagerService: AttributeReservedValueManagerService,
+  ) {}
 
   async syncOfflineTrackedEntityInstancesToServer(
     trackedEntityInstances: any[],
@@ -85,7 +89,7 @@ export class ProgramFormDataService {
     }
   }
 
-  getSyncedReferenceIds(teiResponse) {
+  getSyncedReferenceIds(teiResponse: any) {
     const response = teiResponse.response || {};
     const importSummaries = response.importSummaries || [];
     return _.flattenDeep(
@@ -346,9 +350,49 @@ export class ProgramFormDataService {
       await this.savingTrackedEntityInsanceAttributes(attributes);
       await this.savingTrackedEntityInsanceEnrollements(enrollments);
       await this.savingTrackedEntityInsanceEnrollementEvents(events);
+      await this.removeGenaretedReservedValues(attributes);
+      await this.attributeReservedValueManagerService.regenerateAttributeReservedValues();
     } catch (error) {
       console.log(error);
     }
+  }
+
+  async removeGenaretedReservedValues(attributes: any[]) {
+    const reservedValues = await this.attributeReservedValueManagerService.getAttributeReservedValues();
+    const attributeIds = _.uniq(
+      _.flattenDeep(
+        _.map(
+          reservedValues || [],
+          (reservedValueObj: any) => reservedValueObj.attribute || [],
+        ),
+      ),
+    );
+    const expiriedAttributeReservedValues = _.filter(
+      reservedValues,
+      (reservedValueObj: any) => {
+        const filteredAttributes = _.filter(
+          attributes,
+          (attributeObj: any) =>
+            attributeObj &&
+            attributeObj.attribute &&
+            attributeIds.includes(attributeObj.attribute),
+        );
+        const values = _.uniq(
+          _.flattenDeep(
+            filteredAttributes,
+            (attributeObj: any) => attributeObj.value || [],
+          ),
+        );
+        return (
+          reservedValueObj &&
+          reservedValueObj.value &&
+          values.includes(reservedValueObj.value)
+        );
+      },
+    );
+    await this.attributeReservedValueManagerService.clearExpiredAttributeReservedValues(
+      expiriedAttributeReservedValues,
+    );
   }
 
   async getSavedTrackedEntityInstancesFromLocalStorage(

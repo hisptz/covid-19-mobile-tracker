@@ -36,6 +36,7 @@ export function updateTrackedEntityInstanceWithAtrributes(
   );
   return {
     ...trackedEntityInstance,
+    syncStatus: 'not-synced',
     attributes: (trackedEntityAttributeValuesKeys || [])
       .map((key) => {
         if (key.split('-')[0] === 'undefined') {
