@@ -69,32 +69,44 @@
       </app-age-input>
     </div>
     <div *ngIf="trackedEntityAttribute.valueType === 'BOOLEAN'">
-      <app-boolean-input (valueChange)="updateValue($event)" [dataElementId]="trackedEntityAttribute.id"
+      <app-boolean-input (valueChange)="updateValue($event)" [label]="fieldLabelKey" [dataElementId]="trackedEntityAttribute.id"
         [categoryOptionComboId]="'trackedEntityAttribute'" [data]="data">
       </app-boolean-input>
     </div>
     <div *ngIf="trackedEntityAttribute.valueType === 'COORDINATE'">
+      <div >
+        <ion-label >{{ fieldLabelKey }}</ion-label>
+      </div>
       <app-coordinate-input (coordinateChange)="updateValue($event)" [dataElementId]="trackedEntityAttribute.id"
         [categoryOptionComboId]="'trackedEntityAttribute'" [data]="data">
       </app-coordinate-input>
     </div>
     <div *ngIf="trackedEntityAttribute.valueType === 'ORGANISATION_UNIT'">
+      <div >
+        <ion-label >{{ fieldLabelKey }}</ion-label>
+      </div>
       <app-organisation-unit-input (organisationUnitChange)="updateValue($event)"
         [dataElementId]="trackedEntityAttribute.id" [categoryOptionComboId]="'trackedEntityAttribute'" [data]="data">
       </app-organisation-unit-input>
     </div>
     <div *ngIf="trackedEntityAttribute.valueType === 'UNIT_INTERVAL'">
+    <div >
+        <ion-label >{{ fieldLabelKey }}</ion-label>
+      </div>
       <app-unit-interval-input (unitIntervalChange)="updateValue($event)" [dataElementId]="trackedEntityAttribute.id"
         [categoryOptionComboId]="'trackedEntityAttribute'" [data]="data">
       </app-unit-interval-input>
     </div>
     <div *ngIf="trackedEntityAttribute.valueType === 'PERCENTAGE'">
+    <div >
+        <ion-label >{{ fieldLabelKey }}</ion-label>
+      </div>
       <app-percentage-input (percentageChange)="updateValue($event)" [dataElementId]="trackedEntityAttribute.id"
         [categoryOptionComboId]="'trackedEntityAttribute'" [data]="data">
       </app-percentage-input>
     </div>
     <div *ngIf="trackedEntityAttribute.valueType === 'EMAIL'">
-      <app-email-input (emailChange)="updateValue($event)"
+      <app-email-input (emailChange)="updateValue($event)" [label]="fieldLabelKey"
         [(dataValuesSavingStatusClass)]="trackedEntityAttributesSavingStatusClass"
         [dataElementId]="trackedEntityAttribute.id" [categoryOptionComboId]="'trackedEntityAttribute'" [data]="data">
       </app-email-input>

@@ -69,32 +69,44 @@
             </app-age-input>
         </div>
         <div *ngIf="dataElement.valueType === 'BOOLEAN'">
-            <app-boolean-input (change)="updateValue($event)" [dataElementId]="dataElement.id"
+            <app-boolean-input (change)="updateValue($event)" [label]="fieldLabelKey" [dataElementId]="dataElement.id"
                 [categoryOptionComboId]="'dataElement'" [data]="data">
             </app-boolean-input>
         </div>
         <div *ngIf="dataElement.valueType === 'COORDINATE'">
+            <div >
+                <ion-label >{{ fieldLabelKey }}</ion-label>
+            </div>
             <app-coordinate-input (change)="updateValue($event)" [dataElementId]="dataElement.id"
                 [categoryOptionComboId]="'dataElement'" [data]="data">
             </app-coordinate-input>
         </div>
         <div *ngIf="dataElement.valueType === 'ORGANISATION_UNIT'">
+            <div >
+                <ion-label >{{ fieldLabelKey }}</ion-label>
+            </div>
             <app-organisation-unit-input (change)="updateValue($event)" [dataElementId]="dataElement.id"
                 [categoryOptionComboId]="'dataElement'" [data]="data">
             </app-organisation-unit-input>
         </div>
         <div *ngIf="dataElement.valueType === 'UNIT_INTERVAL'">
+            <div >
+                <ion-label >{{ fieldLabelKey }}</ion-label>
+            </div>
             <app-unit-interval-input (change)="updateValue($event)" [dataElementId]="dataElement.id"
                 [categoryOptionComboId]="'dataElement'" [data]="data">
             </app-unit-interval-input>
         </div>
         <div *ngIf="dataElement.valueType === 'PERCENTAGE'">
+            <div >
+                <ion-label >{{ fieldLabelKey }}</ion-label>
+            </div>
             <app-percentage-input (change)="updateValue($event)" [dataElementId]="dataElement.id"
                 [categoryOptionComboId]="'dataElement'" [data]="data">
             </app-percentage-input>
         </div>
         <div *ngIf="dataElement.valueType === 'EMAIL'">
-            <app-email-input (change)="updateValue($event)"
+            <app-email-input (change)="updateValue($event)" [label]="fieldLabelKey"
                 [(dataValuesSavingStatusClass)]="dataElementsSavingStatusClass" [dataElementId]="dataElement.id"
                 [categoryOptionComboId]="'dataElement'" [data]="data">
             </app-email-input>
