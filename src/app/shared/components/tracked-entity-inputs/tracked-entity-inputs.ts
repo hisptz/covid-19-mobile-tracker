@@ -131,7 +131,7 @@ export class TrackedEntityInputsComponent implements OnInit {
         isAttributeWithRervedValues
       ) {
         const id = trackedEntityAttribute.id;
-        const fieldId = `${id}-isAttributeWithRervedValues`;
+        const fieldId = `${id}-trackedEntityAttribute`;
         const reservedValues = await this.attributeReservedValueManagerService.getAttributeReservedValues(
           id,
         );
@@ -153,7 +153,6 @@ export class TrackedEntityInputsComponent implements OnInit {
   }
 
   updateValue(updatedValue) {
-    console.log({ updatedValue });
     this.trackedEntityAttributesSavingStatusClass[updatedValue.id] =
       'input-field-container-saving';
     this.valueChange.emit(updatedValue);

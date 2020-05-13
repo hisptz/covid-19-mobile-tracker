@@ -120,7 +120,7 @@ export class AttributeReservedValueManagerService {
         ),
       );
       if (ids.length > 0) {
-        await repository.delete({ id: In(ids) });
+        await repository.delete(ids);
       }
     } catch (error) {}
   }

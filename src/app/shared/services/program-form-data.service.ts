@@ -390,6 +390,7 @@ export class ProgramFormDataService {
         );
       },
     );
+    console.log({ expiriedAttributeReservedValues, attributeIds, attributes });
     await this.attributeReservedValueManagerService.clearExpiredAttributeReservedValues(
       expiriedAttributeReservedValues,
     );

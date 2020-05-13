@@ -21,4 +21,4 @@
  * @author Joseph Chingalo <profschingalo@gmail.com>
  *
  */
-export const MAXIMUM_RESERVED_VALUES = 2;
+export const MAXIMUM_RESERVED_VALUES = 10;
