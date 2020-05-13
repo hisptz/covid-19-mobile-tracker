@@ -32,6 +32,7 @@ import { Option } from 'src/app/models';
 export class BooleanInputComponent implements OnInit {
   @Input() dataElementId: string;
   @Input() lockingFieldStatus: boolean;
+  @Input() label: string;
   @Input() categoryOptionComboId: string;
   @Input() data: any;
 

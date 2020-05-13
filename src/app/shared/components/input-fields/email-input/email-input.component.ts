@@ -33,6 +33,7 @@ export class EmailInputComponent implements OnInit {
   @Input() categoryOptionComboId: string;
   @Input() lockingFieldStatus: boolean;
   @Input() data: any;
+  @Input() label: string;
   @Output() emailChange = new EventEmitter();
   @Input() dataValuesSavingStatusClass: any;
   inputFieldValue: any;

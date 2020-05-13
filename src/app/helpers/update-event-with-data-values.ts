@@ -1,4 +1,5 @@
 import { Events } from '../models';
+import * as _ from 'lodash';
 
 export function updateEventWithDataValues(event: any, eventObject): Events {
   if (!event || !eventObject) {

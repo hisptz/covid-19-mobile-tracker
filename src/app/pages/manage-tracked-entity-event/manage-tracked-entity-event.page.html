@@ -28,7 +28,7 @@
           <div *ngIf="programStageDataElement.dataElement">
             <event-input-container [dataElement]="programStageDataElement.dataElement"
               [currentUser]="params.currentUser" [data]="params.eventObject || dataObject"
-              [dataValuesSavingStatusClass]="dataValuesSavingStatusClass" (onChange)="onUpdateData($event, params)">
+              [dataValuesSavingStatusClass]="dataValuesSavingStatusClass" (valueChange)="onUpdateData($event, params)">
             </event-input-container>
           </div>
         </div>
