@@ -21,15 +21,13 @@
  * @author Joseph Chingalo <profschingalo@gmail.com>
  *
  */
-import { Component, OnInit } from '@angular/core';
+import { Entity, PrimaryColumn, Column } from 'typeorm';
 
-@Component({
-  selector: 'app-input-field-container',
-  templateUrl: './input-field-container.component.html',
-  styleUrls: ['./input-field-container.component.scss'],
-})
-export class InputFieldContainerComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit() {}
+@Entity()
+export class AttributeReservedValueEntity {
+  @PrimaryColumn() id: string;
+  @Column() attribute: string;
+  @Column() value: string;
+  @Column() expiryDate: string;
+  @Column() created: string;
 }

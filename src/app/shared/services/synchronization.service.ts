@@ -72,6 +72,7 @@ export class SynchronizationService {
                   ...enrollmentObj,
                   trackedEntityType: trackedEntity,
                   events: _.map(enrollmentObj.events || [], (eventObj: any) => {
+                    delete eventObj.deleted;
                     return { ...eventObj, event: eventObj.id || '' };
                   }),
                 };
@@ -102,7 +103,7 @@ export class SynchronizationService {
         }
       }
     } catch (error) {
-      console.log(JSON.stringify(error));
+      console.log(error);
     }
     return;
   }

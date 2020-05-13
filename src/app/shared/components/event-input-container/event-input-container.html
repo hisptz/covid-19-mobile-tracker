@@ -23,13 +23,6 @@
 *
 -->
 <div *ngIf="!isLoading && dataElement" class="ion-padding-top">
-    <!-- <div (click)="showTooltips()" class="inputLabel">
-        {{ fieldLabelKey }}
-        <span *ngIf="mandatory" class="required">&nbsp;*</span>
-        <span *ngIf="dataElement.description">&nbsp;&nbsp;
-      <ion-icon color="icon-color" name="help-circle"></ion-icon>
-    </span>
-    </div> -->
     <div *ngIf="dataElement.optionSet"
         [ngClass]="(dataValuesSavingStatusClass[dataElement.id +'-dataElement'])?dataValuesSavingStatusClass[dataElement.id +'-dataElement']:'input-field-container'">
         <app-option-set-input [dataEntrySettings]="dataEntrySettings" (optionSetChange)="updateValue($event)"
@@ -46,61 +39,73 @@
             </app-text-input>
         </div>
         <div *ngIf="numericalInputField.indexOf(dataElement.valueType) > -1">
-            <app-numerical-input (change)="updateValue($event)" [dataElementId]="dataElement.id"
+            <app-numerical-input (numericalValueChange)="updateValue($event)" [dataElementId]="dataElement.id"
                 [categoryOptionComboId]="'dataElement'" [data]="data" [barcodeSettings]="barcodeSettings"
                 [valueType]="dataElement.valueType" [label]="fieldLabelKey">
             </app-numerical-input>
         </div>
         <div
             *ngIf="dataElement.valueType === 'DATE' || dataElement.valueType === 'DATETIME' || dataElement.valueType === 'TIME' ">
-            <app-date-input (change)="updateValue($event)" [valueType]="dataElement.valueType"
+            <app-date-input (valueChange)="updateValue($event)" [valueType]="dataElement.valueType"
                 [dataElementId]="dataElement.id" [label]="fieldLabelKey" [categoryOptionComboId]="'dataElement'"
                 [data]="data">
             </app-date-input>
         </div>
         <div *ngIf="dataElement.valueType === 'TRUE_ONLY'">
-            <app-true-only-input (change)="updateValue($event)" [dataElementId]="dataElement.id"
+            <app-true-only-input (valueChange)="updateValue($event)" [dataElementId]="dataElement.id"
                 [categoryOptionComboId]="'dataElement'" [data]="data" [label]="fieldLabelKey">
             </app-true-only-input>
         </div>
         <div *ngIf="dataElement.valueType === 'AGE'">
-            <app-age-input (change)="updateValue($event)" [dataElementId]="dataElement.id"
+            <app-age-input (ageChange)="updateValue($event)" [dataElementId]="dataElement.id"
                 [categoryOptionComboId]="'dataElement'" [data]="data" [label]="fieldLabelKey">
             </app-age-input>
         </div>
         <div *ngIf="dataElement.valueType === 'BOOLEAN'">
-            <app-boolean-input (change)="updateValue($event)" [dataElementId]="dataElement.id"
+            <app-boolean-input (valueChange)="updateValue($event)" [label]="fieldLabelKey" [dataElementId]="dataElement.id"
                 [categoryOptionComboId]="'dataElement'" [data]="data">
             </app-boolean-input>
         </div>
         <div *ngIf="dataElement.valueType === 'COORDINATE'">
-            <app-coordinate-input (change)="updateValue($event)" [dataElementId]="dataElement.id"
+            <div >
+                <ion-label >{{ fieldLabelKey }}</ion-label>
+            </div>
+            <app-coordinate-input (coordinateChange)="updateValue($event)" [dataElementId]="dataElement.id"
                 [categoryOptionComboId]="'dataElement'" [data]="data">
             </app-coordinate-input>
         </div>
         <div *ngIf="dataElement.valueType === 'ORGANISATION_UNIT'">
-            <app-organisation-unit-input (change)="updateValue($event)" [dataElementId]="dataElement.id"
+            <div >
+                <ion-label >{{ fieldLabelKey }}</ion-label>
+            </div>
+            <app-organisation-unit-input (organisationUnitChange)="updateValue($event)" [dataElementId]="dataElement.id"
                 [categoryOptionComboId]="'dataElement'" [data]="data">
             </app-organisation-unit-input>
         </div>
         <div *ngIf="dataElement.valueType === 'UNIT_INTERVAL'">
-            <app-unit-interval-input (change)="updateValue($event)" [dataElementId]="dataElement.id"
+            <div >
+                <ion-label >{{ fieldLabelKey }}</ion-label>
+            </div>
+            <app-unit-interval-input (unitIntervalChange)="updateValue($event)" [dataElementId]="dataElement.id"
                 [categoryOptionComboId]="'dataElement'" [data]="data">
             </app-unit-interval-input>
         </div>
         <div *ngIf="dataElement.valueType === 'PERCENTAGE'">
-            <app-percentage-input (change)="updateValue($event)" [dataElementId]="dataElement.id"
+            <div >
+                <ion-label >{{ fieldLabelKey }}</ion-label>
+            </div>
+            <app-percentage-input (percentageChange)="updateValue($event)" [dataElementId]="dataElement.id"
                 [categoryOptionComboId]="'dataElement'" [data]="data">
             </app-percentage-input>
         </div>
         <div *ngIf="dataElement.valueType === 'EMAIL'">
-            <app-email-input (change)="updateValue($event)"
+            <app-email-input (emailChange)="updateValue($event)" [label]="fieldLabelKey"
                 [(dataValuesSavingStatusClass)]="dataElementsSavingStatusClass" [dataElementId]="dataElement.id"
                 [categoryOptionComboId]="'dataElement'" [data]="data">
             </app-email-input>
         </div>
         <div *ngIf="dataElement.valueType === 'PHONE_NUMBER'">
-            <app-phone-number-input (change)="updateValue($event)"
+            <app-phone-number-input (phoneNumberChange)="updateValue($event)"
                 [(dataValuesSavingStatusClass)]="dataElementsSavingStatusClass" [dataElementId]="dataElement.id"
                 [categoryOptionComboId]="'dataElement'" [data]="data" [label]="fieldLabelKey">
             </app-phone-number-input>

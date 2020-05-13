@@ -21,8 +21,10 @@
  * @author Joseph Chingalo <profschingalo@gmail.com>
  *
  */
-export * from './app-metadata';
-export * from './entry-form-selection';
-export * from './data-entry-form';
-export * from './get-atttributes-with-reserved-value';
-export * from './generate-uid';
+export interface AttributeReservedValue {
+  id: string;
+  attribute: string;
+  value: string;
+  expiryDate: string;
+  created: string;
+}

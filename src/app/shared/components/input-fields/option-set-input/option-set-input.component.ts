@@ -100,21 +100,23 @@ export class OptionSetInputComponent implements OnInit {
   }
 
   async openOptionSetSelectionModal() {
-    const modal = await this.modalController.create({
-      component: OptionSetSelectionPage,
-      componentProps: {
-        selectedValue: this.inputFieldValue,
-        options: this.options,
-        optionListTitle: this.optionListTitle,
-      },
-      cssClass: 'inset-modal',
-    });
-    modal.present();
-    const response = await modal.onDidDismiss();
-    if (response && response.data) {
-      const { data } = response;
-      const { code } = data;
-      this.onUpdateOptionValue(code);
+    if (!this.lockingFieldStatus) {
+      const modal = await this.modalController.create({
+        component: OptionSetSelectionPage,
+        componentProps: {
+          selectedValue: this.inputFieldValue,
+          options: this.options,
+          optionListTitle: this.optionListTitle,
+        },
+        cssClass: 'inset-modal',
+      });
+      modal.present();
+      const response = await modal.onDidDismiss();
+      if (response && response.data) {
+        const { data } = response;
+        const { code } = data;
+        this.onUpdateOptionValue(code);
+      }
     }
   }
 

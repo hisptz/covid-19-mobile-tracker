@@ -38,12 +38,16 @@ import {
   TrackedEntityAttributeEntity,
 } from 'src/app/entites';
 import { CONNECTION_NAME } from 'src/app/constants/db-options';
+import { AttributeReservedValueManagerService } from './attribute-reserved-value-manager.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProgramService {
-  constructor(private httpCLientService: HttpClientService) {}
+  constructor(
+    private httpCLientService: HttpClientService,
+    private attributeReservedValueManagerService: AttributeReservedValueManagerService,
+  ) {}
 
   discoveringProgramsFromServer(currentUser: CurrentUser): Observable<any> {
     let programResponse = [];
@@ -73,8 +77,13 @@ export class ProgramService {
               programs,
               currentUser,
             );
-            observer.next(_.uniqBy(programResponse, 'id'));
-            observer.complete();
+            programResponse = _.uniqBy(programResponse, 'id');
+            this.attributeReservedValueManagerService
+              .regenerateAttributeReservedValues(programResponse)
+              .then(() => {
+                observer.next(programResponse);
+                observer.complete();
+              });
           })
           .catch((error: any) => {
             observer.error(error);

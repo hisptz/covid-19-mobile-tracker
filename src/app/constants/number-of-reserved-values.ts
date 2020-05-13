@@ -21,8 +21,4 @@
  * @author Joseph Chingalo <profschingalo@gmail.com>
  *
  */
-export * from './app-metadata';
-export * from './entry-form-selection';
-export * from './data-entry-form';
-export * from './get-atttributes-with-reserved-value';
-export * from './generate-uid';
+export const MAXIMUM_RESERVED_VALUES = 100;

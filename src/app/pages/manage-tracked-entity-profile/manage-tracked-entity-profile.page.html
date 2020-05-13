@@ -19,11 +19,11 @@
   <ion-row *ngIf="params.program && params.trackedEntityInstance">
     <ion-col>
       <form>
-        <app-date-time [mode]="'date'" [label]="params.program.enrollmentDateLabel"
+        <app-date-time [mode]="'date'" [label]="params.program.enrollmentDateLabel || 'Enrollment Date'"
           [inputValue]="params?.trackedEntityInstanceDates?.enrollmentDate"
           (dateTimeChange)="onTrackedEntityDatesUpdate($event, params?.trackedEntityInstance, 'enrollmentDate')">
         </app-date-time>
-        <app-date-time [mode]="'date'" [label]="params.program.incidentDateLabel"
+        <app-date-time [mode]="'date'" [label]="params.program.incidentDateLabel || 'Incident Date'"
           [inputValue]="params?.trackedEntityInstanceDates?.incidentDate"
           (dateTimeChange)="onTrackedEntityDatesUpdate($event, params?.trackedEntityInstance, 'incidentDate')">
         </app-date-time>
@@ -36,7 +36,7 @@
               [currentUser]="params.currentUser" [data]="params.attributeObject || dataObject"
               [(trackedEntityAttributesSavingStatusClass)]="trackedEntityAttributesSavingStatusClass"
               [mandatory]="programTrackedEntityAttribute.mandatory"
-              (onChange)="onUpdateAttributesValue($event, params.program.programTrackedEntityAttributes, params.trackedEntityInstance, params.attributeObject)">
+              (valueChange)="onUpdateAttributesValue($event, params.program.programTrackedEntityAttributes, params.trackedEntityInstance, params.attributeObject)">
             </tracked-entity-inputs>
             <!-- <div *ngIf="errorOrWarningMessage[programTrackedEntityAttribute.trackedEntityAttribute.id]">
               <program-rule-action-message

@@ -67,7 +67,9 @@ export class HttpClientService {
                   resolve(response);
                 })
                 .catch((error: any) => {
-                  reject(error);
+                  const errorResponse =
+                    error && error.error ? JSON.parse(error.error) : error;
+                  reject(errorResponse);
                 });
             } else {
               this.getResponseWithoutPaginations(apiUrl, headers, dataOnly)
@@ -75,12 +77,16 @@ export class HttpClientService {
                   resolve(response);
                 })
                 .catch((error: any) => {
-                  reject(error);
+                  const errorResponse =
+                    error && error.error ? JSON.parse(error.error) : error;
+                  reject(errorResponse);
                 });
             }
           })
           .catch((error: any) => {
-            reject(error);
+            const errorResponse =
+              error && error.error ? JSON.parse(error.error) : error;
+            reject(errorResponse);
           });
       } else {
         reject({ error: message });
@@ -124,12 +130,16 @@ export class HttpClientService {
                   resolve(initialResponse);
                 }
               } catch (error) {
-                reject(error);
+                const errorResponse =
+                  error && error.error ? JSON.parse(error.error) : error;
+                reject(errorResponse);
               }
             },
             (error, results) => {
               if (error) {
-                reject(error);
+                const errorResponse =
+                  error && error.error ? JSON.parse(error.error) : error;
+                reject(errorResponse);
               } else {
                 resolve(initialResponse);
               }
@@ -137,7 +147,9 @@ export class HttpClientService {
           );
         })
         .catch((error: any) => {
-          reject(error);
+          const errorResponse =
+            error && error.error ? JSON.parse(error.error) : error;
+          reject(errorResponse);
         });
     });
   }
@@ -154,7 +166,9 @@ export class HttpClientService {
           resolve(responseData);
         })
         .catch((error: any) => {
-          reject(error);
+          const errorResponse =
+            error && error.error ? JSON.parse(error.error) : error;
+          reject(errorResponse);
         });
     });
   }
@@ -184,11 +198,15 @@ export class HttpClientService {
                 resolve(responseData);
               })
               .catch((error: any) => {
-                reject(error);
+                const errorResponse =
+                  error && error.error ? JSON.parse(error.error) : error;
+                reject(errorResponse);
               });
           })
           .catch((error: any) => {
-            reject(error);
+            const errorResponse =
+              error && error.error ? JSON.parse(error.error) : error;
+            reject(errorResponse);
           });
       } else {
         reject({ error: message });
@@ -220,11 +238,15 @@ export class HttpClientService {
                 resolve(responseData);
               })
               .catch((error: any) => {
-                reject(error);
+                const errorResponse =
+                  error && error.error ? JSON.parse(error.error) : error;
+                reject(errorResponse);
               });
           })
           .catch((error: any) => {
-            reject(error);
+            const errorResponse =
+              error && error.error ? JSON.parse(error.error) : error;
+            reject(errorResponse);
           });
       } else {
         reject({ error: message });
@@ -256,11 +278,15 @@ export class HttpClientService {
                 resolve(data);
               })
               .catch((error: any) => {
-                reject(error);
+                const errorResponse =
+                  error && error.error ? JSON.parse(error.error) : error;
+                reject(errorResponse);
               });
           })
           .catch((error: any) => {
-            reject(error);
+            const errorResponse =
+              error && error.error ? JSON.parse(error.error) : error;
+            reject(errorResponse);
           });
       } else {
         reject({ error: message });

@@ -22,9 +22,9 @@
  *
  */
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ActionSheetController } from '@ionic/angular';
 
 import { SettingService } from '../../services/setting.service';
+import { AttributeReservedValueManagerService } from '../../services/attribute-reserved-value-manager.service';
 
 /**
  * Generated class for the TrackedEntityInputsComponent component.
@@ -42,7 +42,7 @@ export class TrackedEntityInputsComponent implements OnInit {
   @Input() mandatory;
   @Input() data;
   @Input() trackedEntityAttributesSavingStatusClass;
-  @Output() onChange = new EventEmitter();
+  @Output() valueChange = new EventEmitter();
 
   fieldLabelKey: any;
   textInputField: Array<string>;
@@ -52,15 +52,17 @@ export class TrackedEntityInputsComponent implements OnInit {
   dataEntrySettings: any;
   barcodeSettings: any;
   isLoading: boolean;
+  isDisabled: boolean;
 
   constructor(
     private settingSetting: SettingService,
-    private actionSheetCtrl: ActionSheetController,
+    private attributeReservedValueManagerService: AttributeReservedValueManagerService,
   ) {
     this.isLoading = true;
   }
 
   async ngOnInit() {
+    this.generateReservedValues(this.trackedEntityAttribute);
     this.numericalInputField = [
       'INTEGER_NEGATIVE',
       'INTEGER_POSITIVE',
@@ -116,33 +118,45 @@ export class TrackedEntityInputsComponent implements OnInit {
     }
   }
 
-  showTooltips() {
-    let title = this.fieldLabelKey;
-    let subTitle = '';
-    if (this.trackedEntityAttribute.description) {
-      title += '. Description : ' + this.trackedEntityAttribute.description;
-    }
-    subTitle +=
-      'Value Type : ' +
-      this.trackedEntityAttribute.valueType
-        .toLocaleLowerCase()
-        .replace(/_/g, ' ');
-    if (this.trackedEntityAttribute.optionSet) {
-      title +=
-        '. It has ' +
-        this.trackedEntityAttribute.optionSet.options.length +
-        ' options to select.';
-    }
-    // let actionSheet = this.actionSheetCtrl.create({
-    //   title: title,
-    //   subTitle: subTitle,
-    // });
-    // actionSheet.present();
+  async generateReservedValues(trackedEntityAttribute: any) {
+    const isAttributeWithRervedValues =
+      trackedEntityAttribute && trackedEntityAttribute.generated
+        ? trackedEntityAttribute.generated
+        : false;
+    this.isDisabled = isAttributeWithRervedValues;
+    try {
+      if (
+        trackedEntityAttribute &&
+        trackedEntityAttribute.id &&
+        isAttributeWithRervedValues
+      ) {
+        const id = trackedEntityAttribute.id;
+        const fieldId = `${id}-trackedEntityAttribute`;
+        const reservedValues = await this.attributeReservedValueManagerService.getAttributeReservedValues(
+          id,
+        );
+        if (
+          reservedValues.length > 0 &&
+          !Object.keys(this.data).includes(fieldId)
+        ) {
+          const reservedValue = reservedValues.pop();
+          const updatedValue = {
+            id: fieldId,
+            value: reservedValue.value || '',
+            status: '',
+          };
+          this.data[fieldId] = updatedValue;
+          if (Object.keys(this.data).length > 1) {
+            this.updateValue(updatedValue);
+          }
+        }
+      }
+    } catch (error) {}
   }
 
   updateValue(updatedValue) {
     this.trackedEntityAttributesSavingStatusClass[updatedValue.id] =
       'input-field-container-saving';
-    this.onChange.emit(updatedValue);
+    this.valueChange.emit(updatedValue);
   }
 }

@@ -65,6 +65,7 @@ import {
   SmsCommandEntity,
   ValidationRuleEntity,
   RelationshipTypeEntity,
+  AttributeReservedValueEntity,
 } from '../../entites';
 import { CONNECTION_NAME } from 'src/app/constants/db-options';
 
@@ -172,6 +173,7 @@ export class AppConfigService {
       SmsCommandEntity,
       ValidationRuleEntity,
       RelationshipTypeEntity,
+      AttributeReservedValueEntity,
     ];
   }
 }

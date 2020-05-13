@@ -23,15 +23,36 @@
         <div *ngIf="params.currentProgramStage.captureCoordinates">
           <!--<app-coordinate-input></app-coordinate-input>-->
         </div>
-        <div
-          *ngFor="let programStageDataElement of params.currentProgramStage.programStageDataElements | sortBy:'sortOrder'">
-          <div *ngIf="programStageDataElement.dataElement">
-            <event-input-container [dataElement]="programStageDataElement.dataElement"
-              [currentUser]="params.currentUser" [data]="params.eventObject || dataObject"
-              [dataValuesSavingStatusClass]="dataValuesSavingStatusClass" (onChange)="onUpdateData($event, params)">
-            </event-input-container>
-          </div>
+        <div *ngIf="params.currentProgramStage.programStageSections && params.currentProgramStage.programStageSections.length > 0">
+            <div *ngFor="let programStageSection of params.currentProgramStage.programStageSections">
+              <ion-item-divider>
+                <ion-label>
+                  <h2>{{ programStageSection.displayName || programStageSection.name }}</h2>
+                </ion-label>
+              </ion-item-divider>
+              <div
+                  *ngFor="let dataElement of programStageSection.dataElements">
+                  <div *ngIf="dataElement">
+                    <event-input-container [dataElement]="dataElement"
+                      [currentUser]="params.currentUser" [data]="params.eventObject || dataObject"
+                      [dataValuesSavingStatusClass]="dataValuesSavingStatusClass" (valueChange)="onUpdateData($event, params)">
+                    </event-input-container>
+                  </div>
+                </div> 
+            </div>
         </div>
+
+        <div *ngIf="!(params.currentProgramStage.programStageSections && params.currentProgramStage.programStageSections.length > 0)">
+          <div
+            *ngFor="let programStageDataElement of params.currentProgramStage.programStageDataElements | sortBy:'sortOrder'">
+            <div *ngIf="programStageDataElement.dataElement">
+              <event-input-container [dataElement]="programStageDataElement.dataElement"
+                [currentUser]="params.currentUser" [data]="params.eventObject || dataObject"
+                [dataValuesSavingStatusClass]="dataValuesSavingStatusClass" (valueChange)="onUpdateData($event, params)">
+              </event-input-container>
+            </div>
+          </div>
+        </div>        
       </form>
     </ion-col>
   </ion-row>

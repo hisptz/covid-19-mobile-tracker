@@ -11,6 +11,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 import * as _ from 'lodash';
 import { Router } from '@angular/router';
 import { SynchronizationService } from 'src/app/shared/services/synchronization.service';
+import { AttributeReservedValueManagerService } from 'src/app/shared/services/attribute-reserved-value-manager.service';
 
 @Component({
   selector: 'app-chw-home',
@@ -29,9 +30,13 @@ export class ChwHomePage implements OnInit {
     private userService: UserService,
     private router: Router,
     private store: Store<State>,
+    private attributeReservedValueManagerService: AttributeReservedValueManagerService,
   ) {}
 
   ngOnInit() {
+    this.attributeReservedValueManagerService
+      .regenerateAttributeReservedValues()
+      .then(() => {});
     this.isLoading = true;
     this.menuCtrl.enable(true);
     this.currentOrganisationUnit$ = this.store.pipe(
