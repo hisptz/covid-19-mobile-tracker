@@ -64,7 +64,8 @@ import {
   SectionIndicatorEntity,
   SmsCommandEntity,
   ValidationRuleEntity,
-  RelationshipTypeEntity,AttributeReservedValueEntity
+  RelationshipTypeEntity,
+  AttributeReservedValueEntity,
 } from '../../entites';
 import { CONNECTION_NAME } from 'src/app/constants/db-options';
 
