@@ -75,6 +75,7 @@ export class TrackedEntityListPage implements OnInit {
               this.discoveringTrackedEntityInstancesFromServer(
                 organisationUnitId,
                 programId,
+                currentProgram,
               );
             }
           });
@@ -85,6 +86,7 @@ export class TrackedEntityListPage implements OnInit {
   discoveringTrackedEntityInstancesFromServer(
     organisationUnitId: string,
     programId: string,
+    currentProgram: Program,
   ) {
     this.programFormDataService
       .discoveringTrackedEntityInstancesFromServerAndLocalStorage(
@@ -95,7 +97,8 @@ export class TrackedEntityListPage implements OnInit {
         const { isCompleted, teis } = response;
         this.trackedEntityInstanceList = _.map(teis, (tei: any) => {
           const attributes = tei.attributes || [];
-          for (const attributeToDisplay of this.attributesToDisplay) {
+          const attributesToDisplay = getAttributeToDisplay(currentProgram);
+          for (const attributeToDisplay of attributesToDisplay) {
             const filtereAttr = _.find(
               attributes,
               (attributeObj: any) =>
