@@ -22,7 +22,7 @@
       </ion-card>
   </div>
   <ion-list>
-    <ion-item *ngFor="let trackedEntityInstance of trackedEntityInstanceList"
+    <ion-item lines="none" class="border-bottom" *ngFor="let trackedEntityInstance of trackedEntityInstanceList"
       (click)="onSetCurrentTrackedEntityInstance($event, trackedEntityInstance)">
       <ion-label>
         <h2 *ngFor="let attribute of attributesToDisplay"> {{ attribute.name }} :

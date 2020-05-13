@@ -38,3 +38,7 @@ export const setCurrentEvent = createAction(
 export const saveTrackedEntityInstance = createAction(
   '[Selections] Save current tracked entity instance',
 );
+
+export const saveTrackedEntityInstanceComplete = createAction(
+  '[Selections] Save current tracked entity instance complete',
+);

@@ -1,4 +1,6 @@
-export function updateEventWithDataValues(event: any, eventObject) {
+import { Events } from '../models';
+
+export function updateEventWithDataValues(event: any, eventObject): Events {
   if (!event || !eventObject) {
     return event;
   }
