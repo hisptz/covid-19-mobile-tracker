@@ -1,8 +1,6 @@
-import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Program } from 'src/app/models';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
-import { Platform, IonRouterOutlet } from '@ionic/angular';
+import { IonRouterOutlet, Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-tracked-entity',
