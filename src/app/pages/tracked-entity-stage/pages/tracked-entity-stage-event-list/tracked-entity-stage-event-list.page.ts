@@ -10,6 +10,7 @@ import {
   getCurrentProgramStage,
   getCurrentTrackedEntityInstance,
   getCurrentOrganisationUnit,
+  getCurrentProgramStageEvents,
 } from 'src/app/store/selectors/selections.selectors';
 import { take } from 'rxjs/operators';
 
@@ -23,6 +24,7 @@ export class TrackedEntityStageEventListPage implements OnInit {
   currentTrackedEntityInstance$: Observable<any>;
   currentProgramStage$: Observable<any>;
   currentOrganisationUnit$: Observable<OrganisationUnit>;
+  eventList$: Observable<any[]>;
   constructor(private router: Router, private store: Store<State>) {}
 
   ngOnInit() {
@@ -35,12 +37,20 @@ export class TrackedEntityStageEventListPage implements OnInit {
     this.currentOrganisationUnit$ = this.store.pipe(
       select(getCurrentOrganisationUnit),
     );
+    this.eventList$ = this.store.pipe(select(getCurrentProgramStageEvents));
 
-    this.currentProgram$.pipe(take(1)).subscribe((currentProgram: any) => {
-      if (!currentProgram) {
-        this.router.navigate(['/chw-home']);
-      }
-    });
+    this.currentProgramStage$
+      .pipe(take(1))
+      .subscribe((currentProgramState: any) => {
+        if (!currentProgramState) {
+          this.router.navigate(['/chw-home']);
+        }
+      });
+  }
+  onManageEvent(e, currentEvent: any) {
+    e.stopPropagation();
+    this.store.dispatch(setCurrentEvent({ currentEvent }));
+    this.router.navigate(['/manage-tracked-entity-event']);
   }
 
   onAddEvent(e, params: any) {

@@ -39,6 +39,7 @@ export class EventEntity {
   @Column({ nullable: true }) attributeCategoryOptions: string;
   @Column({ nullable: true }) attributeCc: string;
   @Column({ nullable: true }) notes: string;
+  @Column({ nullable: true }) syncStatus: string;
   @Column({ nullable: true }) eventType: string;
   @Column({ nullable: true, type: 'simple-json' }) coordinate: Coordinate;
   @Column({ type: 'simple-json' }) dataValues: EventDataValue;

@@ -1,20 +1,21 @@
-import { Program, OrganisationUnit } from '../models';
+import { Program, OrganisationUnit, Events } from '../models';
 import { generateUid } from './generate-uid';
 import * as _ from 'lodash';
-
 export function generateEvent(
   program: Program,
   programStage: any,
   trackedEntityInstance: any,
   organisationUnit: OrganisationUnit,
-) {
+): Events {
   const date = new Date();
   const eventDate = date.toISOString().split('T')[0];
+  const id = generateUid();
   const enrollment = (trackedEntityInstance
     ? trackedEntityInstance.enrollments || []
     : [])[0];
   return {
-    event: generateUid(),
+    id,
+    event: id,
     eventDate,
     dueDate: eventDate,
     program: program ? program.id.split('_')[0] : undefined,
@@ -23,8 +24,11 @@ export function generateEvent(
     trackedEntityInstance: trackedEntityInstance
       ? trackedEntityInstance.id
       : undefined,
-    enrollment: enrollment ? enrollment.id : undefined,
     status: 'ACTIVE',
     dataValues: [],
+    deleted: 'false',
+    enrollment: enrollment ? enrollment.id : undefined,
+    // TODO: Find best way to get attributeCategoryOptions attribute
+    attributeCategoryOptions: '',
   };
 }

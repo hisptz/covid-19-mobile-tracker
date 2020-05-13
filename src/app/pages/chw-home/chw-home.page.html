@@ -16,7 +16,7 @@
       </ion-item>
     </ion-col>
   </ion-row>
-  <ion-row *ngIf="!(currentOrganisationUnit$ | async)">
+  <ion-row *ngIf="!(currentOrganisationUnit$ | async) || (!isLoading && programs && programs.length === 0)">
     <ion-col>
       <ion-card (click)="openOrganisationUnitModal($event)">
         <ion-card-content class="ion-text-center">
@@ -26,22 +26,25 @@
       </ion-card>
     </ion-col>
   </ion-row>
-  <ion-row *ngIf="currentOrganisationUnit$ | async">    
-    <ion-col>
+  <ion-row *ngIf="currentOrganisationUnit$ | async">
+    <ion-col class="ion-no-padding">
       <div *ngIf="isLoading" class="ion-padding">
-          <app-progress-bar [isIndeterminateProcess]="true"
-              [processMessage]="'Discovering forms...'">
-          </app-progress-bar>
+        <app-progress-bar [isIndeterminateProcess]="true" [processMessage]="'Discovering forms...'">
+        </app-progress-bar>
       </div>
-      <div *ngIf="!isLoading" class="ion-padding">
-          <ion-list class="ion-padding-top">
-          <ion-item *ngFor="let program of programs" (click)="onSelectProgram($event, program)" detail>
-            <ion-label>
-              <h2 class="ion-padding-bottom">{{ program.displayName || program.name }}</h2>
-            </ion-label>
+      <div *ngIf="!isLoading">
+        <ion-list class="ion-no-padding">
+          <ion-item lines="none" class="border-bottom" *ngFor="let program of programs"
+            (click)="onSelectProgram($event, program)">
+            <ion-avatar slot="start">
+              <div class="avatar-placeholder"></div>
+            </ion-avatar>
+            <ion-text class="ion-wrap">
+              <h6>{{ program.displayName }}</h6>
+            </ion-text>
           </ion-item>
         </ion-list>
-      </div>      
+      </div>
     </ion-col>
   </ion-row>
 </ion-content>

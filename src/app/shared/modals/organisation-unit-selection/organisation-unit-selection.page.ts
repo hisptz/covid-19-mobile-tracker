@@ -90,7 +90,6 @@ export class OrganisationUnitSelectionPage implements OnInit {
       await this.setToggledOrganisationUnit(selectedOrganisationUnitIds);
     } catch (error) {
       const message = `Error ${JSON.stringify(error)}`;
-      console.log({ message });
       this.toasterMessagesService.showToasterMessage(message);
     } finally {
       this.isLoading = false;
@@ -132,13 +131,13 @@ export class OrganisationUnitSelectionPage implements OnInit {
     if (e) {
       e.stopPropagation();
     }
-    await this.modalController.dismiss();
+    await this.modalController.dismiss({});
   }
 
   // @TODO handling multiple selections
   async onSelectOrganisationUnit(currentOrganisationUnit: OrganisationUnit) {
     this.store.dispatch(setCurrentOrgUnit({ currentOrganisationUnit }));
-    this.onClose();
+    await this.onClose();
   }
 
   async openOrganisationUnitSetSearchModal(selectedOrganisationUnitIds) {
@@ -154,7 +153,7 @@ export class OrganisationUnitSelectionPage implements OnInit {
     const response = await modal.onDidDismiss();
     if (response && response.data) {
       const { data } = response;
-      this.onSelectOrganisationUnit(data);
+      this.onSelectOrganisationUnit({ ...{}, ...data });
     }
   }
 

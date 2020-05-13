@@ -13,19 +13,26 @@
     <app-progress-bar [isIndeterminateProcess]="true" [processMessage]="'Discovering data...'">
     </app-progress-bar>
   </div>
-  <ion-list class="ion-padding-top">
-    <ion-item *ngFor="let trackedEntityInstance of trackedEntityInstanceList"
+  <div *ngIf="!isLoading && trackedEntityInstanceList && trackedEntityInstanceList.length === 0">
+      <ion-card (click)="onAddTrackedEntityInstance($event, currentParameters)">
+        <ion-card-content class="ion-text-center">
+          <ion-icon color="warning" size="large" name="alert-circle-outline"></ion-icon>
+          <ion-card-subtitle class="ion-margin-top" color="warning">Click plus sign to button below to add data</ion-card-subtitle>
+        </ion-card-content>
+      </ion-card>
+  </div>
+  <ion-list>
+    <ion-item lines="none" class="border-bottom" *ngFor="let trackedEntityInstance of trackedEntityInstanceList"
       (click)="onSetCurrentTrackedEntityInstance($event, trackedEntityInstance)">
-      <ion-avatar slot="start" *ngIf="false">
-        <img src="assets/icon/rumor.png">
-      </ion-avatar>
       <ion-label>
-        <div *ngFor="let attribute of attributesToDisplay">
-          <p> {{ attribute.name }} : {{ trackedEntityInstance[attribute.id] || "" }}</p>
-        </div>
+        <h2 *ngFor="let attribute of attributesToDisplay"> {{ attribute.name }} :
+          {{ trackedEntityInstance[attribute.id] || "" }}</h2>
         <p>{{ trackedEntityInstance.numberOfContact }} Contacts </p>
       </ion-label>
-      <ion-icon color="success" name="sync"></ion-icon>
+      <ion-icon
+        [color]="(trackedEntityInstance.syncStatus && trackedEntityInstance.syncStatus === 'synced')?'success' : 'warning'"
+        [name]="(trackedEntityInstance.syncStatus && trackedEntityInstance.syncStatus === 'synced')?'sync' :'alert-circle'">
+      </ion-icon>
     </ion-item>
   </ion-list>
 

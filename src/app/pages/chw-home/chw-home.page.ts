@@ -8,9 +8,9 @@ import { getCurrentOrganisationUnit } from 'src/app/store/selectors/selections.s
 import { OrganisationUnitSelectionPage } from 'src/app/shared/modals/organisation-unit-selection/organisation-unit-selection.page';
 import { ProgramSelectionService } from 'src/app/shared/services/program-selection.service';
 import { UserService } from 'src/app/shared/services/user.service';
-import { DEFAULT_CHW_PROGRAMS } from 'src/app/constants/default-chw-programs';
 import * as _ from 'lodash';
 import { Router } from '@angular/router';
+import { SynchronizationService } from 'src/app/shared/services/synchronization.service';
 
 @Component({
   selector: 'app-chw-home',
@@ -25,6 +25,7 @@ export class ChwHomePage implements OnInit {
     private menuCtrl: MenuController,
     private modalController: ModalController,
     private programService: ProgramSelectionService,
+    private synchronizationService: SynchronizationService,
     private userService: UserService,
     private router: Router,
     private store: Store<State>,
@@ -36,7 +37,7 @@ export class ChwHomePage implements OnInit {
     this.currentOrganisationUnit$ = this.store.pipe(
       select(getCurrentOrganisationUnit),
     );
-
+    this.synchronizationService.startSynchronization();
     this.currentOrganisationUnit$.subscribe(
       (selectedOrganisationUnit: OrganisationUnit) => {
         if (selectedOrganisationUnit) {
@@ -64,7 +65,6 @@ export class ChwHomePage implements OnInit {
           currentProgram.currentProgramTrackedEntityAttribute,
       }),
     );
-
     this.router.navigate(['/tracked-entity-list']);
   }
 

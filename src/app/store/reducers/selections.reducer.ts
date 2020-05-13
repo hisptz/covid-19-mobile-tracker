@@ -23,6 +23,8 @@ import {
   setCurrentTrackedEntityInstance,
   setCurrentProgramStage,
   setCurrentEvent,
+  saveTrackedEntityInstance,
+  saveTrackedEntityInstanceComplete,
 } from '../actions/selections-actions';
 import { updateTrackedEntityInstanceWithEvent } from 'src/app/helpers/update-tracked-entity-instance-with-events';
 
@@ -33,6 +35,7 @@ export interface SelectionsState {
   currentTrackedEntityInstance: any;
   currentProgramStage: any;
   currentEvent: any;
+  isSavingTrackedEntityInstance: boolean;
 }
 
 const initialSelectionsState: SelectionsState = {
@@ -42,6 +45,7 @@ const initialSelectionsState: SelectionsState = {
   currentTrackedEntityInstance: null,
   currentProgramStage: null,
   currentEvent: null,
+  isSavingTrackedEntityInstance: false,
 };
 
 const reducer = createReducer(
@@ -76,6 +80,14 @@ const reducer = createReducer(
       state.currentTrackedEntityInstance,
       currentEvent,
     ),
+  })),
+  on(saveTrackedEntityInstance, (state) => ({
+    ...state,
+    isSavingTrackedEntityInstance: true,
+  })),
+  on(saveTrackedEntityInstanceComplete, (state) => ({
+    ...state,
+    isSavingTrackedEntityInstance: false,
   })),
 );
 

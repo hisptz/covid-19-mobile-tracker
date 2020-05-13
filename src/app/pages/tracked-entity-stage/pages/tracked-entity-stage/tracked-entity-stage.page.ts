@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-tracked-entity-stage',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./tracked-entity-stage.page.scss'],
 })
 export class TrackedEntityStagePage implements OnInit {
+  currentProgramStage$: Observable<any>;
+
   constructor() {}
 
   ngOnInit() {}

@@ -1,3 +1,43 @@
-<ion-content>
-  <h1 class="ion-margin-top ion-text-center">Profile page</h1>
+<ion-content *ngIf="{
+    trackedEntityInstance: currentTrackedEntityInstance$ | async, 
+    program: currentProgram$ | async, 
+    trackedEntityInstanceDates: trackedEntityInstanceDates$ | async,
+    attributesToDisplay: attributesToDisplay$  | async
+   } as params">
+  <ion-row *ngIf="params.program && params.trackedEntityInstanceDates && params.attributesToDisplay">
+    <ion-col>
+      <ion-list>
+        <ion-item lines="none" class="border-bottom">
+          <ion-label class="ion-text-uppercase">
+            {{ params.program.enrollmentDateLabel || 'Enrollment Date' }}
+          </ion-label>
+          <div class="ion-justify-content-end">
+            <ion-label>
+              {{ params?.trackedEntityInstanceDates?.enrollmentDate | date:"yyyy-MM-dd" }}
+            </ion-label>
+          </div>
+        </ion-item>
+        <ion-item lines="none" class="border-bottom">
+          <ion-label class="ion-text-uppercase">
+            {{ params.program.incidentDateLabel || 'Incident Date'}}
+          </ion-label>
+          <div class="ion-justify-content-end">
+            <ion-label>
+              {{ params?.trackedEntityInstanceDates?.incidentDate | date:"yyyy-MM-dd" }}
+            </ion-label>
+          </div>
+        </ion-item>
+        <ion-item lines="none" class="border-bottom" *ngFor="let attribute of params.attributesToDisplay">
+          <ion-label class="ion-text-uppercase">
+            {{ attribute.name }}
+          </ion-label>
+          <div class="ion-justify-content-end">
+            <ion-label>
+              {{ params?.trackedEntityInstance[attribute.id] || "" }}
+            </ion-label>
+          </div>
+        </ion-item>
+      </ion-list>
+    </ion-col>
+  </ion-row>
 </ion-content>

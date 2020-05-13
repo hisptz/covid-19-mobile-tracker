@@ -11,9 +11,13 @@ import { Router } from '@angular/router';
 import {
   getCurrentProgramStage,
   getCurrentEvent,
+  getCurrentEventDataValueObject,
+  getTrackedEntityInstanceSavingStatus,
 } from 'src/app/store/selectors/selections.selectors';
 import { CurrentUser } from 'src/app/models';
 import { UserService } from 'src/app/shared/services/user.service';
+import { updateEventWithDataValues } from 'src/app/helpers/update-event-with-data-values';
+import * as d2Rule from '@iapps/dhis2-program-rule-engine';
 
 @Component({
   selector: 'app-manage-tracked-entity-event',
@@ -24,6 +28,8 @@ export class ManageTrackedEntityEventPage implements OnInit {
   currentProgramStage$: Observable<any>;
   currentEvent$: Observable<any>;
   currentUser$: Observable<CurrentUser>;
+  currentEventDataValueObject$: Observable<any>;
+  isSavingInstance$: Observable<boolean>;
   isFormReady: boolean = true;
   dataObject: any;
   dataValuesSavingStatusClass: any;
@@ -37,7 +43,14 @@ export class ManageTrackedEntityEventPage implements OnInit {
     this.dataObject = {};
     this.dataValuesSavingStatusClass = {};
     this.currentEvent$ = this.store.pipe(select(getCurrentEvent));
+    this.currentEventDataValueObject$ = this.store.pipe(
+      select(getCurrentEventDataValueObject),
+    );
     this.currentProgramStage$ = this.store.pipe(select(getCurrentProgramStage));
+    this.isSavingInstance$ = this.store.pipe(
+      select(getTrackedEntityInstanceSavingStatus),
+    );
+
     this.currentProgramStage$
       .pipe(take(1))
       .subscribe((currentProgramStage: any) => {
@@ -50,40 +63,24 @@ export class ManageTrackedEntityEventPage implements OnInit {
   }
   onUpdateData(
     updatedData: any,
-    currentEvent,
+    params,
     shouldSkipProgramRules: boolean = false,
   ) {
-    const dataValues = [];
-    const { id } = updatedData;
-    let syncStatus = 'synced';
-    if (id) {
-      const newValue = updatedData.value;
-      const hasNoOldValue =
-        this.dataObject && this.dataObject[id] && this.dataObject[id].value
-          ? false
-          : true;
-      const oldValue = !hasNoOldValue ? this.dataObject[id].value : newValue;
-      if (oldValue !== newValue || hasNoOldValue) {
-        syncStatus = 'not-synced';
-        this.dataObject[updatedData.id] = updatedData;
-      }
-    }
-    Object.keys(this.dataObject).forEach((key: any) => {
-      let dataElementId = key.split('-')[0];
-      if (dataElementId) {
-        dataValues.push({
-          dataElement: dataElementId,
-          value: this.dataObject[key].value,
-        });
-      }
-    });
-    if (dataValues && dataValues.length > 0) {
-      this.store.dispatch(
-        setCurrentEvent({
-          currentEvent: { ...currentEvent, dataValues, syncStatus },
-        }),
-      );
-    }
+    const { currentEvent, eventObject } = params;
+    console.log(d2Rule.execute({}, {}, [], [], {}));
+    this.dataObject[updatedData.id] = updatedData;
+
+    this.store.dispatch(
+      setCurrentEvent({
+        currentEvent: updateEventWithDataValues(
+          { ...currentEvent, syncStatus: 'not-synced' },
+          {
+            ...eventObject,
+            ...this.dataObject,
+          },
+        ),
+      }),
+    );
   }
 
   onEventDateUpdate(eventDate: string, currentEvent) {
@@ -94,9 +91,9 @@ export class ManageTrackedEntityEventPage implements OnInit {
     );
   }
 
-  onSave(e, currentEvent) {
+  onSave(e) {
     e.stopPropagation();
     this.store.dispatch(saveTrackedEntityInstance());
-    this.router.navigate(['/tracked-entity/stage/events']);
+    // this.router.navigate(['/tracked-entity/stage/events']);
   }
 }

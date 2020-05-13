@@ -44,23 +44,29 @@ export class ProgramSelectionService {
     const ProgramOrganisationUnits = await this.getProgramsByOrganisationUnits([
       organisationUnitId,
     ]);
-    const programIds = _.flattenDeep(
-      _.map(
-        ProgramOrganisationUnits,
-        (programOrganisationUnit: ProgramOrganisationUnit) => {
-          return programOrganisationUnit.id;
-        },
-      ),
-    );
+    const programIds =
+      organisationUnitId !== ''
+        ? _.flattenDeep(
+            _.map(
+              ProgramOrganisationUnits,
+              (programOrganisationUnit: ProgramOrganisationUnit) => {
+                return programOrganisationUnit.id;
+              },
+            ),
+          )
+        : [];
     const ids = authorities.includes('ALL')
       ? programIds
       : _.filter(programIds, (id: string) => {
           return programIdsByUserRoles.includes(id);
         });
-    const programs: any[] = await this.programFormMetadataService.getProgramByIds(
-      ids,
-      shouldIncludeAllMetadata,
-    );
+    const programs: any[] =
+      programIds.length === 0
+        ? []
+        : await this.programFormMetadataService.getProgramByIds(
+            ids,
+            shouldIncludeAllMetadata,
+          );
     return _.filter(
       _.sortBy(programs, 'name'),
       (program: Program) =>

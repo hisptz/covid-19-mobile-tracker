@@ -12,6 +12,8 @@ import {
   getCurrentProgramTrackedEntityAttribute,
   getCurrentTrackedEntityInstance,
   getTrackedEntityInstanceAttributeObject,
+  getTrackedEntityInstanceDates,
+  getTrackedEntityInstanceSavingStatus,
 } from 'src/app/store/selectors/selections.selectors';
 import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
@@ -28,6 +30,8 @@ export class ManageTrackedEntityProfilePage implements OnInit {
   currentProgramTrackedEntityAttribute$: Observable<any>;
   currentTrackedEntityInstance$: Observable<any>;
   trackedEntityInstanceAttributeValueObject$: Observable<any>;
+  trackedEntityInstanceDates$: Observable<any>;
+  isSavingInstance$: Observable<boolean>;
   hiddenFields: any;
   trackedEntityAttributesSavingStatusClass: any;
   dataObject: any;
@@ -46,6 +50,12 @@ export class ManageTrackedEntityProfilePage implements OnInit {
     this.trackedEntityAttributesSavingStatusClass = {};
     this.dataObject = {};
     this.currentProgram$ = this.store.pipe(select(getCurrentProgram));
+    this.trackedEntityInstanceDates$ = this.store.pipe(
+      select(getTrackedEntityInstanceDates),
+    );
+    this.isSavingInstance$ = this.store.pipe(
+      select(getTrackedEntityInstanceSavingStatus),
+    );
     this.currentProgram$.pipe(take(1)).subscribe((currentProgram: Program) => {
       if (!currentProgram) {
         this.router.navigate(['/chw-home']);
@@ -103,15 +113,21 @@ export class ManageTrackedEntityProfilePage implements OnInit {
     return result;
   }
 
-  onIncidentDateUpdate(incidentDate: string, trackedEntityInstance) {
+  onTrackedEntityDatesUpdate(
+    trackedEntityDate: string,
+    trackedEntityInstance,
+    dateType: string,
+  ) {
     this.store.dispatch(
       setCurrentTrackedEntityInstance({
         currentTrackedEntityInstance: {
           ...trackedEntityInstance,
-          incidentDate,
           enrollments: trackedEntityInstance.enrollments.map(
             (enrollment: any) => {
-              return { ...enrollment, incidentDate };
+              return {
+                ...enrollment,
+                [dateType]: trackedEntityDate,
+              };
             },
           ),
         },
@@ -170,6 +186,5 @@ export class ManageTrackedEntityProfilePage implements OnInit {
   onSave(e) {
     e.stopPropagation();
     this.store.dispatch(saveTrackedEntityInstance());
-    this.router.navigate(['/tracked-entity-list']);
   }
 }

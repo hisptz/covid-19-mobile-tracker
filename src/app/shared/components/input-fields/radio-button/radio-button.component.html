@@ -25,25 +25,17 @@
 <ion-row>
     <ion-col>
         <ion-list>
-            <ion-radio-group>
+            <ion-radio-group [value]="selectedValue">
                 <ion-list-header>
                     <ion-label>{{label | translate}}</ion-label>
                 </ion-list-header>
                 <ion-item *ngFor="let option of options">
                     <ion-label>{{option.name}}</ion-label>
-                    <ion-radio slot="start" [name]="fieldId" [value]="option.code" [disabled]="lockingFieldStatus"
+                    <ion-radio slot="start" [value]="option.code" [disabled]="lockingFieldStatus"
                         (ionFocus)="saveValue(option.code)">
                     </ion-radio>
                 </ion-item>
             </ion-radio-group>
         </ion-list>
     </ion-col>
-    <!-- <ion-col size="auto">
-        <div class="ion-float-right">
-            <ion-button slot="end" class="clear-button ion-no-padding" fill="clear"
-                [disabled]="dataModal[fieldId] == '' || isTrashButtonDisabled" (click)="clearInput()">
-                <ion-icon name="trash" color="danger"></ion-icon>
-            </ion-button>
-        </div>
-    </ion-col> -->
 </ion-row>

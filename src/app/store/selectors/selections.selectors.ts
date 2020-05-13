@@ -5,7 +5,10 @@ import {
   OrganisationUnit,
   TrackedEntityInstance,
   Enrollment,
+  Program,
 } from 'src/app/models';
+import * as _ from 'lodash';
+import { getAttributeToDisplay } from 'src/app/helpers/get-attributes-to-display';
 
 /**
  * Copyright (C) 2020 UDSM DHIS2 PROJECT
@@ -77,6 +80,31 @@ export const getTrackedEntityInstanceAttributeObject = createSelector(
   },
 );
 
+export const getTrackedEntityInstanceDates = createSelector(
+  getCurrentTrackedEntityInstance,
+  (trackedEntityInstance: TrackedEntityInstance) => {
+    const enrollment: Enrollment = (trackedEntityInstance
+      ? trackedEntityInstance.enrollments || []
+      : [])[0];
+
+    if (!enrollment) {
+      const date = new Date();
+
+      return date.toISOString().split('T')[0];
+    }
+
+    return {
+      enrollmentDate: enrollment.enrollmentDate,
+      incidentDate: enrollment.incidentDate,
+    };
+  },
+);
+
+export const getTrackedAttributeToDisplay = createSelector(
+  getCurrentProgram,
+  (program: Program) => getAttributeToDisplay(program),
+);
+
 export const getCurrentProgramStage = createSelector(
   getSelectionsState,
   (selectionsState: SelectionsState) => selectionsState.currentProgramStage,
@@ -85,4 +113,51 @@ export const getCurrentProgramStage = createSelector(
 export const getCurrentEvent = createSelector(
   getSelectionsState,
   (selectionsState: SelectionsState) => selectionsState.currentEvent,
+);
+
+export const getCurrentEventDataValueObject = createSelector(
+  getCurrentEvent,
+  (event: any) => {
+    const eventObject = {};
+
+    (event ? event.dataValues || [] : []).forEach((dataValue: any) => {
+      eventObject[`${dataValue.dataElement}-dataElement`] = {
+        id: `${dataValue.dataElement}-dataElement`,
+        value: dataValue.value,
+        status: '',
+      };
+    });
+
+    return eventObject;
+  },
+);
+
+export const getCurrentProgramStageEvents = createSelector(
+  getCurrentProgramStage,
+  getCurrentTrackedEntityInstance,
+  (programStage: any, trackedEntityInstance: TrackedEntityInstance) => {
+    if (!programStage || !trackedEntityInstance) {
+      return [];
+    }
+
+    const events = _.flatten(
+      (trackedEntityInstance
+        ? trackedEntityInstance.enrollments
+        : []
+      ).map((enrollment: Enrollment) =>
+        (enrollment.events || []).filter(
+          (event: any) =>
+            programStage && event && event.programStage === programStage.id,
+        ),
+      ),
+    );
+
+    return events;
+  },
+);
+
+export const getTrackedEntityInstanceSavingStatus = createSelector(
+  getSelectionsState,
+  (selectionState: SelectionsState) =>
+    selectionState.isSavingTrackedEntityInstance,
 );

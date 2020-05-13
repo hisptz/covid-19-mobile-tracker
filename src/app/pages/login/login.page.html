@@ -37,25 +37,24 @@
 <ion-content class="ion-padding" [color]="'primary'">
 
   <div *ngIf="isLoading" class="ion-padding">
-      <app-progress-bar [isIndeterminateProcess]="true"
-          [processMessage]="'Loading... '">
-      </app-progress-bar>
+    <app-progress-bar [isIndeterminateProcess]="true" [processMessage]="'Loading... '">
+    </app-progress-bar>
   </div>
   <div *ngIf="!isLoading" class="ion-padding">
-      <div *ngIf="isLoginProcessActive">
-        <div class="login-spinner-container">
-          <!-- <app-login-spinner></app-login-spinner> -->
-        </div>
-        <div class="ion-margin ion-padding-top">
-          <app-login-metadata-sync (systemSettingLoaded)="onSystemSettingLoaded($event)"
-            (updateCurrentUser)="onUpdateCurrentUser($event)" (failOnLogin)="onFailLogin($event)"
-            (successOnLoginAndSyncMetadata)="onSuccessLogin($event)" [currentUser]="currentUser"
-            (cancelProgress)="onCancelLoginProcess()" [overAllMessage]="overAllLoginMessage"
-            [color]="(colorSettings$ | async)?.colorAttributes?.main" [showOverallProgressBar]="showOverallProgressBar"
-            [isOnLogin]="isOnLogin" [processes]="processes">
-          </app-login-metadata-sync>
-        </div>
+    <div *ngIf="isLoginProcessActive">
+      <div class="login-spinner-container">
+        <!-- <app-login-spinner></app-login-spinner> -->
       </div>
+      <div class="ion-margin ion-padding-top">
+        <app-login-metadata-sync (systemSettingLoaded)="onSystemSettingLoaded($event)"
+          (updateCurrentUser)="onUpdateCurrentUser($event)" (failOnLogin)="onFailLogin($event)"
+          (successOnLoginAndSyncMetadata)="onSuccessLogin($event)" [currentUser]="currentUser"
+          (cancelProgress)="onCancelLoginProcess()" [overAllMessage]="overAllLoginMessage"
+          [color]="(colorSettings$ | async)?.colorAttributes?.main" [showOverallProgressBar]="showOverallProgressBar"
+          [isOnLogin]="isOnLogin" [processes]="processes">
+        </app-login-metadata-sync>
+      </div>
+    </div>
     <ion-grid>
       <div *ngIf="!isLoginProcessActive">
         <ion-row>
@@ -76,55 +75,55 @@
           <ion-col></ion-col>
         </ion-row>
       </div>
-    <ion-row *ngIf="false">
-    <ion-col>
-      <div *ngIf="localInstances && localInstances.length > 1">
-        <div class="strike">
-          <span [translate]="'or'"></span>
-        </div>
-        <ion-button [color]="'light'" size="small" (click)="openLocalInstancesSelection()" fill="clear"
-          expand="block">
-          <img class="offline-instances-icon" [src]="offlineIcon" />&nbsp;&nbsp;
-          <span [translate]="'Available instances'"></span>
-        </ion-button>
-      </div>
-    </ion-col>
-    </ion-row>
-    <ion-row *ngIf="false">
-      <ion-col>
-        <div class="translation-container">
-          <span class="translation-codes" *ngIf="currentUser">
-            <span *ngFor="
+      <ion-row *ngIf="false">
+        <ion-col>
+          <div *ngIf="localInstances && localInstances.length > 1">
+            <div class="strike">
+              <span [translate]="'or'"></span>
+            </div>
+            <ion-button [color]="'light'" size="small" (click)="openLocalInstancesSelection()" fill="clear"
+              expand="block">
+              <img class="offline-instances-icon" [src]="offlineIcon" />&nbsp;&nbsp;
+              <span [translate]="'Available instances'"></span>
+            </ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="false">
+        <ion-col>
+          <div class="translation-container">
+            <span class="translation-codes" *ngIf="currentUser">
+              <span *ngFor="
               let code of topThreeTranslationCodes;
               let currentIndex = index
             ">
-              <span (click)="updateTranslationLanguage(code)" [ngClass]="
+                <span (click)="updateTranslationLanguage(code)" [ngClass]="
                 currentUser.currentLanguage === code ? 'currentLang' : ''
               ">{{ code }}</span>
-              <span *ngIf="currentIndex < 2">&nbsp;|&nbsp;</span>
-            </span>
-            <span *ngIf="
+                <span *ngIf="currentIndex < 2">&nbsp;|&nbsp;</span>
+              </span>
+              <span *ngIf="
               topThreeTranslationCodes.indexOf(
                 currentUser.currentLanguage
               ) === -1
             ">
-              &nbsp;|&nbsp;
-              <span (click)="updateTranslationLanguage(currentUser.currentLanguage)"
-                [ngClass]="'currentLang'">{{ currentUser.currentLanguage }}</span>
+                &nbsp;|&nbsp;
+                <span (click)="updateTranslationLanguage(currentUser.currentLanguage)"
+                  [ngClass]="'currentLang'">{{ currentUser.currentLanguage }}</span>
+              </span>
+              <span (click)="openTranslationCodeSelection()">
+                &nbsp;
+                <ion-icon name="ios-more"></ion-icon>
+              </span>
             </span>
-            <span (click)="openTranslationCodeSelection()">
-              &nbsp;
-              <ion-icon name="ios-more"></ion-icon>
-            </span>
-          </span>
-        </div>
-        <p></p>
-      </ion-col>
-    </ion-row>
-    </ion-grid>                               
+          </div>
+          <p></p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </div>
 
 
-  
+
   <!-- <app-slogan [position]="'bottom'" [slogan]="buttonSlogan"></app-slogan> -->
 </ion-content>
