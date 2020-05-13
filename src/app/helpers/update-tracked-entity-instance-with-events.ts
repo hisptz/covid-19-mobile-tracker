@@ -1,18 +1,18 @@
 import * as _ from 'lodash';
+import { TrackedEntityInstance } from '../models';
 export function updateTrackedEntityInstanceWithEvent(
-  trackedEntityInstance,
-  updatedEvent,
+  trackedEntityInstance: TrackedEntityInstance,
+  updatedEvent: any,
 ) {
   if (!trackedEntityInstance) {
     return null;
   }
   const enrollments = trackedEntityInstance.enrollments.map(
     (enrollment: any) => {
-      if (updatedEvent.enrollment !== enrollment.enrollment) {
+      if (updatedEvent.program !== enrollment.program) {
         return enrollment;
       }
       const availableEvent = _.find(enrollment.events, ['id', updatedEvent.id]);
-
       const availableEventIndex = enrollment.events.indexOf(availableEvent);
       return {
         ...enrollment,
@@ -27,7 +27,6 @@ export function updateTrackedEntityInstanceWithEvent(
       };
     },
   );
-
   return {
     ...trackedEntityInstance,
     enrollments,

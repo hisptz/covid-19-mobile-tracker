@@ -47,6 +47,7 @@ export class ProgramFormDataService {
     const syncStatus = 'synced';
     const url = `/api/trackedEntityInstances?strategy=CREATE_AND_UPDATE`;
     for (const data of _.chunk(trackedEntityInstances, pageSize)) {
+      console.log(data);
       const teiResponse = await this.httpClientService.post(url, {
         trackedEntityInstances: data,
       });

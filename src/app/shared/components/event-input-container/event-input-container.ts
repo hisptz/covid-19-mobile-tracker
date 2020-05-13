@@ -140,7 +140,6 @@ export class EventInputContainerComponent implements OnInit, OnDestroy {
   }
 
   updateValue(updatedValue) {
-    console.log({ updatedValue });
     this.dataValuesSavingStatusClass[updatedValue.id] =
       'input-field-container-saving';
     this.onChange.emit(updatedValue);

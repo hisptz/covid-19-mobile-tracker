@@ -30,7 +30,7 @@ export class ManageTrackedEntityEventPage implements OnInit {
   currentUser$: Observable<CurrentUser>;
   currentEventDataValueObject$: Observable<any>;
   isSavingInstance$: Observable<boolean>;
-  isFormReady: boolean = true;
+  isFormReady = true;
   dataObject: any;
   dataValuesSavingStatusClass: any;
   constructor(
@@ -69,7 +69,6 @@ export class ManageTrackedEntityEventPage implements OnInit {
     const { currentEvent, eventObject } = params;
     console.log(d2Rule.execute({}, {}, [], [], {}));
     this.dataObject[updatedData.id] = updatedData;
-
     this.store.dispatch(
       setCurrentEvent({
         currentEvent: updateEventWithDataValues(
@@ -84,6 +83,7 @@ export class ManageTrackedEntityEventPage implements OnInit {
   }
 
   onEventDateUpdate(eventDate: string, currentEvent) {
+    console.log({ currentEvent });
     this.store.dispatch(
       setCurrentEvent({
         currentEvent: { ...currentEvent, eventDate },
