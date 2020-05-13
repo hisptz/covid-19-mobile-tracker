@@ -22,7 +22,6 @@
  *
  */
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ActionSheetController } from '@ionic/angular';
 
 import { SettingService } from '../../services/setting.service';
 
@@ -42,7 +41,7 @@ export class TrackedEntityInputsComponent implements OnInit {
   @Input() mandatory;
   @Input() data;
   @Input() trackedEntityAttributesSavingStatusClass;
-  @Output() onChange = new EventEmitter();
+  @Output() valueChange = new EventEmitter();
 
   fieldLabelKey: any;
   textInputField: Array<string>;
@@ -52,15 +51,14 @@ export class TrackedEntityInputsComponent implements OnInit {
   dataEntrySettings: any;
   barcodeSettings: any;
   isLoading: boolean;
+  isDisabled: boolean;
 
-  constructor(
-    private settingSetting: SettingService,
-    private actionSheetCtrl: ActionSheetController,
-  ) {
+  constructor(private settingSetting: SettingService) {
     this.isLoading = true;
   }
 
   async ngOnInit() {
+    this.updateFielDisabliityStatus(this.trackedEntityAttribute);
     this.numericalInputField = [
       'INTEGER_NEGATIVE',
       'INTEGER_POSITIVE',
@@ -116,33 +114,16 @@ export class TrackedEntityInputsComponent implements OnInit {
     }
   }
 
-  showTooltips() {
-    let title = this.fieldLabelKey;
-    let subTitle = '';
-    if (this.trackedEntityAttribute.description) {
-      title += '. Description : ' + this.trackedEntityAttribute.description;
-    }
-    subTitle +=
-      'Value Type : ' +
-      this.trackedEntityAttribute.valueType
-        .toLocaleLowerCase()
-        .replace(/_/g, ' ');
-    if (this.trackedEntityAttribute.optionSet) {
-      title +=
-        '. It has ' +
-        this.trackedEntityAttribute.optionSet.options.length +
-        ' options to select.';
-    }
-    // let actionSheet = this.actionSheetCtrl.create({
-    //   title: title,
-    //   subTitle: subTitle,
-    // });
-    // actionSheet.present();
+  updateFielDisabliityStatus(trackedEntityAttribute: any) {
+    this.isDisabled =
+      trackedEntityAttribute && trackedEntityAttribute.generated
+        ? trackedEntityAttribute.generated
+        : false;
   }
 
   updateValue(updatedValue) {
     this.trackedEntityAttributesSavingStatusClass[updatedValue.id] =
       'input-field-container-saving';
-    this.onChange.emit(updatedValue);
+    this.valueChange.emit(updatedValue);
   }
 }

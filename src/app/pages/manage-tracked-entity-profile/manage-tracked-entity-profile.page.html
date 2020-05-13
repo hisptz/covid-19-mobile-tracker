@@ -36,7 +36,7 @@
               [currentUser]="params.currentUser" [data]="params.attributeObject || dataObject"
               [(trackedEntityAttributesSavingStatusClass)]="trackedEntityAttributesSavingStatusClass"
               [mandatory]="programTrackedEntityAttribute.mandatory"
-              (onChange)="onUpdateAttributesValue($event, params.program.programTrackedEntityAttributes, params.trackedEntityInstance, params.attributeObject)">
+              (valueChange)="onUpdateAttributesValue($event, params.program.programTrackedEntityAttributes, params.trackedEntityInstance, params.attributeObject)">
             </tracked-entity-inputs>
             <!-- <div *ngIf="errorOrWarningMessage[programTrackedEntityAttribute.trackedEntityAttribute.id]">
               <program-rule-action-message

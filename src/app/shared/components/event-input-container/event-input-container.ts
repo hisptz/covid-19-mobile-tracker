@@ -29,7 +29,6 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { ActionSheetController } from '@ionic/angular';
 import { CurrentUser } from 'src/app/models';
 import { SettingService } from '../../services/setting.service';
 
@@ -50,7 +49,7 @@ export class EventInputContainerComponent implements OnInit, OnDestroy {
   @Input() data: any;
   @Input() dataValuesSavingStatusClass: any;
   @Input() lockingFieldStatus: boolean;
-  @Output() onChange = new EventEmitter();
+  @Output() valueChange = new EventEmitter();
 
   fieldLabelKey: any;
   textInputField: Array<string>;
@@ -60,10 +59,7 @@ export class EventInputContainerComponent implements OnInit, OnDestroy {
   barcodeSettings: any;
   isLoading: boolean;
 
-  constructor(
-    private settingsService: SettingService,
-    private actionSheetCtrl: ActionSheetController,
-  ) {
+  constructor(private settingsService: SettingService) {
     this.isLoading = true;
   }
 
@@ -116,33 +112,10 @@ export class EventInputContainerComponent implements OnInit, OnDestroy {
     this.isLoading = false;
   }
 
-  showTooltips() {
-    let title = this.fieldLabelKey;
-    let subTitle = '';
-    if (this.dataElement.description) {
-      title += '. Description : ' + this.dataElement.description;
-    }
-    subTitle +=
-      'Value Type : ' + this.dataElement && this.dataElement.valueType
-        ? this.dataElement.valueType.toLocaleLowerCase().replace(/_/g, ' ')
-        : 'Unknown';
-    if (this.dataElement.optionSet) {
-      title +=
-        '. It has ' +
-        this.dataElement.optionSet.options.length +
-        ' options to select.';
-    }
-    // let actionSheet = this.actionSheetCtrl.create({
-    //   title: title,
-    //   subTitle: subTitle,
-    // });
-    // actionSheet.present();
-  }
-
   updateValue(updatedValue) {
     this.dataValuesSavingStatusClass[updatedValue.id] =
       'input-field-container-saving';
-    this.onChange.emit(updatedValue);
+    this.valueChange.emit(updatedValue);
   }
 
   ngOnDestroy() {

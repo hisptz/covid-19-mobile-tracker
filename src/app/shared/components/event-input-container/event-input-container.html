@@ -23,13 +23,6 @@
 *
 -->
 <div *ngIf="!isLoading && dataElement" class="ion-padding-top">
-    <!-- <div (click)="showTooltips()" class="inputLabel">
-        {{ fieldLabelKey }}
-        <span *ngIf="mandatory" class="required">&nbsp;*</span>
-        <span *ngIf="dataElement.description">&nbsp;&nbsp;
-      <ion-icon color="icon-color" name="help-circle"></ion-icon>
-    </span>
-    </div> -->
     <div *ngIf="dataElement.optionSet"
         [ngClass]="(dataValuesSavingStatusClass[dataElement.id +'-dataElement'])?dataValuesSavingStatusClass[dataElement.id +'-dataElement']:'input-field-container'">
         <app-option-set-input [dataEntrySettings]="dataEntrySettings" (optionSetChange)="updateValue($event)"
