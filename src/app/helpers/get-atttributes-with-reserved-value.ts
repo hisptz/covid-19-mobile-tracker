@@ -21,8 +21,22 @@
  * @author Joseph Chingalo <profschingalo@gmail.com>
  *
  */
-export * from './app-metadata';
-export * from './entry-form-selection';
-export * from './data-entry-form';
-export * from './get-atttributes-with-reserved-value';
-export * from './generate-uid';
+import { Program, ProgramProgramTrackedEntityAttribute } from '../models';
+import * as _ from 'lodash';
+
+export function getAttributesWithReservedValues(programs: Program[]) {
+  return _.uniq(
+    _.flattenDeep(programs, (program: Program) => {
+      return _.map(
+        program.programTrackedEntityAttributes || [],
+        (programTrackedEntityAttribute: any) => {
+          return programTrackedEntityAttribute &&
+            programTrackedEntityAttribute.trackedEntityAttribute &&
+            programTrackedEntityAttribute.trackedEntityAttribute.generated
+            ? programTrackedEntityAttribute.trackedEntityAttribute.id || []
+            : [];
+        },
+      );
+    }),
+  );
+}
