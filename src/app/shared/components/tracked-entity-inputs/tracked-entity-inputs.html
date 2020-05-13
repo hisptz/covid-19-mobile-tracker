@@ -46,7 +46,7 @@
       </app-text-input>
     </div>
     <div *ngIf="numericalInputField.indexOf(trackedEntityAttribute.valueType) > -1">
-      <app-numerical-input (change)="updateValue($event)" [dataElementId]="trackedEntityAttribute.id"
+      <app-numerical-input (numericalValueChange)="updateValue($event)" [dataElementId]="trackedEntityAttribute.id"
         [categoryOptionComboId]="'trackedEntityAttribute'" [data]="data" [barcodeSettings]="barcodeSettings"
         [valueType]="trackedEntityAttribute.valueType" [label]="fieldLabelKey">
       </app-numerical-input>
