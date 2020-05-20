@@ -29,7 +29,7 @@
         <ion-label>
           <span *ngIf="showLoader">
             <ion-spinner name="dots" [color]="color" *ngIf="progressPercentage < 100"></ion-spinner>
-            <ion-icon slot="start" name="done-all" [color]="color" *ngIf="progressPercentage >= 100"></ion-icon>
+            <ion-icon slot="start" [color]="color" *ngIf="progressPercentage >= 100" name="checkmark-done-outline"></ion-icon>            
           </span>
           <span [translate]="processMessage"></span>
         </ion-label>
@@ -43,8 +43,6 @@
     </div>
   </div>
   <div>
-    <div *ngIf="isIndeterminateProcess"></div>
-    <div *ngIf="!isIndeterminateProcess"></div>
     <ion-progress-bar buffer="{{ progressPercentage/100 }}"
       [type]="isIndeterminateProcess ? 'indeterminate' :  'determinate'" [color]="color"></ion-progress-bar>
   </div>

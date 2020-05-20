@@ -40,7 +40,7 @@ export class ProgramRuleActionEntity {
   @PrimaryColumn() id: string;
   @Column() programRuleActionType: string;
   @Column({ nullable: true }) location: string;
-  @Column({ nullable: true}) data: string;
+  @Column({ nullable: true }) data: string;
   @Column({ nullable: true }) content: string;
   @Column('simple-json') programRule: { id: string };
   @Column({ nullable: true, type: 'simple-json' }) dataElement: { id: string };

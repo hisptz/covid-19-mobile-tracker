@@ -1,0 +1,5 @@
+<ion-content>
+  <div *ngIf="isLoading"> 
+    <app-metadata-sync [shouldOverrideOverAllMessages]="shouldOverrideOverAllMessages" [currentUser]="currentUser" (updateCurrentUser)="onUpdateCurrentUser($event)" (failOnLogin)="onFailLogin($event)" (successOnLoginAndSyncMetadata)="onSuccessLogin($event)"  [showPercentage]="showPercentage"></app-metadata-sync>
+  </div>
+</ion-content>

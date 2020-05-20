@@ -58,11 +58,14 @@ export class LoginMetadataSyncComponent implements OnInit, OnDestroy {
   isOnLogin: boolean;
   @Input()
   overAllMessage: string;
+  @Input() shouldOverrideOverAllMessages: boolean;
   @Input()
   showOverallProgressBar: boolean;
   @Input() hideSubProcesses: boolean;
   @Input() color: string;
   @Input() defaultAppMetadata: any;
+  @Input() showCancelButton: boolean;
+  @Input() showPercentage: boolean;
 
   @Output()
   cancelProgress = new EventEmitter();
@@ -77,8 +80,6 @@ export class LoginMetadataSyncComponent implements OnInit, OnDestroy {
   savingingQueueManager: QueueManager;
   downloadingQueueManager: QueueManager;
   subscriptions: Subscription;
-  showCancelButton: boolean;
-  showPercentage: boolean;
   showLoader: boolean;
   trackedResourceTypes: string[];
   progressTrackerPacentage: any;
@@ -111,8 +112,10 @@ export class LoginMetadataSyncComponent implements OnInit, OnDestroy {
     private dataStoreManagerService: DataStoreManagerService,
     private relationshipsService: RelationshipsService,
   ) {
-    this.showCancelButton = true;
-    this.showPercentage = true;
+    this.showCancelButton =
+      this.showCancelButton !== undefined ? this.showCancelButton : true;
+    this.showPercentage =
+      this.showPercentage !== undefined ? this.showPercentage : true;
     this.showLoader = true;
     this.subscriptions = new Subscription();
     this.progressTrackerPacentage = {
@@ -127,6 +130,10 @@ export class LoginMetadataSyncComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.processes = this.processes ? this.processes : [];
+    this.shouldOverrideOverAllMessages =
+      this.shouldOverrideOverAllMessages === undefined
+        ? true
+        : this.shouldOverrideOverAllMessages;
     if (this.processes) {
       this.resetQueueManager();
     }
@@ -206,7 +213,9 @@ export class LoginMetadataSyncComponent implements OnInit, OnDestroy {
             this.currentUser.progressTracker = progressTracker
               ? progressTracker
               : {};
-            this.overAllMessage = serverUrl;
+            this.overAllMessage = this.shouldOverrideOverAllMessages
+              ? serverUrl
+              : this.overAllMessage;
             this.resetProgressTracker(this.currentUser, processes);
             const processTracker = this.getProgressTracker(
               this.currentUser,

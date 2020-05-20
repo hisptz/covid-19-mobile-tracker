@@ -155,7 +155,7 @@ export class ProgramRuleEngineService {
           ),
         );
       }
-    } catch (error) {}    
+    } catch (error) {}
     return {
       programRuleActions: _.flattenDeep(programRuleActions),
       programRules: _.flattenDeep(programRules),
@@ -265,7 +265,7 @@ export class ProgramRuleEngineService {
         .save(programRuleActions, { chunk })
         .then(() => {
           observer.next();
-          observer.complete();         
+          observer.complete();
         })
         .catch((error: any) => {
           observer.error(error);

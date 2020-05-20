@@ -9,7 +9,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'launch',
     pathMatch: 'full',
   },
   {
@@ -87,6 +87,11 @@ const routes: Routes = [
       import('./pages/manage-self-check/manage-self-check.module').then(
         (m) => m.ManageSelfCheckPageModule,
       ),
+  },
+  {
+    path: 'launch',
+    loadChildren: () =>
+      import('./pages/launch/launch.module').then((m) => m.LaunchPageModule),
   },
 ];
 

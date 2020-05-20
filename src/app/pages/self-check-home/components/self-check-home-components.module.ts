@@ -21,18 +21,24 @@
  * @author Joseph Chingalo <profschingalo@gmail.com>
  *
  */
-import { Entity, Column, PrimaryColumn } from 'typeorm';
-import { OptionSet } from 'src/app/models';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
+import { TranslateModule } from '@ngx-translate/core';
+import { SharedModule } from 'src/app/shared/shared.module';
 
-@Entity()
-export class DataElementEntity {
-  @PrimaryColumn() id: string;
-  @Column() displayName: string;
-  @Column({ nullable: true }) formName: string;
-  @Column() valueType: string;
-  @Column() aggregationType: string;
-  @Column({ nullable: true }) description: string;
-  @Column({ nullable: true, type: 'simple-json' }) attributeValues: string;
-  @Column('simple-json') categoryCombo: string;
-  @Column({ nullable: true, type: 'simple-json' }) optionSet: OptionSet;
-}
+import { MetadataSyncComponent } from './metadata-sync/metadata-sync.component';
+import { LoginComponentsModule } from '../../login/components/login-component.module';
+
+@NgModule({
+  declarations: [MetadataSyncComponent],
+  imports: [
+    IonicModule,
+    CommonModule,
+    SharedModule,
+    LoginComponentsModule,
+    TranslateModule.forChild(),
+  ],
+  exports: [MetadataSyncComponent],
+})
+export class SelfCheckHomeComponentsModule {}
