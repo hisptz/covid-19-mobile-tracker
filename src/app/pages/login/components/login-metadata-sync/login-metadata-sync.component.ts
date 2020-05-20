@@ -65,6 +65,7 @@ export class LoginMetadataSyncComponent implements OnInit, OnDestroy {
   @Input() color: string;
   @Input() defaultAppMetadata: any;
   @Input() showCancelButton: boolean;
+  @Input() showPercentage : boolean;
 
   @Output()
   cancelProgress = new EventEmitter();
@@ -79,7 +80,6 @@ export class LoginMetadataSyncComponent implements OnInit, OnDestroy {
   savingingQueueManager: QueueManager;
   downloadingQueueManager: QueueManager;
   subscriptions: Subscription;
-  showPercentage: boolean;
   showLoader: boolean;
   trackedResourceTypes: string[];
   progressTrackerPacentage: any;
@@ -114,7 +114,8 @@ export class LoginMetadataSyncComponent implements OnInit, OnDestroy {
   ) {
     this.showCancelButton =
       this.showCancelButton !== undefined ? this.showCancelButton : true;
-    this.showPercentage = true;
+    this.showPercentage =
+      this.showPercentage !== undefined ? this.showPercentage : true;
     this.showLoader = true;
     this.subscriptions = new Subscription();
     this.progressTrackerPacentage = {

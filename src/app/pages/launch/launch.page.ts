@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+import { NavController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import * as _ from 'lodash';
-import { Observable } from 'rxjs';
 import {
   DEFAULT_SETTINGS,
   DEFAULT_SELF_USER,
-  DEFAULT_SELF_CHECK_PROGRAMS,
   DEFAULT_SELF_CHECK_KEY,
 } from 'src/app/constants';
 import { getAppMetadata } from 'src/app/helpers';
@@ -24,13 +23,14 @@ import { UserService } from 'src/app/shared/services/user.service';
 import { CurrentUser, AppSetting } from 'src/app/models';
 
 @Component({
-  selector: 'app-self-check-home',
-  templateUrl: './self-check-home.page.html',
-  styleUrls: ['./self-check-home.page.scss'],
+  selector: 'app-launch',
+  templateUrl: './launch.page.html',
+  styleUrls: ['./launch.page.scss'],
 })
-export class SelfCheckHomePage implements OnInit {
+export class LaunchPage implements OnInit {
   isLoading: boolean;
   currentUser: CurrentUser;
+  showPercentage: boolean;
 
   constructor(
     private backgroundMode: BackgroundMode,
@@ -41,8 +41,10 @@ export class SelfCheckHomePage implements OnInit {
     private settingService: SettingService,
     private store: Store<State>,
     private appConfigService: AppConfigService,
+    private navCtrl: NavController,
   ) {
     this.isLoading = false;
+    this.showPercentage = true;
   }
 
   ngOnInit() {
@@ -67,6 +69,7 @@ export class SelfCheckHomePage implements OnInit {
             currentDatabase,
           );
         }
+        this.navCtrl.navigateRoot('/home');
       }
     } catch (error) {}
     const isPasswordEncode = false;
@@ -78,9 +81,47 @@ export class SelfCheckHomePage implements OnInit {
           progressTracker: {},
         }
       : { ...DEFAULT_SELF_USER, isPasswordEncode };
-    // TODO checking data if past a month so we can update metadata
     this.isLoading = true;
     this.backgroundMode.enable();
+  }
+
+  async onUpdateCurrentUser(currentUser: CurrentUser) {
+    const { colorSettings } = currentUser;
+    if (colorSettings) {
+      this.store.dispatch(SetCurrentUserColorSettings({ colorSettings }));
+    }
+    this.currentUser = _.assign({}, this.currentUser, currentUser);
+    await this.userService.setCurrentUser(this.currentUser);
+  }
+
+  async onCancelLoginProcess() {
+    this.backgroundMode.disable();
+  }
+
+  onFailLogin(errorResponseObject: any) {
+    const {
+      failedProcesses,
+      error,
+      failedProcessesErrors,
+    } = errorResponseObject;
+    if (error) {
+      this.toasterMessageService.showToasterMessage(error, 10000);
+    } else if (failedProcesses && failedProcesses.length > 0) {
+      let errorMessage = '';
+      failedProcesses.map((process) => {
+        const errorResponse: any =
+          failedProcessesErrors[failedProcesses.indexOf(process)];
+        errorMessage +=
+          (process.charAt(0).toUpperCase() + process.slice(1))
+            .replace(/([A-Z])/g, ' $1')
+            .trim() +
+          ' : ' +
+          this.toasterMessageService.getSanitizedErrorMessage(errorResponse) +
+          '; ';
+      });
+      this.toasterMessageService.showToasterMessage(errorMessage, 10000);
+    }
+    this.onCancelLoginProcess();
   }
 
   async onSuccessLogin(data: any, skipCurrentUserPropertiesUpdate = false) {
@@ -99,13 +140,14 @@ export class SelfCheckHomePage implements OnInit {
       });
     }
     try {
+      await this.reCheckingAppSetting(currentUser);
       const { colorSettings } = this.currentUser;
       if (colorSettings) {
         this.store.dispatch(SetCurrentUserColorSettings({ colorSettings }));
       }
       this.store.dispatch(AddCurrentUser({ currentUser: this.currentUser }));
       await this.userService.setCurrentUser(this.currentUser);
-      this.isLoading = false;
+      this.navCtrl.navigateRoot('/home');
     } catch (error) {
       await this.toasterMessageService.showToasterMessage(
         error,
@@ -115,6 +157,19 @@ export class SelfCheckHomePage implements OnInit {
       );
     } finally {
       this.backgroundMode.disable();
+    }
+  }
+
+  async reCheckingAppSetting(currentUser: CurrentUser) {
+    const defaultSetting: AppSetting = DEFAULT_SETTINGS;
+    const appSettings: AppSetting = await this.settingService.getCurrentSettingsForTheApp(
+      currentUser,
+    );
+    if (!appSettings || Object.keys(appSettings).length === 0) {
+      await this.settingService.setCurrentSettingsForTheApp(
+        currentUser,
+        defaultSetting,
+      );
     }
   }
 }

@@ -7,9 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { SelfCheckHomePageRoutingModule } from './self-check-home-routing.module';
 
 import { SelfCheckHomePage } from './self-check-home.page';
-import * as selfCheckComponnts from './components';
-import { LoginComponentsModule } from '../login/components/login-component.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { SelfCheckHomeComponentsModule } from './components/self-check-home-components.module';
 
 @NgModule({
   imports: [
@@ -17,9 +16,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
     FormsModule,
     IonicModule,
     SelfCheckHomePageRoutingModule,
-    LoginComponentsModule,
+    SelfCheckHomeComponentsModule,
     SharedModule,
   ],
-  declarations: [SelfCheckHomePage, ...selfCheckComponnts.components],
+  declarations: [SelfCheckHomePage],
 })
 export class SelfCheckHomePageModule {}

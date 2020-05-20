@@ -9,6 +9,7 @@ import { getAppMetadata } from 'src/app/helpers';
 })
 export class MetadataSyncComponent implements OnInit {
   @Input() currentUser: CurrentUser;
+  @Input() showPercentage: boolean;
 
   @Output()
   successOnLoginAndSyncMetadata = new EventEmitter();
@@ -29,13 +30,18 @@ export class MetadataSyncComponent implements OnInit {
   constructor() {
     this.processes = getAppMetadata();
     this.isOnLogin = true;
-    this.overAllLoginMessage = 'overAllLoginMessage';
     this.showOverallProgressBar = true;
-    this.hideSubProcesses = true;
+   // this.hideSubProcesses = true;
     this.showCancelButton = false;
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.showPercentage =
+      this.showPercentage === undefined ? false : this.showPercentage;
+    if (!this.showPercentage) {
+      this.overAllLoginMessage = '';
+    }
+  }
 
   onUpdateCurrentUser(data: any) {
     this.updateCurrentUser.emit(data);
