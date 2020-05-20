@@ -8,7 +8,6 @@ import {
   DEFAULT_SELF_USER,
   DEFAULT_SELF_CHECK_KEY,
 } from 'src/app/constants';
-import { getAppMetadata } from 'src/app/helpers';
 import {
   AddCurrentUser,
   SetCurrentUserColorSettings,
@@ -31,6 +30,8 @@ export class LaunchPage implements OnInit {
   isLoading: boolean;
   currentUser: CurrentUser;
   showPercentage: boolean;
+  shouldOverrideOverAllMessages = false;
+  overAllMessage: string;
 
   constructor(
     private backgroundMode: BackgroundMode,
@@ -83,6 +84,11 @@ export class LaunchPage implements OnInit {
       : { ...DEFAULT_SELF_USER, isPasswordEncode };
     this.isLoading = true;
     this.backgroundMode.enable();
+    this.setProgressMessages();
+  }
+
+  setProgressMessages() {
+    this.overAllMessage = 'Discovering data';
   }
 
   async onUpdateCurrentUser(currentUser: CurrentUser) {
@@ -91,7 +97,10 @@ export class LaunchPage implements OnInit {
       this.store.dispatch(SetCurrentUserColorSettings({ colorSettings }));
     }
     this.currentUser = _.assign({}, this.currentUser, currentUser);
-    await this.userService.setCurrentUser(this.currentUser);
+    await this.userService.setCurrentUser(
+      this.currentUser,
+      DEFAULT_SELF_CHECK_KEY,
+    );
   }
 
   async onCancelLoginProcess() {
@@ -146,7 +155,10 @@ export class LaunchPage implements OnInit {
         this.store.dispatch(SetCurrentUserColorSettings({ colorSettings }));
       }
       this.store.dispatch(AddCurrentUser({ currentUser: this.currentUser }));
-      await this.userService.setCurrentUser(this.currentUser);
+      await this.userService.setCurrentUser(
+        this.currentUser,
+        DEFAULT_SELF_CHECK_KEY,
+      );
       this.navCtrl.navigateRoot('/home');
     } catch (error) {
       await this.toasterMessageService.showToasterMessage(

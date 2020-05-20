@@ -10,6 +10,7 @@ import { getAppMetadata } from 'src/app/helpers';
 export class MetadataSyncComponent implements OnInit {
   @Input() currentUser: CurrentUser;
   @Input() showPercentage: boolean;
+  @Input() shouldOverrideOverAllMessages: boolean;
 
   @Output()
   successOnLoginAndSyncMetadata = new EventEmitter();
@@ -23,15 +24,14 @@ export class MetadataSyncComponent implements OnInit {
   showOverallProgressBar: boolean;
   hideSubProcesses: boolean;
   showCancelButton: boolean;
-
-  defaultAppMetadata: any;
   overAllLoginMessage: string;
+  defaultAppMetadata: any;
 
   constructor() {
     this.processes = getAppMetadata();
     this.isOnLogin = true;
     this.showOverallProgressBar = true;
-   // this.hideSubProcesses = true;
+    this.hideSubProcesses = true;
     this.showCancelButton = false;
   }
 

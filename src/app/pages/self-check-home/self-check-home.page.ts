@@ -2,14 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 import { Store } from '@ngrx/store';
 import * as _ from 'lodash';
-import { Observable } from 'rxjs';
 import {
-  DEFAULT_SETTINGS,
   DEFAULT_SELF_USER,
   DEFAULT_SELF_CHECK_PROGRAMS,
   DEFAULT_SELF_CHECK_KEY,
 } from 'src/app/constants';
-import { getAppMetadata } from 'src/app/helpers';
 import {
   AddCurrentUser,
   SetCurrentUserColorSettings,
@@ -18,10 +15,9 @@ import {
 import { AppConfigService } from 'src/app/shared/services/app-config.service';
 import { AppTransalationsService } from 'src/app/shared/services/app-transalations.service';
 import { EncryptionService } from 'src/app/shared/services/encryption.service';
-import { SettingService } from 'src/app/shared/services/setting.service';
 import { ToasterMessagesService } from 'src/app/shared/services/toaster-messages.service';
 import { UserService } from 'src/app/shared/services/user.service';
-import { CurrentUser, AppSetting } from 'src/app/models';
+import { CurrentUser } from 'src/app/models';
 
 @Component({
   selector: 'app-self-check-home',
@@ -31,6 +27,8 @@ import { CurrentUser, AppSetting } from 'src/app/models';
 export class SelfCheckHomePage implements OnInit {
   isLoading: boolean;
   currentUser: CurrentUser;
+  showPercentage = false;
+  shouldOverrideOverAllMessages: boolean;
 
   constructor(
     private backgroundMode: BackgroundMode,
@@ -38,11 +36,11 @@ export class SelfCheckHomePage implements OnInit {
     private encryptionService: EncryptionService,
     private translationService: AppTransalationsService,
     private userService: UserService,
-    private settingService: SettingService,
     private store: Store<State>,
     private appConfigService: AppConfigService,
   ) {
     this.isLoading = false;
+    this.shouldOverrideOverAllMessages = false;
   }
 
   ngOnInit() {
@@ -78,9 +76,9 @@ export class SelfCheckHomePage implements OnInit {
           progressTracker: {},
         }
       : { ...DEFAULT_SELF_USER, isPasswordEncode };
-    // TODO checking data if past a month so we can update metadata
-    this.isLoading = true;
-    this.backgroundMode.enable();
+    // @TODO checking data if past a month so we can update metadata
+    // this.isLoading = true;
+    // this.backgroundMode.enable();
   }
 
   async onSuccessLogin(data: any, skipCurrentUserPropertiesUpdate = false) {
@@ -104,7 +102,10 @@ export class SelfCheckHomePage implements OnInit {
         this.store.dispatch(SetCurrentUserColorSettings({ colorSettings }));
       }
       this.store.dispatch(AddCurrentUser({ currentUser: this.currentUser }));
-      await this.userService.setCurrentUser(this.currentUser);
+      await this.userService.setCurrentUser(
+        this.currentUser,
+        DEFAULT_SELF_CHECK_KEY,
+      );
       this.isLoading = false;
     } catch (error) {
       await this.toasterMessageService.showToasterMessage(

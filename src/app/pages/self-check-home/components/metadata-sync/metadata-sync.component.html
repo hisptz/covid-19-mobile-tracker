@@ -1,5 +1,5 @@
 <app-login-metadata-sync  (updateCurrentUser)="onUpdateCurrentUser($event)" (failOnLogin)="onFailLogin($event)" [hideSubProcesses]="hideSubProcesses" [showCancelButton]="showCancelButton"
-  (successOnLoginAndSyncMetadata)="onSuccessLogin($event)" [currentUser]="currentUser" [showPercentage]="showPercentage"
+  (successOnLoginAndSyncMetadata)="onSuccessLogin($event)" [defaultAppMetadata]="defaultAppMetadata" [shouldOverrideOverAllMessages]="shouldOverrideOverAllMessages" [currentUser]="currentUser" [showPercentage]="showPercentage"
   (cancelProgress)="onCancelLoginProcess()" [color]="" [overAllMessage]="overAllLoginMessage" [showOverallProgressBar]="showOverallProgressBar"
   [isOnLogin]="isOnLogin" [processes]="processes">
 </app-login-metadata-sync>

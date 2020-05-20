@@ -58,14 +58,14 @@ export class LoginMetadataSyncComponent implements OnInit, OnDestroy {
   isOnLogin: boolean;
   @Input()
   overAllMessage: string;
-  @Input() overrideOverallMessage: boolean;
+  @Input() shouldOverrideOverAllMessages: boolean;
   @Input()
   showOverallProgressBar: boolean;
   @Input() hideSubProcesses: boolean;
   @Input() color: string;
   @Input() defaultAppMetadata: any;
   @Input() showCancelButton: boolean;
-  @Input() showPercentage : boolean;
+  @Input() showPercentage: boolean;
 
   @Output()
   cancelProgress = new EventEmitter();
@@ -130,10 +130,10 @@ export class LoginMetadataSyncComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.processes = this.processes ? this.processes : [];
-    this.overrideOverallMessage =
-      this.overrideOverallMessage === undefined
+    this.shouldOverrideOverAllMessages =
+      this.shouldOverrideOverAllMessages === undefined
         ? true
-        : this.overrideOverallMessage;
+        : this.shouldOverrideOverAllMessages;
     if (this.processes) {
       this.resetQueueManager();
     }
@@ -213,7 +213,7 @@ export class LoginMetadataSyncComponent implements OnInit, OnDestroy {
             this.currentUser.progressTracker = progressTracker
               ? progressTracker
               : {};
-            this.overAllMessage = this.overrideOverallMessage
+            this.overAllMessage = this.shouldOverrideOverAllMessages
               ? serverUrl
               : this.overAllMessage;
             this.resetProgressTracker(this.currentUser, processes);
