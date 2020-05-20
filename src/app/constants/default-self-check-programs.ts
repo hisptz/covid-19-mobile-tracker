@@ -21,16 +21,4 @@
  * @author Joseph Chingalo <profschingalo@gmail.com>
  *
  */
-export * from './login-form-fields';
-export * from './default-user';
-export * from './local-instance';
-export * from './default-settings';
-export * from './default-color-setting';
-export * from './deafult-app-metadata';
-export * from './utilities-app-list';
-export * from './apps-list';
-export * from './default-current-entry-selection';
-export * from './db-options';
-export * from './number-of-reserved-values';
-export * from './default-self-user';
-export * from './default-self-check-programs';
+export const DEFAULT_SELF_CHECK_PROGRAMS: any[] = [{ id: 'wQaWU3KPllK' }];

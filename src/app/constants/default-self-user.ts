@@ -21,16 +21,13 @@
  * @author Joseph Chingalo <profschingalo@gmail.com>
  *
  */
-export * from './login-form-fields';
-export * from './default-user';
-export * from './local-instance';
-export * from './default-settings';
-export * from './default-color-setting';
-export * from './deafult-app-metadata';
-export * from './utilities-app-list';
-export * from './apps-list';
-export * from './default-current-entry-selection';
-export * from './db-options';
-export * from './number-of-reserved-values';
-export * from './default-self-user';
-export * from './default-self-check-programs';
+import { CurrentUser } from 'src/app/models';
+import { DEFAULT_COLOR_SETTING } from './default-color-setting';
+
+export const DEFAULT_SELF_USER: CurrentUser = {
+  serverUrl: 'https://hisptz.com/dhis2covid19',
+  username: 'selfcheck',
+  password: 'Selfcheck@2020',
+  currentLanguage: 'en',
+  colorSettings: DEFAULT_COLOR_SETTING,
+};
