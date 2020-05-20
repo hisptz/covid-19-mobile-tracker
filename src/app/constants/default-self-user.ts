@@ -31,3 +31,5 @@ export const DEFAULT_SELF_USER: CurrentUser = {
   currentLanguage: 'en',
   colorSettings: DEFAULT_COLOR_SETTING,
 };
+
+export const DEFAULT_SELF_CHECK_KEY = 'self-check';

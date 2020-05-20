@@ -58,11 +58,13 @@ export class LoginMetadataSyncComponent implements OnInit, OnDestroy {
   isOnLogin: boolean;
   @Input()
   overAllMessage: string;
+  @Input() overrideOverallMessage: boolean;
   @Input()
   showOverallProgressBar: boolean;
   @Input() hideSubProcesses: boolean;
   @Input() color: string;
   @Input() defaultAppMetadata: any;
+  @Input() showCancelButton: boolean;
 
   @Output()
   cancelProgress = new EventEmitter();
@@ -77,7 +79,6 @@ export class LoginMetadataSyncComponent implements OnInit, OnDestroy {
   savingingQueueManager: QueueManager;
   downloadingQueueManager: QueueManager;
   subscriptions: Subscription;
-  showCancelButton: boolean;
   showPercentage: boolean;
   showLoader: boolean;
   trackedResourceTypes: string[];
@@ -111,7 +112,8 @@ export class LoginMetadataSyncComponent implements OnInit, OnDestroy {
     private dataStoreManagerService: DataStoreManagerService,
     private relationshipsService: RelationshipsService,
   ) {
-    this.showCancelButton = true;
+    this.showCancelButton =
+      this.showCancelButton !== undefined ? this.showCancelButton : true;
     this.showPercentage = true;
     this.showLoader = true;
     this.subscriptions = new Subscription();
@@ -127,6 +129,10 @@ export class LoginMetadataSyncComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.processes = this.processes ? this.processes : [];
+    this.overrideOverallMessage =
+      this.overrideOverallMessage === undefined
+        ? true
+        : this.overrideOverallMessage;
     if (this.processes) {
       this.resetQueueManager();
     }
@@ -206,7 +212,9 @@ export class LoginMetadataSyncComponent implements OnInit, OnDestroy {
             this.currentUser.progressTracker = progressTracker
               ? progressTracker
               : {};
-            this.overAllMessage = serverUrl;
+            this.overAllMessage = this.overrideOverallMessage
+              ? serverUrl
+              : this.overAllMessage;
             this.resetProgressTracker(this.currentUser, processes);
             const processTracker = this.getProgressTracker(
               this.currentUser,
