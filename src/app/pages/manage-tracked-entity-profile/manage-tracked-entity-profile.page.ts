@@ -154,7 +154,7 @@ export class ManageTrackedEntityProfilePage implements OnInit {
     );
 
     console.log(attributeObject);
-    console.log(d2Rule.execute());
+    // console.log(d2Rule.execute());
 
     this.trackedEntityAttributeValuesObject = trackedEntityAttributeValuesObject;
     this.store.dispatch(
