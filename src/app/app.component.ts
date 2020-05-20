@@ -36,10 +36,12 @@ export class AppComponent {
   async initiateDatabaseConnection() {
     try {
       const currentUser: CurrentUser = await this.userService.getCurrentUser();
-      this.appConfigService.initateDataBaseConnection(
-        currentUser.currentDatabase,
-        true,
-      );
+      if (currentUser && currentUser.currentDatabase) {
+        this.appConfigService.initateDataBaseConnection(
+          currentUser.currentDatabase,
+          true,
+        );
+      }
     } catch (e) {
       console.error(e);
     }

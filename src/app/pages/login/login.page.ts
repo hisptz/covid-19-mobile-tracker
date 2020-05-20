@@ -29,7 +29,6 @@ import {
   SetCurrentUserColorSettings,
   State,
 } from 'src/app/store';
-import { Router } from '@angular/router';
 import { AppConfigService } from 'src/app/shared/services/app-config.service';
 
 @Component({

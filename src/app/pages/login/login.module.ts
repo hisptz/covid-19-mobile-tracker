@@ -7,9 +7,10 @@ import { IonicModule } from '@ionic/angular';
 import { LoginPageRoutingModule } from './login-routing.module';
 
 import { LoginPage } from './login.page';
-import { components } from './components';
+
 import { SharedModule } from 'src/app/shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { LoginComponentsModule } from './components/login-component.module';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { TranslateModule } from '@ngx-translate/core';
     LoginPageRoutingModule,
     TranslateModule.forChild(),
     SharedModule,
+    LoginComponentsModule,
   ],
-  declarations: [LoginPage, ...components],
+  declarations: [LoginPage],
 })
 export class LoginPageModule {}

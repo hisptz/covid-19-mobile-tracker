@@ -65,6 +65,7 @@ export function getDataBaseName(user: CurrentUser) {
 export function getEmptyProcessTracker(
   processes: string[],
   isOnLogin: boolean,
+  defaultAppMetadata = DEFAULT_APP_METADATA,
 ) {
   const progressTracker = {};
   progressTracker[`communication`] = {
@@ -73,7 +74,7 @@ export function getEmptyProcessTracker(
     passedProcesses: [],
     message: '',
   };
-  const dataBaseStructure = DEFAULT_APP_METADATA;
+  const dataBaseStructure = defaultAppMetadata;
   processes.map((process: string) => {
     const metadataObject = dataBaseStructure[process] || {};
     const { resourceType } = metadataObject;
