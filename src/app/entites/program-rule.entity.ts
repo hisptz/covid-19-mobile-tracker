@@ -28,8 +28,8 @@ import { ProgramRuleAction } from 'src/app/models';
 export class ProgramRuleEntity {
   @PrimaryColumn() id: string;
   @Column() displayName: string;
-  @Column('simple-json') condition: string;
-  @Column({ nullable: true, type: 'simple-json' }) description: string;
+  @Column() condition: string;
+  @Column({ nullable: true }) description: string;
   @Column('simple-json') program: { id: string };
   @Column({ nullable: true, type: 'simple-json' })
   programRuleActions: ProgramRuleAction[];
@@ -40,8 +40,8 @@ export class ProgramRuleActionEntity {
   @PrimaryColumn() id: string;
   @Column() programRuleActionType: string;
   @Column({ nullable: true }) location: string;
-  @Column({ nullable: true, type: 'simple-json' }) data: string;
-  @Column({ nullable: true, type: 'simple-json' }) content: string;
+  @Column({ nullable: true}) data: string;
+  @Column({ nullable: true }) content: string;
   @Column('simple-json') programRule: { id: string };
   @Column({ nullable: true, type: 'simple-json' }) dataElement: { id: string };
   @Column({ nullable: true, type: 'simple-json' }) trackedEntityAttribute: {
