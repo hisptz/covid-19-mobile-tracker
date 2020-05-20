@@ -94,23 +94,6 @@ export class ManageTrackedEntityProfilePage implements OnInit {
         }
       }
     });
-    // if (result) {
-    //   const { displayIncidentDate } = this.currentProgram;
-    //   if (this.enrollmentDate === '') {
-    //     // this.appProvider.setNormalNotification(
-    //     //   this.currentProgram.enrollmentDateLabel + ' is mandatory field',
-    //     // );
-    //     result = false;
-    //   }
-    //   if (result && displayIncidentDate && this.enrollmentDate !== '') {
-    //     if (this.incidentDate === '') {
-    //       this.appProvider.setNormalNotification(
-    //         this.currentProgram.incidentDateLabel + ' is mandatory field',
-    //       );
-    //       result = false;
-    //     }
-    //   }
-    // }
     return result;
   }
 
@@ -123,6 +106,7 @@ export class ManageTrackedEntityProfilePage implements OnInit {
       setCurrentTrackedEntityInstance({
         currentTrackedEntityInstance: {
           ...trackedEntityInstance,
+          syncStatus: 'not-synced',
           enrollments: trackedEntityInstance.enrollments.map(
             (enrollment: any) => {
               return {

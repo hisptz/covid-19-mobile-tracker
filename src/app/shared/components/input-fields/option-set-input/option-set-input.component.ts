@@ -117,7 +117,7 @@ export class OptionSetInputComponent implements OnInit {
         const { code } = data;
         this.onUpdateOptionValue(code);
       }
-    }      
+    }
   }
 
   onUpdateOptionValue(value: string) {

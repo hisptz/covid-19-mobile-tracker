@@ -37,13 +37,13 @@ export class UserService {
     private encryptionService: EncryptionService,
   ) {}
 
-  async getCurrentUser() {
-    const key = 'currentUser';
+  async getCurrentUser(key?: string) {
+    key = key = `currentUser-${key}` || 'currentUser-chw';
     return await this.localStoregeService.getDataFromLocalStorage(key);
   }
 
-  async setCurrentUser(currentUser: CurrentUser) {
-    const key = 'currentUser';
+  async setCurrentUser(currentUser: CurrentUser, key?: string) {
+    key = key = `currentUser-${key}` || 'currentUser-chw';
     return await this.localStoregeService.setDataOnLocalStorage(
       currentUser,
       key,
@@ -65,7 +65,7 @@ export class UserService {
     return sanitizedUser;
   }
 
-  setCurrentUserUserData(userDataResponse): Observable<any> {
+  setCurrentUserUserData(userDataResponse: any, key?: string): Observable<any> {
     const userData = {
       Name: userDataResponse.name,
       Employer: userDataResponse.employer,
@@ -81,12 +81,12 @@ export class UserService {
       dataSets: this.getAssignedDataSetIds(userDataResponse),
       programs: this.getAssignedProgramsId(userDataResponse),
     };
-    const key = 'userData';
+    key = `userData-${key}` || 'userData-chw';
     return new Observable((observer) => {
       this.localStoregeService
         .setDataOnLocalStorage(userData, key)
         .then(() => {
-          this.setProfileInformation(userDataResponse)
+          this.setProfileInformation(userDataResponse, true, key)
             .then(() => {
               observer.next(userData);
               observer.complete();
@@ -100,8 +100,12 @@ export class UserService {
         });
     });
   }
-  setProfileInformation(userDataResponse, status?: boolean): Promise<any> {
-    const key = 'profileInfo';
+  setProfileInformation(
+    userDataResponse,
+    status?: boolean,
+    key?: string,
+  ): Promise<any> {
+    key = `profileInfo-${key}` || 'profileInfo-chw';
     const ommittedKeys = [
       'access',
       'attributeValues',
@@ -132,8 +136,8 @@ export class UserService {
     return this.localStoregeService.setDataOnLocalStorage(profileInfo, key);
   }
 
-  async getProfileInformation(): Promise<any> {
-    const key = 'profileInfo';
+  async getProfileInformation(key?: string): Promise<any> {
+    key = `profileInfo-${key}` || 'profileInfo-chw';
     return await this.localStoregeService.getDataFromLocalStorage(key);
   }
 

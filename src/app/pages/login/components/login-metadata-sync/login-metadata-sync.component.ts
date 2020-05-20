@@ -60,7 +60,10 @@ export class LoginMetadataSyncComponent implements OnInit, OnDestroy {
   overAllMessage: string;
   @Input()
   showOverallProgressBar: boolean;
+  @Input() hideSubProcesses: boolean;
   @Input() color: string;
+  @Input() defaultAppMetadata: any;
+
   @Output()
   cancelProgress = new EventEmitter();
   @Output()
@@ -133,6 +136,10 @@ export class LoginMetadataSyncComponent implements OnInit, OnDestroy {
       const error = 'Missing current user data';
       this.onFailToLogin({ error });
     }
+
+    this.defaultAppMetadata = this.defaultAppMetadata
+      ? this.defaultAppMetadata
+      : DEFAULT_APP_METADATA;
   }
 
   resetCUrrentUserOptionalvalues() {
@@ -408,6 +415,7 @@ export class LoginMetadataSyncComponent implements OnInit, OnDestroy {
     const emptyProgressTracker = getEmptyProcessTracker(
       processes,
       this.isOnLogin,
+      this.defaultAppMetadata,
     );
     const progressTrackerObject =
       currentUser &&
@@ -446,7 +454,7 @@ export class LoginMetadataSyncComponent implements OnInit, OnDestroy {
     processMessage?: string,
     currentResouceType?: string,
   ) {
-    const dataBaseStructure = DEFAULT_APP_METADATA;
+    const dataBaseStructure = this.defaultAppMetadata;
     const typeOfProcess =
       process.split('-').length > 1 ? process.split('-')[1] : 'saving';
     process = process.split('-')[0];

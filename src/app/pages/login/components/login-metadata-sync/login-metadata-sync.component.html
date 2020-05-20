@@ -29,7 +29,7 @@
             [showPercentage]="showPercentage" (cancelProgress)="onCancelProgess()" [showCancelButton]="showCancelButton"
             [processMessage]="overAllMessage"></app-progress-bar>
     </div>
-    <div class="item-card progress-bar-container">
+    <div class="item-card progress-bar-container" *ngIf="!hideSubProcesses">
         <div *ngFor="let resourceType of trackedResourceTypes;trackBy: trackByFn">
             <app-progress-bar [color]="color" [showLoader]="trackedProcessWithLoader[resourceType]"
                 [progressPercentage]="progressTrackerPacentage[resourceType]" [showPercentage]="showPercentage"

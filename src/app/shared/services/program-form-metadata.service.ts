@@ -58,15 +58,20 @@ export class ProgramFormMetadataService {
     try {
       // TODO Entry forms
       const programEntites: Program[] = await this.getProgramEntities(ids);
-      const programTrackedEntityAttributes = await this.getprogramTrackedEntityAttributes(
-        ids,
+      const programIds = _.flattenDeep(
+        _.map(programEntites, (entity: Program) => entity.id || []),
       );
-      const programStages = await this.getprogramStages(ids);
+      const programTrackedEntityAttributes = await this.getprogramTrackedEntityAttributes(
+        programIds,
+      );
+      const programStages = await this.getprogramStages(programIds);
       const {
         programRuleActions,
         programRules,
         programRuleVariables,
-      } = await this.programRuleEngineService.getAllProgramRulesMetadata(ids);
+      } = await this.programRuleEngineService.getAllProgramRulesMetadata(
+        programIds,
+      );
       programs = shouldIncludeAllMetadata
         ? _.map(programEntites, (programEntity: any) => {
             const id = programEntity.id || '';
@@ -294,7 +299,9 @@ export class ProgramFormMetadataService {
       'ProgramEntity',
       CONNECTION_NAME,
     ) as Repository<ProgramEntity>;
-    return await programRepository.findByIds(ids);
+    return ids && ids.length > 0
+      ? await programRepository.findByIds(ids)
+      : await programRepository.find();
   }
 
   async getTrackedEntityAttributeEntities(ids: string[]) {

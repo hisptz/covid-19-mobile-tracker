@@ -31,7 +31,7 @@ export class DataElementEntity {
   @Column({ nullable: true }) formName: string;
   @Column() valueType: string;
   @Column() aggregationType: string;
-  @Column({ nullable: true, type: 'simple-json' }) description: string;
+  @Column({ nullable: true}) description: string;
   @Column({ nullable: true, type: 'simple-json' }) attributeValues: string;
   @Column('simple-json') categoryCombo: string;
   @Column({ nullable: true, type: 'simple-json' }) optionSet: OptionSet;

@@ -21,8 +21,13 @@
  * @author Joseph Chingalo <profschingalo@gmail.com>
  *
  */
-export * from './app-metadata';
-export * from './entry-form-selection';
-export * from './data-entry-form';
-export * from './get-atttributes-with-reserved-value';
-export * from './generate-uid';
+import { CurrentUser } from 'src/app/models';
+import { DEFAULT_COLOR_SETTING } from './default-color-setting';
+
+export const DEFAULT_SELF_USER: CurrentUser = {
+  serverUrl: 'https://hisptz.com/dhis2covid19',
+  username: 'selfcheck',
+  password: 'Selfcheck@2020',
+  currentLanguage: 'en',
+  colorSettings: DEFAULT_COLOR_SETTING,
+};
