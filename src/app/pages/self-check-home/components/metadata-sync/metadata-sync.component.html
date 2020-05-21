@@ -13,9 +13,9 @@
             <ion-img class="self-check-img" [src]="slide.icon"></ion-img>
           </ion-card-header>
           <ion-card-content>
-            <p *ngIf="slide && slide.descriptions && slide.descriptions.length > 0">
+            <h2 *ngIf="slide && slide.descriptions && slide.descriptions.length > 0">
               {{ slide.descriptions[0] }}
-            </p>
+            </h2>
           </ion-card-content>
         </ion-card>
       </ion-slide>      
