@@ -5,6 +5,7 @@ import * as _ from 'lodash';
 import {
   DEFAULT_SELF_USER,
   DEFAULT_SELF_CHECK_PROGRAMS,
+  DEFAULT_SELF_CHECK_HOME_CONTENTS,
   DEFAULT_SELF_CHECK_KEY,
 } from 'src/app/constants';
 import {
@@ -29,6 +30,7 @@ export class SelfCheckHomePage implements OnInit {
   currentUser: CurrentUser;
   showPercentage = false;
   shouldOverrideOverAllMessages: boolean;
+  homeContents: any;
 
   constructor(
     private backgroundMode: BackgroundMode,
@@ -41,6 +43,7 @@ export class SelfCheckHomePage implements OnInit {
   ) {
     this.isLoading = false;
     this.shouldOverrideOverAllMessages = false;
+    this.homeContents = DEFAULT_SELF_CHECK_HOME_CONTENTS || [];
   }
 
   ngOnInit() {
