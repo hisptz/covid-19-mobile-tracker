@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CurrentUser } from 'src/app/models';
 import { getAppMetadata } from 'src/app/helpers';
+import { DEFAULT_SELF_CHECK_HOME_CONTENTS } from 'src/app/constants';
 
 @Component({
   selector: 'app-metadata-sync',
@@ -11,6 +12,9 @@ export class MetadataSyncComponent implements OnInit {
   @Input() currentUser: CurrentUser;
   @Input() showPercentage: boolean;
   @Input() shouldOverrideOverAllMessages: boolean;
+  @Input() overAllMessage: string;
+
+  @Input() showSlides: boolean;
 
   @Output()
   successOnLoginAndSyncMetadata = new EventEmitter();
@@ -24,8 +28,11 @@ export class MetadataSyncComponent implements OnInit {
   showOverallProgressBar: boolean;
   hideSubProcesses: boolean;
   showCancelButton: boolean;
-  overAllLoginMessage: string;
+
   defaultAppMetadata: any;
+
+  slideOpts: any;
+  slides: any;
 
   constructor() {
     this.processes = getAppMetadata();
@@ -33,13 +40,21 @@ export class MetadataSyncComponent implements OnInit {
     this.showOverallProgressBar = true;
     this.hideSubProcesses = true;
     this.showCancelButton = false;
+    this.slideOpts = {
+      initialSlide: 0,
+      speed: 500,
+      effect: 'cube',
+      autoplay: true,
+      autoHeight: true,
+    };
+    this.slides = DEFAULT_SELF_CHECK_HOME_CONTENTS;
   }
 
   ngOnInit() {
     this.showPercentage =
       this.showPercentage === undefined ? false : this.showPercentage;
     if (!this.showPercentage) {
-      this.overAllLoginMessage = '';
+      this.overAllMessage = '';
     }
   }
 
