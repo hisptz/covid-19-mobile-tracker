@@ -24,6 +24,7 @@ import { ProgramRuleActionMessageComponent } from './program-rule-action-message
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { TrackedEntityInputsComponent } from './tracked-entity-inputs/tracked-entity-inputs';
 import { TrackerProfileFormComponent } from './tracker-profile-form/tracker-profile-form.component';
+import { EventFormComponent } from './event-form/event-form.component';
 
 export const components: any[] = [
   LanguageListComponent,
@@ -51,5 +52,6 @@ export const components: any[] = [
   CoordinateComponent,
   EventInputContainerComponent,
   TrackerProfileFormComponent,
+  EventFormComponent,
 ];
 export const entryComponents: any[] = [LanguageListComponent, ...modals];

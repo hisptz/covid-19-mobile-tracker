@@ -187,6 +187,10 @@ export const getSelfCheckSections = createSelector(
         name: 'Assessment',
         isStageForm: true,
         program: currentProgram,
+        programStage:
+          currentProgram && currentProgram.programStages
+            ? currentProgram.programStages[0]
+            : null,
       },
       {
         index: 3,

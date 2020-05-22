@@ -32,7 +32,10 @@
       </div>
 
       <div class="message-card" *ngIf="currentSection.isStageForm">
-        <ion-text>Stage Form goes here</ion-text>
+        <app-event-form [program]="currentSection.program" [programStage]="currentSection.programStage"
+          [currentEvent]="currentEvent$ | async" [eventObject]="currentEventDataValueObject$ | async"
+          [currentUser]="currentUser$ | async" (eventUpdate)="onEventUpdate($event)">
+        </app-event-form>
       </div>
     </ion-col>
   </ion-row>

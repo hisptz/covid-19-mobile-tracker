@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
-import { State, setCurrentTrackedEntityInstance } from 'src/app/store';
+import {
+  State,
+  setCurrentTrackedEntityInstance,
+  setCurrentEvent,
+} from 'src/app/store';
 import {
   getCurrentProgram,
   getSelfCheckSections,
@@ -9,6 +13,8 @@ import {
   getCurrentProgramTrackedEntityAttribute,
   getCurrentTrackedEntityInstance,
   getTrackedEntityInstanceAttributeObject,
+  getCurrentEventDataValueObject,
+  getCurrentEvent,
 } from 'src/app/store/selectors/selections.selectors';
 import { take } from 'rxjs/operators';
 import { Observable, from } from 'rxjs';
@@ -24,7 +30,9 @@ import { DEFAULT_SELF_CHECK_KEY } from 'src/app/constants';
 export class ManageSelfCheckProfilePage implements OnInit {
   currentProgramTrackedEntityAttribute$: Observable<any>;
   currentTrackedEntityInstance$: Observable<any>;
+  currentEvent$: Observable<any>;
   trackedEntityInstanceAttributeValueObject$: Observable<any>;
+  currentEventDataValueObject$: Observable<any>;
   trackedEntityInstanceDates$: Observable<any>;
   currentUser$: Observable<CurrentUser>;
 
@@ -68,6 +76,13 @@ export class ManageSelfCheckProfilePage implements OnInit {
     this.trackedEntityInstanceAttributeValueObject$ = this.store.pipe(
       select(getTrackedEntityInstanceAttributeObject),
     );
+
+    this.currentEventDataValueObject$ = this.store.pipe(
+      select(getCurrentEventDataValueObject),
+    );
+
+    this.currentEvent$ = this.store.pipe(select(getCurrentEvent));
+
     this.currentUser$ = from(
       this.userService.getCurrentUser(DEFAULT_SELF_CHECK_KEY),
     );
@@ -105,6 +120,14 @@ export class ManageSelfCheckProfilePage implements OnInit {
       this.store.dispatch(
         setCurrentTrackedEntityInstance({ currentTrackedEntityInstance }),
       );
+    }
+  }
+
+  onEventUpdate(eventDetails: any) {
+    if (eventDetails) {
+      const { currentEvent, isFormReady } = eventDetails;
+      this.isSectionReady = isFormReady;
+      this.store.dispatch(setCurrentEvent({ currentEvent }));
     }
   }
 }

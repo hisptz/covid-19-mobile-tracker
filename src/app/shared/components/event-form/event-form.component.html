@@ -1,0 +1,35 @@
+<form action="" *ngIf="program && programStage && currentUser">
+  <app-date-time [mode]="'date'" [label]="'Incident Date'" [inputValue]="currentEvent?.eventDate"
+    (dateTimeChange)="onEventDateUpdate($event, currentEvent)"></app-date-time>
+  <div *ngIf="programStage.captureCoordinates">
+    <!--<app-coordinate-input></app-coordinate-input>-->
+  </div>
+  <div *ngIf="programStage.programStageSections && programStage.programStageSections.length > 0">
+    <div *ngFor="let programStageSection of programStage.programStageSections">
+      <ion-item-divider>
+        <ion-label>
+          <h2>{{ programStageSection.displayName || programStageSection.name }}</h2>
+        </ion-label>
+      </ion-item-divider>
+      <div *ngFor="let dataElement of programStageSection.dataElements">
+        <div *ngIf="dataElement">
+          <event-input-container [dataElement]="dataElement" [currentUser]="currentUser"
+            [data]="eventObject || dataObject" [dataValuesSavingStatusClass]="dataValuesSavingStatusClass"
+            (valueChange)="onUpdateData($event)">
+          </event-input-container>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!(programStage.programStageSections && programStage.programStageSections.length > 0)">
+    <div *ngFor="let programStageDataElement of programStage.programStageDataElements | sortBy:'sortOrder'">
+      <div *ngIf="programStageDataElement.dataElement">
+        <event-input-container [dataElement]="programStageDataElement.dataElement" [currentUser]="currentUser"
+          [data]="eventObject || dataObject" [dataValuesSavingStatusClass]="dataValuesSavingStatusClass"
+          (valueChange)="onUpdateData($event)">
+        </event-input-container>
+      </div>
+    </div>
+  </div>
+</form>
