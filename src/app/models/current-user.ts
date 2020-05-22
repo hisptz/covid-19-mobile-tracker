@@ -22,6 +22,7 @@
  *
  */
 import { AppColorObject } from './app-color';
+import { TrackedEntityInstance } from './program';
 export interface CurrentUser {
   username: string;
   name?: string;
@@ -42,4 +43,5 @@ export interface CurrentUser {
   programs?: string[];
   dataSets?: string[];
   colorSettings?: AppColorObject;
+  trackedEntityInstance?: TrackedEntityInstance;
 }
