@@ -22,7 +22,7 @@
 *
 *
 -->
-<div *ngIf="trackedEntityAttribute" class="ion-padding-top">
+<div *ngIf="!isLoading && trackedEntityAttribute" class="ion-padding-top">
   <div *ngIf="trackedEntityAttribute.optionSet"
     [ngClass]="(trackedEntityAttributesSavingStatusClass[trackedEntityAttribute.id +'-trackedEntityAttribute'])?trackedEntityAttributesSavingStatusClass[trackedEntityAttribute.id +'-trackedEntityAttribute']:'input-field-container'">
     <app-option-set-input [dataEntrySettings]="dataEntrySettings" (optionSetChange)="updateValue($event)"

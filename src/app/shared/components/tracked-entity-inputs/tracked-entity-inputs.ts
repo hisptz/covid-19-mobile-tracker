@@ -22,6 +22,7 @@
  *
  */
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import * as _ from 'lodash';
 
 import { SettingService } from '../../services/setting.service';
 import { AttributeReservedValueManagerService } from '../../services/attribute-reserved-value-manager.service';
@@ -62,7 +63,7 @@ export class TrackedEntityInputsComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.generateReservedValues(this.trackedEntityAttribute);
+    await this.generateReservedValues(this.trackedEntityAttribute);
     this.numericalInputField = [
       'INTEGER_NEGATIVE',
       'INTEGER_POSITIVE',
@@ -114,8 +115,8 @@ export class TrackedEntityInputsComponent implements OnInit {
           dataEntrySettings.label
         ];
       }
-      this.isLoading = false;
     }
+    this.isLoading = false;
   }
 
   async generateReservedValues(trackedEntityAttribute: any) {
@@ -139,7 +140,7 @@ export class TrackedEntityInputsComponent implements OnInit {
           reservedValues.length > 0 &&
           !Object.keys(this.data).includes(fieldId)
         ) {
-          const reservedValue = reservedValues.pop();
+          const reservedValue = _.head(reservedValues);
           const updatedValue = {
             id: fieldId,
             value: reservedValue.value || '',
