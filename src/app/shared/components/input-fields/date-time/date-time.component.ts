@@ -65,7 +65,7 @@ export class DateTimeComponent implements OnInit {
           cancelText: 'Back',
           todayText: 'Today',
           nowText: 'Now',
-          allowFutureDates: true,
+          maxDate : new Date(),
           is24Hour: false,
           androidTheme: this.datePicker.ANDROID_THEMES
             .THEME_DEVICE_DEFAULT_LIGHT,
