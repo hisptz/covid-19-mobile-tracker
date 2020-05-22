@@ -93,6 +93,13 @@ export class ManageSelfCheckProfilePage implements OnInit {
       .subscribe((formSections: any[]) => {
         this.formSections = formSections;
         this.currentSection = this.formSections[0];
+        this.formSections.forEach((section: any) => {
+          if (section.isStageForm) {
+            this.store.dispatch(
+              setCurrentEvent({ currentEvent: section.currentEvent }),
+            );
+          }
+        });
       });
   }
 
