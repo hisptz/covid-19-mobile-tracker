@@ -5,6 +5,7 @@ import {
   State,
   setCurrentTrackedEntityInstance,
   setCurrentEvent,
+  saveTrackedEntityInstance,
 } from 'src/app/store';
 import {
   getCurrentProgram,
@@ -93,6 +94,13 @@ export class ManageSelfCheckProfilePage implements OnInit {
       .subscribe((formSections: any[]) => {
         this.formSections = formSections;
         this.currentSection = this.formSections[0];
+        this.formSections.forEach((section: any) => {
+          if (section.isStageForm) {
+            this.store.dispatch(
+              setCurrentEvent({ currentEvent: section.currentEvent }),
+            );
+          }
+        });
       });
   }
 
@@ -128,6 +136,12 @@ export class ManageSelfCheckProfilePage implements OnInit {
       const { currentEvent, isFormReady } = eventDetails;
       this.isSectionReady = isFormReady;
       this.store.dispatch(setCurrentEvent({ currentEvent }));
+    }
+  }
+
+  onAgreeDeclaration(e) {
+    if (this.isDataCorrect) {
+      this.store.dispatch(saveTrackedEntityInstance());
     }
   }
 }

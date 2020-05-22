@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content *ngIf="currentUser">
   <div *ngIf="isLoading">
     <app-metadata-sync [currentUser]="currentUser" (successOnLoginAndSyncMetadata)="onSuccessLogin($event)">
     </app-metadata-sync>

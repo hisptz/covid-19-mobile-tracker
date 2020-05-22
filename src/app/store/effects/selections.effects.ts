@@ -57,6 +57,7 @@ export class SelectionsEffects {
           ),
         ),
         tap(async ([{}, trackedEntityInstance]) => {
+          console.log('TRACKED ENTITY INSTANCE::' + trackedEntityInstance);
           try {
             await this.programDataService.savingTrackedEntityInstancesToLocalStorage(
               [trackedEntityInstance],
@@ -64,10 +65,9 @@ export class SelectionsEffects {
           } catch (e) {
             console.log(e);
           }
-          console.log({ trackedEntityInstance });
           // TODO: Add support for pop notification to show saving progress
           this.store.dispatch(saveTrackedEntityInstanceComplete());
-          this.router.navigate(['/tracked-entity-list']);
+          // this.router.navigate(['/tracked-entity-list']);
         }),
       ),
     { dispatch: false },

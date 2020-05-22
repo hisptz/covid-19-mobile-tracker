@@ -9,6 +9,7 @@ import {
 } from 'src/app/models';
 import * as _ from 'lodash';
 import { getAttributeToDisplay } from 'src/app/helpers/get-attributes-to-display';
+import { generateEvent } from 'src/app/helpers/generate-event';
 
 /**
  * Copyright (C) 2020 UDSM DHIS2 PROJECT
@@ -164,8 +165,9 @@ export const getTrackedEntityInstanceSavingStatus = createSelector(
 
 export const getSelfCheckSections = createSelector(
   getCurrentProgram,
-  (currentProgram: Program) => {
-    return [
+  getCurrentTrackedEntityInstance,
+  (currentProgram: Program, trackedEntityInstance: TrackedEntityInstance) => {
+    const sections = [
       {
         index: 0,
         id: 'disclaimer',
@@ -211,5 +213,20 @@ export const getSelfCheckSections = createSelector(
           'Great! you details have been collected and you are advised to perform another check after 12 hours',
       },
     ];
+
+    return sections.map((section: any) => {
+      if (section.isStageForm) {
+        return {
+          ...section,
+          currentEvent: generateEvent(
+            currentProgram,
+            section.programStage,
+            trackedEntityInstance,
+          ),
+        };
+      }
+
+      return section;
+    });
   },
 );

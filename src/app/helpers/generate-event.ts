@@ -28,7 +28,7 @@ export function generateEvent(
   program: Program,
   programStage: any,
   trackedEntityInstance: any,
-  organisationUnit: OrganisationUnit,
+  organisationUnit?: OrganisationUnit,
 ): Events {
   const date = new Date();
   const eventDate = date.toISOString().split('T')[0];
@@ -43,7 +43,11 @@ export function generateEvent(
     dueDate: eventDate,
     program: program ? program.id.split('_')[0] : undefined,
     programStage: programStage ? programStage.id : undefined,
-    orgUnit: organisationUnit ? organisationUnit.id : undefined,
+    orgUnit: organisationUnit
+      ? organisationUnit.id
+      : trackedEntityInstance
+      ? trackedEntityInstance.orgUnit
+      : undefined,
     trackedEntityInstance: trackedEntityInstance
       ? trackedEntityInstance.id
       : undefined,

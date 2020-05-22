@@ -69,7 +69,6 @@ export class SelfCheckHomePage implements OnInit {
       )
       .subscribe((currentProgram: Program) => {
         this.currentProgram = currentProgram;
-        console.log(currentProgram);
         this.store.dispatch(setCurrentProgram({ currentProgram }));
       });
   }
@@ -149,10 +148,10 @@ export class SelfCheckHomePage implements OnInit {
   onCheckUp(e) {
     e.stopPropagation();
     if (this.currentProgram) {
-      const currentTrackedEntityInstance = generateTrackedEntityInstance(
-        this.currentProgram,
-        null,
-      );
+      const { trackedEntityInstance } = this.currentUser;
+      const currentTrackedEntityInstance =
+        trackedEntityInstance ||
+        generateTrackedEntityInstance(this.currentProgram, null);
 
       this.store.dispatch(
         setCurrentTrackedEntityInstance({ currentTrackedEntityInstance }),
