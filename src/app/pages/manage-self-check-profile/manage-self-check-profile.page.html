@@ -1,9 +1,44 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>manage-self-check-profile</ion-title>
+<ion-header class="ion-no-border">
+  <ion-toolbar class="ion-padding-top">
+    <ion-buttons slot="start" *ngIf="!currentSection?.isLast">
+      <ion-button (click)="onBack($event, currentSection?.index)">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">
+      <div class="text-subtitle">Self Check</div>
+      <div class="text-title">{{currentSection.name}}</div>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-row class="self-check-content" *ngIf="currentSection">
+    <ion-col>
+      <div class="message-card" *ngIf="currentSection.isForMessage">
+        <ion-text class="ion-text-justify">{{ currentSection.message}}</ion-text>
+        <ion-item lines="none" *ngIf="currentSection.isDeclaration">
+          <ion-checkbox [(ngModel)]="isDataCorrect"></ion-checkbox>
+          <ion-text class="ion-margin-start">I Agree</ion-text>
+        </ion-item>
+      </div>
 
+      <div class="message-card" *ngIf="currentSection.isProfileForm">
+        <app-tracker-profile-form [program]="currentSection.program"></app-tracker-profile-form>
+      </div>
+
+      <div class="message-card" *ngIf="currentSection.isStageForm">
+        <ion-text>Stage Form goes here</ion-text>
+      </div>
+    </ion-col>
+  </ion-row>
+  <ion-row class="continue-button-block">
+    <ion-col>
+      <ion-button (click)="onNext($event, currentSection.index, currentSection.isLast)" expand="block" size="large"
+        shape="round" [disabled]="isButtonDisabled">
+        <ion-label>{{
+         currentSection.isLast ? 'Done' : currentSection.isDeclaration ? 'Finish' : 'Continue'}}</ion-label>
+      </ion-button>
+    </ion-col>
+  </ion-row>
 </ion-content>

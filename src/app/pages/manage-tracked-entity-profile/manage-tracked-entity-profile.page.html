@@ -31,7 +31,7 @@
         <div
           *ngFor="let programTrackedEntityAttribute of params.program.programTrackedEntityAttributes | sortBy:'sortOrder'">
           <div
-            *ngIf="params.currentUser && programTrackedEntityAttribute && programTrackedEntityAttribute.trackedEntityAttribute && programTrackedEntityAttribute.trackedEntityAttribute.id && !hiddenFields[programTrackedEntityAttribute.trackedEntityAttribute.id]">
+            *ngIf="programTrackedEntityAttribute && programTrackedEntityAttribute.trackedEntityAttribute && programTrackedEntityAttribute.trackedEntityAttribute.id && !hiddenFields[programTrackedEntityAttribute.trackedEntityAttribute.id]">
             <tracked-entity-inputs [trackedEntityAttribute]="programTrackedEntityAttribute.trackedEntityAttribute"
               [currentUser]="params.currentUser" [data]="params.attributeObject || dataObject"
               [(trackedEntityAttributesSavingStatusClass)]="trackedEntityAttributesSavingStatusClass"

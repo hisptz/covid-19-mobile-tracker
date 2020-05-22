@@ -1,10 +1,12 @@
 <ion-content>
-  <div *ngIf="isLoading"> 
-    <app-metadata-sync [currentUser]="currentUser" (successOnLoginAndSyncMetadata)="onSuccessLogin($event)"  ></app-metadata-sync>
+  <div *ngIf="isLoading">
+    <app-metadata-sync [currentUser]="currentUser" (successOnLoginAndSyncMetadata)="onSuccessLogin($event)">
+    </app-metadata-sync>
   </div>
-  <ion-card color="primary">
+
+  <ion-card color="secondary">
     <ion-card-header>
-      <ion-card-title>Hello Rajab,</ion-card-title>
+      <ion-card-title>Hello,</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <h2>No status update for the last 12 hours</h2>
@@ -14,9 +16,7 @@
   <ion-card color="light">
     <ion-card-header>
       <ion-img class="self-check-img" src="assets/icon/spread.svg"></ion-img>
-      <ion-card-title class="ion-padding-top"
-        >Know How it spreads</ion-card-title
-      >
+      <ion-card-title class="ion-padding-top">Know How it spreads</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <h2>
@@ -45,13 +45,8 @@
   </ion-card>
   <ion-card color="light">
     <ion-card-header>
-      <ion-img
-        class="self-check-img"
-        src="assets/icon/wash_hands.svg"
-      ></ion-img>
-      <ion-card-title class="ion-padding-top"
-        >Clean your hands often</ion-card-title
-      >
+      <ion-img class="self-check-img" src="assets/icon/wash_hands.svg"></ion-img>
+      <ion-card-title class="ion-padding-top">Clean your hands often</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <h2>
@@ -71,10 +66,7 @@
   </ion-card>
   <ion-card color="light">
     <ion-card-header>
-      <ion-img
-        class="self-check-img"
-        src="assets/icon/social_distancing.svg"
-      ></ion-img>
+      <ion-img class="self-check-img" src="assets/icon/social_distancing.svg"></ion-img>
       <ion-card-title class="ion-padding-top">Keep distance</ion-card-title>
     </ion-card-header>
     <ion-card-content>
@@ -91,9 +83,7 @@
   <ion-card color="light">
     <ion-card-header>
       <ion-img class="self-check-img" src="assets/icon/mask.svg"></ion-img>
-      <ion-card-title class="ion-padding-top"
-        >Wear face mask if you are sick</ion-card-title
-      >
+      <ion-card-title class="ion-padding-top">Wear face mask if you are sick</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <h2>
@@ -113,4 +103,16 @@
       </h2>
     </ion-card-content>
   </ion-card>
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+    <ion-button shape="round" color="success" [routerLink]="['/self-check-enrollment']">
+      <ion-icon slot="start" name="person-add"></ion-icon>
+      <ion-label>Enroll</ion-label>
+    </ion-button>
+  </ion-fab>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-button shape="round" (click)="onCheckUp($event)">
+      <ion-icon slot="start" name="heart-outline"></ion-icon>
+      <ion-label>Check-up</ion-label>
+    </ion-button>
+  </ion-fab>
 </ion-content>

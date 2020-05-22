@@ -11,13 +11,20 @@ import {
   AddCurrentUser,
   SetCurrentUserColorSettings,
   State,
+  setCurrentProgram,
+  setCurrentTrackedEntityInstance,
 } from 'src/app/store';
 import { AppConfigService } from 'src/app/shared/services/app-config.service';
 import { AppTransalationsService } from 'src/app/shared/services/app-transalations.service';
 import { EncryptionService } from 'src/app/shared/services/encryption.service';
 import { ToasterMessagesService } from 'src/app/shared/services/toaster-messages.service';
 import { UserService } from 'src/app/shared/services/user.service';
-import { CurrentUser } from 'src/app/models';
+import { CurrentUser, Program } from 'src/app/models';
+import { ProgramFormMetadataService } from 'src/app/shared/services/program-form-metadata.service';
+import { Observable, from } from 'rxjs';
+import { map, filter } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { generateTrackedEntityInstance } from 'src/app/helpers/generate-tracked-entity-instance';
 
 @Component({
   selector: 'app-self-check-home',
@@ -29,6 +36,7 @@ export class SelfCheckHomePage implements OnInit {
   currentUser: CurrentUser;
   showPercentage = false;
   shouldOverrideOverAllMessages: boolean;
+  currentProgram: Program;
 
   constructor(
     private backgroundMode: BackgroundMode,
@@ -38,13 +46,29 @@ export class SelfCheckHomePage implements OnInit {
     private userService: UserService,
     private store: Store<State>,
     private appConfigService: AppConfigService,
+    private programMetadata: ProgramFormMetadataService,
+    private router: Router,
   ) {
     this.isLoading = false;
     this.shouldOverrideOverAllMessages = false;
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.intiateApp();
+    from(
+      this.programMetadata.getProgramByIds(
+        DEFAULT_SELF_CHECK_PROGRAMS.map((program: any) => program.id),
+      ),
+    )
+      .pipe(
+        map((programs: any[]) => programs[0]),
+        filter((program) => program),
+      )
+      .subscribe((currentProgram: Program) => {
+        this.currentProgram = currentProgram;
+        console.log(currentProgram);
+        this.store.dispatch(setCurrentProgram({ currentProgram }));
+      });
   }
 
   async intiateApp() {
@@ -116,6 +140,21 @@ export class SelfCheckHomePage implements OnInit {
       );
     } finally {
       this.backgroundMode.disable();
+    }
+  }
+
+  onCheckUp(e) {
+    e.stopPropagation();
+    if (this.currentProgram) {
+      const currentTrackedEntityInstance = generateTrackedEntityInstance(
+        this.currentProgram,
+        null,
+      );
+
+      this.store.dispatch(
+        setCurrentTrackedEntityInstance({ currentTrackedEntityInstance }),
+      );
+      this.router.navigate(['/manage-self-check-profile']);
     }
   }
 }

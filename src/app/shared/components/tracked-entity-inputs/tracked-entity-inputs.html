@@ -22,26 +22,27 @@
 *
 *
 -->
-<div *ngIf="!isLoading && trackedEntityAttribute" class="ion-padding-top">
+<div *ngIf="trackedEntityAttribute" class="ion-padding-top">
   <div *ngIf="trackedEntityAttribute.optionSet"
     [ngClass]="(trackedEntityAttributesSavingStatusClass[trackedEntityAttribute.id +'-trackedEntityAttribute'])?trackedEntityAttributesSavingStatusClass[trackedEntityAttribute.id +'-trackedEntityAttribute']:'input-field-container'">
     <app-option-set-input [dataEntrySettings]="dataEntrySettings" (optionSetChange)="updateValue($event)"
-      [dataElementId]="trackedEntityAttribute.id" [categoryOptionComboId]="'trackedEntityAttribute'" [lockingFieldStatus]="isDisabled" [data]="data"
-      [options]="trackedEntityAttribute.optionSet.options" [label]="fieldLabelKey">
+      [dataElementId]="trackedEntityAttribute.id" [categoryOptionComboId]="'trackedEntityAttribute'"
+      [lockingFieldStatus]="isDisabled" [data]="data" [options]="trackedEntityAttribute.optionSet.options"
+      [label]="fieldLabelKey">
     </app-option-set-input>
   </div>
   <div *ngIf="!trackedEntityAttribute.optionSet"
     [ngClass]="(trackedEntityAttributesSavingStatusClass[trackedEntityAttribute.id +'-trackedEntityAttribute'])?trackedEntityAttributesSavingStatusClass[trackedEntityAttribute.id +'-trackedEntityAttribute']:'input-field-container'">
     <div *ngIf="textInputField.indexOf(trackedEntityAttribute.valueType) > -1">
       <app-text-input (change)="updateValue($event)" [dataElementId]="trackedEntityAttribute.id"
-        [categoryOptionComboId]="'trackedEntityAttribute'" [lockingFieldStatus]="isDisabled" [data]="data" [barcodeSettings]="barcodeSettings"
-        [valueType]="trackedEntityAttribute.valueType" [label]="fieldLabelKey">
+        [categoryOptionComboId]="'trackedEntityAttribute'" [lockingFieldStatus]="isDisabled" [data]="data"
+        [barcodeSettings]="barcodeSettings" [valueType]="trackedEntityAttribute.valueType" [label]="fieldLabelKey">
       </app-text-input>
     </div>
     <div *ngIf="numericalInputField.indexOf(trackedEntityAttribute.valueType) > -1">
       <app-numerical-input (numericalValueChange)="updateValue($event)" [dataElementId]="trackedEntityAttribute.id"
-        [categoryOptionComboId]="'trackedEntityAttribute'" [lockingFieldStatus]="isDisabled" [data]="data" [barcodeSettings]="barcodeSettings"
-        [valueType]="trackedEntityAttribute.valueType" [label]="fieldLabelKey">
+        [categoryOptionComboId]="'trackedEntityAttribute'" [lockingFieldStatus]="isDisabled" [data]="data"
+        [barcodeSettings]="barcodeSettings" [valueType]="trackedEntityAttribute.valueType" [label]="fieldLabelKey">
       </app-numerical-input>
     </div>
     <div
@@ -53,46 +54,50 @@
     </div>
     <div *ngIf="trackedEntityAttribute.valueType === 'TRUE_ONLY'">
       <app-true-only-input (valueChange)="updateValue($event)" [dataElementId]="trackedEntityAttribute.id"
-        [categoryOptionComboId]="'trackedEntityAttribute'" [lockingFieldStatus]="isDisabled" [data]="data" [label]="fieldLabelKey">
+        [categoryOptionComboId]="'trackedEntityAttribute'" [lockingFieldStatus]="isDisabled" [data]="data"
+        [label]="fieldLabelKey">
       </app-true-only-input>
     </div>
     <div *ngIf="trackedEntityAttribute.valueType === 'AGE'">
       <app-age-input (ageChange)="updateValue($event)" [dataElementId]="trackedEntityAttribute.id"
-        [categoryOptionComboId]="'trackedEntityAttribute'" [lockingFieldStatus]="isDisabled" [data]="data" [label]="fieldLabelKey">
+        [categoryOptionComboId]="'trackedEntityAttribute'" [lockingFieldStatus]="isDisabled" [data]="data"
+        [label]="fieldLabelKey">
       </app-age-input>
     </div>
     <div *ngIf="trackedEntityAttribute.valueType === 'BOOLEAN'">
-      <app-boolean-input (valueChange)="updateValue($event)" [label]="fieldLabelKey" [dataElementId]="trackedEntityAttribute.id"
-        [categoryOptionComboId]="'trackedEntityAttribute'" [lockingFieldStatus]="isDisabled" [data]="data">
+      <app-boolean-input (valueChange)="updateValue($event)" [label]="fieldLabelKey"
+        [dataElementId]="trackedEntityAttribute.id" [categoryOptionComboId]="'trackedEntityAttribute'"
+        [lockingFieldStatus]="isDisabled" [data]="data">
       </app-boolean-input>
     </div>
     <div *ngIf="trackedEntityAttribute.valueType === 'COORDINATE'">
-      <div >
-        <ion-label >{{ fieldLabelKey }}</ion-label>
+      <div>
+        <ion-label>{{ fieldLabelKey }}</ion-label>
       </div>
       <app-coordinate-input (coordinateChange)="updateValue($event)" [dataElementId]="trackedEntityAttribute.id"
         [categoryOptionComboId]="'trackedEntityAttribute'" [lockingFieldStatus]="isDisabled" [data]="data">
       </app-coordinate-input>
     </div>
     <div *ngIf="trackedEntityAttribute.valueType === 'ORGANISATION_UNIT'">
-      <div >
-        <ion-label >{{ fieldLabelKey }}</ion-label>
+      <div>
+        <ion-label>{{ fieldLabelKey }}</ion-label>
       </div>
       <app-organisation-unit-input (organisationUnitChange)="updateValue($event)"
-        [dataElementId]="trackedEntityAttribute.id" [categoryOptionComboId]="'trackedEntityAttribute'" [lockingFieldStatus]="isDisabled" [data]="data">
+        [dataElementId]="trackedEntityAttribute.id" [categoryOptionComboId]="'trackedEntityAttribute'"
+        [lockingFieldStatus]="isDisabled" [data]="data">
       </app-organisation-unit-input>
     </div>
     <div *ngIf="trackedEntityAttribute.valueType === 'UNIT_INTERVAL'">
-    <div >
-        <ion-label >{{ fieldLabelKey }}</ion-label>
+      <div>
+        <ion-label>{{ fieldLabelKey }}</ion-label>
       </div>
       <app-unit-interval-input (unitIntervalChange)="updateValue($event)" [dataElementId]="trackedEntityAttribute.id"
         [categoryOptionComboId]="'trackedEntityAttribute'" [lockingFieldStatus]="isDisabled" [data]="data">
       </app-unit-interval-input>
     </div>
     <div *ngIf="trackedEntityAttribute.valueType === 'PERCENTAGE'">
-    <div >
-        <ion-label >{{ fieldLabelKey }}</ion-label>
+      <div>
+        <ion-label>{{ fieldLabelKey }}</ion-label>
       </div>
       <app-percentage-input (percentageChange)="updateValue($event)" [dataElementId]="trackedEntityAttribute.id"
         [categoryOptionComboId]="'trackedEntityAttribute'" [lockingFieldStatus]="isDisabled" [data]="data">
@@ -101,14 +106,15 @@
     <div *ngIf="trackedEntityAttribute.valueType === 'EMAIL'">
       <app-email-input (emailChange)="updateValue($event)" [label]="fieldLabelKey"
         [(dataValuesSavingStatusClass)]="trackedEntityAttributesSavingStatusClass"
-        [dataElementId]="trackedEntityAttribute.id" [categoryOptionComboId]="'trackedEntityAttribute'" [lockingFieldStatus]="isDisabled" [data]="data">
+        [dataElementId]="trackedEntityAttribute.id" [categoryOptionComboId]="'trackedEntityAttribute'"
+        [lockingFieldStatus]="isDisabled" [data]="data">
       </app-email-input>
     </div>
     <div *ngIf="trackedEntityAttribute.valueType === 'PHONE_NUMBER'">
       <app-phone-number-input (phoneNumberChange)="updateValue($event)"
         [(dataValuesSavingStatusClass)]="trackedEntityAttributesSavingStatusClass"
-        [dataElementId]="trackedEntityAttribute.id" [categoryOptionComboId]="'trackedEntityAttribute'" [lockingFieldStatus]="isDisabled" [data]="data"
-        [label]="fieldLabelKey">
+        [dataElementId]="trackedEntityAttribute.id" [categoryOptionComboId]="'trackedEntityAttribute'"
+        [lockingFieldStatus]="isDisabled" [data]="data" [label]="fieldLabelKey">
       </app-phone-number-input>
     </div>
 

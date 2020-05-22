@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,gBAAgB,CAAC;EACf,QAAQ,EAAE,KAAK;EACf,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,IAAI;CACb;;AAED,AAAA,cAAc,CAAC;EACb,QAAQ,EAAE,KAAK;EACf,IAAI,EAAE,IAAI;EACV,MAAM,EAAE,IAAI;CACb",
-    "sources": [
-        "self-check.page.scss"
-    ],
-    "names": [],
-    "file": "self-check.page.css"
-}

@@ -93,6 +93,10 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/launch/launch.module').then((m) => m.LaunchPageModule),
   },
+  {
+    path: 'self-check-login',
+    loadChildren: () => import('./pages/self-check-login/self-check-login.module').then( m => m.SelfCheckLoginPageModule)
+  },
 ];
 
 @NgModule({

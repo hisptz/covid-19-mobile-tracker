@@ -14,35 +14,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with lab. If not, see <http://www.gnu.org/licenses/>.
  */
-.text-title {
-  font-size: 22px;
-  font-weight: 600;
-  margin-top: 5px;
-  padding-bottom: 10px;
-  color: var(--ion-color-primary);
-}
-.text-subtitle {
-  font-size: 14px;
-  color: var(--ion-color-primary);
-}
-
-.continue-button-block {
-  position: fixed;
-  bottom: 15px;
-  width: 100%;
-}
-
-.self-check-content {
-  background-color: var(--ion-color-light);
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-}
-
-.message-card {
-  padding: 15px;
-  margin: 10px;
-  border-radius: 10px;
-  background-color: #ffffff;
-  max-height: calc(100vh - 200px);
-  overflow: auto;
+.login-content {
+  margin-top: 70px;
 }

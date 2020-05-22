@@ -161,3 +161,51 @@ export const getTrackedEntityInstanceSavingStatus = createSelector(
   (selectionState: SelectionsState) =>
     selectionState.isSavingTrackedEntityInstance,
 );
+
+export const getSelfCheckSections = createSelector(
+  getCurrentProgram,
+  (currentProgram: Program) => {
+    return [
+      {
+        index: 0,
+        id: 'disclaimer',
+        name: 'Disclaimer',
+        isForMessage: true,
+        message:
+          'Please note that this application will not be able to diagnose corona virus disease but will be able to help you find out if you need to come to hospital for assessment, The app is  not meant to replace the assessment done by healthcare staff. As the app will be updated in accordance with the changing guidelines, it is suggested that you update the app regularly while in use',
+      },
+      {
+        index: 1,
+        id: 'profile',
+        name: 'Profile',
+        isProfileForm: true,
+        program: currentProgram,
+      },
+      {
+        index: 2,
+        id: 'assessment',
+        name: 'Assessment',
+        isStageForm: true,
+        program: currentProgram,
+      },
+      {
+        index: 3,
+        id: 'declaration',
+        name: 'Declaration',
+        isForMessage: true,
+        isDeclaration: true,
+        message:
+          'I declare that provided details are correct to the best of my knowledge',
+      },
+      {
+        index: 4,
+        id: 'done',
+        name: 'Done',
+        isForMessage: true,
+        isLast: true,
+        message:
+          'Great! you details have been collected and you are advised to perform another check after 12 hours',
+      },
+    ];
+  },
+);

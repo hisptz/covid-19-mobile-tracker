@@ -1,7 +1,10 @@
 <ion-header class="ion-no-border">
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-button [routerLink]="['']">
+        <ion-icon name="arrow-back">
+        </ion-icon>
+      </ion-button>
     </ion-buttons>
     <ion-title>Self Check</ion-title>
     <ion-buttons slot="end">
@@ -32,17 +35,4 @@
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>
-  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
-    <ion-button shape="round" color="success" [routerLink]="['/self-check-enrollment']">
-      <ion-icon slot="start" name="person-add"></ion-icon>
-      <ion-label>Enroll</ion-label>
-    </ion-button>
-  </ion-fab>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-button shape="round" [routerLink]="['/manage-self-check']">
-      <ion-icon slot="start" name="heart-outline"></ion-icon>
-      <ion-label>Check-up</ion-label>
-    </ion-button>
-  </ion-fab>
-
 </ion-content>

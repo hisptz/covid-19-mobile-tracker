@@ -10,7 +10,7 @@ export const setCurrentProgram = createAction(
   '[OrgUnit] Set current program',
   props<{
     currentProgram: Program;
-    currentProgramTrackedEntityAttribute: any;
+    currentProgramTrackedEntityAttribute?: any;
   }>(),
 );
 

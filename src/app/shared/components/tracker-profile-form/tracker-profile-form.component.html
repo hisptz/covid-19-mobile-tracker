@@ -1,0 +1,22 @@
+<form>
+  <!-- <app-date-time [mode]="'date'" [label]="program.enrollmentDateLabel || 'Enrollment Date'"
+    [inputValue]="params?.trackedEntityInstanceDates?.enrollmentDate"
+    (dateTimeChange)="onTrackedEntityDatesUpdate($event, params?.trackedEntityInstance, 'enrollmentDate')">
+  </app-date-time>
+  <app-date-time [mode]="'date'" [label]="program.incidentDateLabel || 'Incident Date'"
+    [inputValue]="params?.trackedEntityInstanceDates?.incidentDate"
+    (dateTimeChange)="onTrackedEntityDatesUpdate($event, params?.trackedEntityInstance, 'incidentDate')">
+  </app-date-time> -->
+  <!-- TODO: Add support to disabled form fields when saving data -->
+  <div *ngFor="let programTrackedEntityAttribute of program?.programTrackedEntityAttributes | sortBy:'sortOrder'">
+    <div
+      *ngIf="programTrackedEntityAttribute && programTrackedEntityAttribute.trackedEntityAttribute && programTrackedEntityAttribute.trackedEntityAttribute.id && !hiddenFields[programTrackedEntityAttribute.trackedEntityAttribute.id]">
+      <tracked-entity-inputs [trackedEntityAttribute]="programTrackedEntityAttribute.trackedEntityAttribute"
+        [currentUser]="currentUser" [data]="attributeObject || dataObject"
+        [(trackedEntityAttributesSavingStatusClass)]="trackedEntityAttributesSavingStatusClass"
+        [mandatory]="programTrackedEntityAttribute.mandatory"
+        (valueChange)="onUpdateAttributesValue($event, program.programTrackedEntityAttributes, trackedEntityInstance, attributeObject)">
+      </tracked-entity-inputs>
+    </div>
+  </div>
+</form>

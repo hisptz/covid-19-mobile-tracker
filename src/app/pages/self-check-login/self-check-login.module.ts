@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ManageSelfCheckProfilePageRoutingModule } from './manage-self-check-profile-routing.module';
+import { SelfCheckLoginPageRoutingModule } from './self-check-login-routing.module';
 
-import { ManageSelfCheckProfilePage } from './manage-self-check-profile.page';
+import { SelfCheckLoginPage } from './self-check-login.page';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
@@ -15,8 +15,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     FormsModule,
     IonicModule,
     SharedModule,
-    ManageSelfCheckProfilePageRoutingModule,
+    SelfCheckLoginPageRoutingModule,
   ],
-  declarations: [ManageSelfCheckProfilePage],
+  declarations: [SelfCheckLoginPage],
 })
-export class ManageSelfCheckProfilePageModule {}
+export class SelfCheckLoginPageModule {}

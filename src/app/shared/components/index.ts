@@ -23,6 +23,7 @@ import { OrganisationUnitTreeComponent } from './organisation-unit-tree/organisa
 import { ProgramRuleActionMessageComponent } from './program-rule-action-message/program-rule-action-message';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { TrackedEntityInputsComponent } from './tracked-entity-inputs/tracked-entity-inputs';
+import { TrackerProfileFormComponent } from './tracker-profile-form/tracker-profile-form.component';
 
 export const components: any[] = [
   LanguageListComponent,
@@ -49,5 +50,6 @@ export const components: any[] = [
   ProgramRuleActionMessageComponent,
   CoordinateComponent,
   EventInputContainerComponent,
+  TrackerProfileFormComponent,
 ];
 export const entryComponents: any[] = [LanguageListComponent, ...modals];
