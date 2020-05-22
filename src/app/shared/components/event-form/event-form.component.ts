@@ -60,6 +60,13 @@ export class EventFormComponent implements OnInit {
     });
   }
 
+  onEventDateUpdate(eventDate: string, currentEvent) {
+    this.eventUpdate.emit({
+      currentEvent: { ...currentEvent, eventDate },
+      isFormReady: this.isFormReady,
+    });
+  }
+
   private _evaluateProgramRules(params: any) {
     const {
       event,

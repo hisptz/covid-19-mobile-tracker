@@ -7,6 +7,12 @@
     [inputValue]="params?.trackedEntityInstanceDates?.incidentDate"
     (dateTimeChange)="onTrackedEntityDatesUpdate($event, params?.trackedEntityInstance, 'incidentDate')">
   </app-date-time> -->
+  <app-organisation-unit-input (organisationUnitChange)="onUpdateOrgUnit($event, trackedEntityInstance)"
+    [dataElementId]="'tracker_orgunit'" [categoryOptionComboId]="'trackedEntityAttribute'" [data]="{'tracker_orgunit-trackedEntityAttribute': {
+      id: 'tracker_orgunit-trackedEntityAttribute',
+      value: trackedEntityInstance.orgUnit
+    }}">
+  </app-organisation-unit-input>
   <!-- TODO: Add support to disabled form fields when saving data -->
   <div *ngFor="let programTrackedEntityAttribute of program?.programTrackedEntityAttributes | sortBy:'sortOrder'">
     <div

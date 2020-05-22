@@ -1,5 +1,5 @@
 <form action="" *ngIf="program && programStage && currentUser">
-  <app-date-time [mode]="'date'" [label]="'Incident Date'" [inputValue]="currentEvent?.eventDate"
+  <app-date-time class="hidden" [mode]="'date'" [label]="'Incident Date'" [inputValue]="currentEvent?.eventDate"
     (dateTimeChange)="onEventDateUpdate($event, currentEvent)"></app-date-time>
   <div *ngIf="programStage.captureCoordinates">
     <!--<app-coordinate-input></app-coordinate-input>-->

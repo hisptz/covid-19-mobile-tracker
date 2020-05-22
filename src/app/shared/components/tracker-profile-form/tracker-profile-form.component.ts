@@ -90,4 +90,38 @@ export class TrackerProfileFormComponent implements OnInit {
       isFormReady: this.isFormReady,
     });
   }
+
+  onTrackedEntityDatesUpdate(
+    trackedEntityDate: string,
+    trackedEntityInstance,
+    dateType: string,
+  ) {
+    this.profileUpdate.emit({
+      currentTrackedEntityInstance: {
+        ...trackedEntityInstance,
+        syncStatus: 'not-synced',
+        enrollments: trackedEntityInstance.enrollments.map(
+          (enrollment: any) => {
+            return {
+              ...enrollment,
+              [dateType]: trackedEntityDate,
+            };
+          },
+        ),
+      },
+      isFormReady: this.isFormReady,
+    });
+  }
+
+  onUpdateOrgUnit(data, trackedEntityInstance) {
+    console.log(data, this.attributeObject);
+    this.profileUpdate.emit({
+      currentTrackedEntityInstance: {
+        ...trackedEntityInstance,
+        syncStatus: 'not-synced',
+        orgUnit: '',
+      },
+      isFormReady: this.isFormReady,
+    });
+  }
 }

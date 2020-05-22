@@ -30,8 +30,11 @@ export function updateEventWithDataValues(event: any, eventObject): Events {
   }
 
   const dataValuesKeys = Object.keys(eventObject);
+  const date = new Date();
+  const eventDate = date.toISOString().split('T')[0];
   return {
     ...event,
+    eventDate: event.eventDate || eventDate,
     dataValues: (dataValuesKeys || [])
       .map((key) => {
         if (key.split('-')[0] === 'undefined') {
