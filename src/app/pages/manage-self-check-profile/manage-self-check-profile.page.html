@@ -24,7 +24,11 @@
       </div>
 
       <div class="message-card" *ngIf="currentSection.isProfileForm">
-        <app-tracker-profile-form [program]="currentSection.program"></app-tracker-profile-form>
+        <app-tracker-profile-form [program]="currentSection.program"
+          [trackedEntityInstance]="currentTrackedEntityInstance$ | async"
+          [attributeObject]="trackedEntityInstanceAttributeValueObject$ | async" [currentUser]="currentUser$ | async"
+          (profileUpdate)="onProfileUpdate($event)">
+        </app-tracker-profile-form>
       </div>
 
       <div class="message-card" *ngIf="currentSection.isStageForm">

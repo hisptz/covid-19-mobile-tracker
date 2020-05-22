@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
-import { State } from 'src/app/store';
+import { State, setCurrentTrackedEntityInstance } from 'src/app/store';
 import {
   getCurrentProgram,
   getSelfCheckSections,
@@ -14,6 +14,7 @@ import { take } from 'rxjs/operators';
 import { Observable, from } from 'rxjs';
 import { CurrentUser } from 'src/app/models';
 import { UserService } from 'src/app/shared/services/user.service';
+import { DEFAULT_SELF_CHECK_KEY } from 'src/app/constants';
 
 @Component({
   selector: 'app-manage-self-check-profile',
@@ -30,6 +31,7 @@ export class ManageSelfCheckProfilePage implements OnInit {
   formSections: any[];
   currentSection: any;
   isDataCorrect: boolean;
+  isSectionReady: boolean;
   constructor(
     private router: Router,
     private store: Store<State>,
@@ -37,10 +39,19 @@ export class ManageSelfCheckProfilePage implements OnInit {
   ) {}
 
   get isButtonDisabled(): boolean {
-    if (this.currentSection && this.currentSection.isDeclaration) {
+    if (!this.currentSection) {
+      return true;
+    }
+
+    if (this.currentSection.isDeclaration) {
       return !this.isDataCorrect;
     }
-    return false;
+
+    if (this.currentSection.isForMessage) {
+      return false;
+    }
+
+    return !this.isSectionReady;
   }
 
   ngOnInit() {
@@ -57,7 +68,9 @@ export class ManageSelfCheckProfilePage implements OnInit {
     this.trackedEntityInstanceAttributeValueObject$ = this.store.pipe(
       select(getTrackedEntityInstanceAttributeObject),
     );
-    this.currentUser$ = from(this.userService.getCurrentUser());
+    this.currentUser$ = from(
+      this.userService.getCurrentUser(DEFAULT_SELF_CHECK_KEY),
+    );
 
     this.store
       .pipe(select(getSelfCheckSections))
@@ -82,6 +95,16 @@ export class ManageSelfCheckProfilePage implements OnInit {
       this.currentSection = this.formSections[currentIndex + 1];
     } else {
       this.router.navigate(['/self-check/status']);
+    }
+  }
+
+  onProfileUpdate(profileDetails: any) {
+    if (profileDetails) {
+      const { currentTrackedEntityInstance, isFormReady } = profileDetails;
+      this.isSectionReady = isFormReady;
+      this.store.dispatch(
+        setCurrentTrackedEntityInstance({ currentTrackedEntityInstance }),
+      );
     }
   }
 }

@@ -1,4 +1,4 @@
-<form>
+<form *ngIf="program && currentUser">
   <!-- <app-date-time [mode]="'date'" [label]="program.enrollmentDateLabel || 'Enrollment Date'"
     [inputValue]="params?.trackedEntityInstanceDates?.enrollmentDate"
     (dateTimeChange)="onTrackedEntityDatesUpdate($event, params?.trackedEntityInstance, 'enrollmentDate')">
