@@ -5,6 +5,7 @@ import {
   State,
   setCurrentTrackedEntityInstance,
   setCurrentEvent,
+  saveTrackedEntityInstance,
 } from 'src/app/store';
 import {
   getCurrentProgram,
@@ -135,6 +136,12 @@ export class ManageSelfCheckProfilePage implements OnInit {
       const { currentEvent, isFormReady } = eventDetails;
       this.isSectionReady = isFormReady;
       this.store.dispatch(setCurrentEvent({ currentEvent }));
+    }
+  }
+
+  onAgreeDeclaration(e) {
+    if (this.isDataCorrect) {
+      this.store.dispatch(saveTrackedEntityInstance());
     }
   }
 }

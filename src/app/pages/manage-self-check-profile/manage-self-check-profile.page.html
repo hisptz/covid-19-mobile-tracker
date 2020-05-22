@@ -18,7 +18,7 @@
       <div class="message-card" *ngIf="currentSection.isForMessage">
         <ion-text class="ion-text-justify">{{ currentSection.message}}</ion-text>
         <ion-item lines="none" *ngIf="currentSection.isDeclaration">
-          <ion-checkbox [(ngModel)]="isDataCorrect"></ion-checkbox>
+          <ion-checkbox [(ngModel)]="isDataCorrect" (ngModelChange)="onAgreeDeclaration($event)"></ion-checkbox>
           <ion-text class="ion-margin-start">I Agree</ion-text>
         </ion-item>
       </div>
