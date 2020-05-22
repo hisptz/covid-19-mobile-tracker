@@ -62,6 +62,7 @@
     "cordova.plugins.diagnostic": "^5.0.1",
     "core-js": "^2.5.4",
     "cz-conventional-changelog": "^3.2.0",
+    "highcharts": "^8.1.0",
     "js-sha1": "^0.6.0",
     "leaflet": "^1.6.0",
     "lodash": "^4.17.15",

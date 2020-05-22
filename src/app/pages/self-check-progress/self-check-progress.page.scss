@@ -1,0 +1,14 @@
+.progress-content {
+  background-color: var(--ion-color-light);
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+.chart-card {
+  padding: 15px;
+  margin: 10px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  max-height: calc(100vh - 200px);
+  overflow: auto;
+  display: flex;
+}
