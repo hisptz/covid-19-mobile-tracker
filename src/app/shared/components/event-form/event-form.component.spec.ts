@@ -9,8 +9,8 @@ describe('EventFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EventFormComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [EventFormComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(EventFormComponent);

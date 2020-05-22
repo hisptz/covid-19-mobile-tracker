@@ -9,8 +9,8 @@ describe('TrackerProfileFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TrackerProfileFormComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [TrackerProfileFormComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TrackerProfileFormComponent);

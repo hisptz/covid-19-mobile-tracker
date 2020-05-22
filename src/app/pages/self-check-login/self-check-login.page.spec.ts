@@ -9,8 +9,8 @@ describe('SelfCheckLoginPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SelfCheckLoginPage ],
-      imports: [IonicModule.forRoot()]
+      declarations: [SelfCheckLoginPage],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(SelfCheckLoginPage);

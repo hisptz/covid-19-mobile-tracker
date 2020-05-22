@@ -23,7 +23,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { createConnection, Connection, getConnection } from 'typeorm';
+import { createConnection, getConnection } from 'typeorm';
 import { Platform } from '@ionic/angular';
 import {
   CategoryComboEntity,
@@ -73,45 +73,36 @@ import { CONNECTION_NAME } from 'src/app/constants/db-options';
   providedIn: 'root',
 })
 export class AppConfigService {
-  connection: any;
   constructor(private platform: Platform) {}
 
   async initateDataBaseConnection(
     dataBaseName: string,
     synchronize: boolean = true,
   ) {
+    let shouldConnect = true;
     try {
       await this.platform.ready();
       const entities = this.getAllEntites();
       if (this.platform.is('cordova')) {
         try {
-          if (this.connection) {
-            await this.connection.close();
-          } else {
+          const dbname = getConnection(CONNECTION_NAME).driver.database || '';
+          shouldConnect = dbname !== dataBaseName;
+          if (shouldConnect) {
             await getConnection(CONNECTION_NAME).close();
-          }
+          } 
         } catch (error) {
           console.log(JSON.stringify({ type: 'close connection', error }));
-        } finally {
+        }
+        if (shouldConnect) {
           setTimeout(async () => {
             try {
-              const connection: Connection = await this.startConnection(
-                dataBaseName,
-                entities,
-                synchronize,
-              );
-              this.connection = connection;
+              await this.startConnection(dataBaseName, entities, synchronize);
             } catch (error) {
               synchronize = false;
-              const connection: Connection = await this.startConnection(
-                dataBaseName,
-                entities,
-                synchronize,
-              );
-              this.connection = connection;
+              await this.startConnection(dataBaseName, entities, synchronize);
             }
           }, 100);
-        }
+        }        
       }
     } catch (error) {
       console.log(error);

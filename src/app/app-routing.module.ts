@@ -95,7 +95,10 @@ const routes: Routes = [
   },
   {
     path: 'self-check-login',
-    loadChildren: () => import('./pages/self-check-login/self-check-login.module').then( m => m.SelfCheckLoginPageModule)
+    loadChildren: () =>
+      import('./pages/self-check-login/self-check-login.module').then(
+        (m) => m.SelfCheckLoginPageModule,
+      ),
   },
 ];
 
