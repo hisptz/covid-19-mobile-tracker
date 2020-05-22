@@ -34,3 +34,4 @@ export * from './db-options';
 export * from './number-of-reserved-values';
 export * from './default-self-user';
 export * from './default-self-check-programs';
+export * from './default-self-check-home-contents';

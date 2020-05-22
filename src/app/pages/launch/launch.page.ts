@@ -32,6 +32,7 @@ export class LaunchPage implements OnInit {
   showPercentage: boolean;
   shouldOverrideOverAllMessages = false;
   overAllMessage: string;
+  showSlides: boolean;
 
   constructor(
     private backgroundMode: BackgroundMode,
@@ -46,6 +47,7 @@ export class LaunchPage implements OnInit {
   ) {
     this.isLoading = false;
     this.showPercentage = true;
+    this.showSlides = true;
   }
 
   ngOnInit() {
@@ -88,7 +90,7 @@ export class LaunchPage implements OnInit {
   }
 
   setProgressMessages() {
-    this.overAllMessage = 'Discovering data';
+    this.overAllMessage = 'Preparing the app';
   }
 
   async onUpdateCurrentUser(currentUser: CurrentUser) {

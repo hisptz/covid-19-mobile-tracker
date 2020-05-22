@@ -23,7 +23,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { createConnection, Connection } from 'typeorm';
+import { createConnection, Connection, getConnection } from 'typeorm';
 import { Platform } from '@ionic/angular';
 import {
   CategoryComboEntity,
@@ -87,6 +87,8 @@ export class AppConfigService {
         try {
           if (this.connection) {
             await this.connection.close();
+          } else {
+            await getConnection(CONNECTION_NAME).close();
           }
         } catch (error) {
           console.log(JSON.stringify({ type: 'close connection', error }));

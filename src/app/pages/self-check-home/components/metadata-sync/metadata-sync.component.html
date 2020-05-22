@@ -1,5 +1,23 @@
 <app-login-metadata-sync  (updateCurrentUser)="onUpdateCurrentUser($event)" (failOnLogin)="onFailLogin($event)" [hideSubProcesses]="hideSubProcesses" [showCancelButton]="showCancelButton"
   (successOnLoginAndSyncMetadata)="onSuccessLogin($event)" [defaultAppMetadata]="defaultAppMetadata" [shouldOverrideOverAllMessages]="shouldOverrideOverAllMessages" [currentUser]="currentUser" [showPercentage]="showPercentage"
-  (cancelProgress)="onCancelLoginProcess()" [color]="" [overAllMessage]="overAllLoginMessage" [showOverallProgressBar]="showOverallProgressBar"
+  (cancelProgress)="onCancelLoginProcess()" [color]="" [overAllMessage]="overAllMessage" [showOverallProgressBar]="showOverallProgressBar"
   [isOnLogin]="isOnLogin" [processes]="processes">
 </app-login-metadata-sync>
+
+
+<div *ngIf="showSlides">
+   <ion-slides [options]="slideOpts">
+      <ion-slide *ngFor="let slide of slides">
+        <ion-card >
+          <ion-card-header>
+            <ion-img class="self-check-img" [src]="slide.icon"></ion-img>
+          </ion-card-header>
+          <ion-card-content>
+            <h2 *ngIf="slide && slide.descriptions && slide.descriptions.length > 0">
+              {{ slide.descriptions[0] }}
+            </h2>
+          </ion-card-content>
+        </ion-card>
+      </ion-slide>      
+    </ion-slides>
+</div>
