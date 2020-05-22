@@ -26,6 +26,7 @@ import { Observable, from } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { generateTrackedEntityInstance } from 'src/app/helpers/generate-tracked-entity-instance';
+import { AttributeReservedValueManagerService } from 'src/app/shared/services/attribute-reserved-value-manager.service';
 
 @Component({
   selector: 'app-self-check-home',
@@ -49,6 +50,7 @@ export class SelfCheckHomePage implements OnInit {
     private store: Store<State>,
     private appConfigService: AppConfigService,
     private programMetadata: ProgramFormMetadataService,
+    private attributeReservedValueManagerService: AttributeReservedValueManagerService,
     private router: Router,
   ) {
     this.isLoading = false;
@@ -58,19 +60,6 @@ export class SelfCheckHomePage implements OnInit {
 
   async ngOnInit() {
     this.intiateApp();
-    from(
-      this.programMetadata.getProgramByIds(
-        DEFAULT_SELF_CHECK_PROGRAMS.map((program: any) => program.id),
-      ),
-    )
-      .pipe(
-        map((programs: any[]) => programs[0]),
-        filter((program) => program),
-      )
-      .subscribe((currentProgram: Program) => {
-        this.currentProgram = currentProgram;
-        this.store.dispatch(setCurrentProgram({ currentProgram }));
-      });
   }
 
   async intiateApp() {
@@ -90,9 +79,23 @@ export class SelfCheckHomePage implements OnInit {
           await this.appConfigService.initateDataBaseConnection(
             currentDatabase,
           );
+          await this.attributeReservedValueManagerService.regenerateAttributeReservedValues();
         }
       }
     } catch (error) {}
+    from(
+      this.programMetadata.getProgramByIds(
+        DEFAULT_SELF_CHECK_PROGRAMS.map((program: any) => program.id),
+      ),
+    )
+      .pipe(
+        map((programs: any[]) => programs[0]),
+        filter((program) => program),
+      )
+      .subscribe((currentProgram: Program) => {
+        this.currentProgram = currentProgram;
+        this.store.dispatch(setCurrentProgram({ currentProgram }));
+      });
     const isPasswordEncode = false;
     this.currentUser = currentUser
       ? {

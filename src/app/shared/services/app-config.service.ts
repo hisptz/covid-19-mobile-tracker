@@ -88,8 +88,8 @@ export class AppConfigService {
           const dbname = getConnection(CONNECTION_NAME).driver.database || '';
           shouldConnect = dbname !== dataBaseName;
           if (shouldConnect) {
-            await getConnection(CONNECTION_NAME).close();
-          } 
+            await this.closeExistingConnections();
+          }
         } catch (error) {
           console.log(JSON.stringify({ type: 'close connection', error }));
         }
@@ -102,11 +102,15 @@ export class AppConfigService {
               await this.startConnection(dataBaseName, entities, synchronize);
             }
           }, 100);
-        }        
+        }
       }
     } catch (error) {
       console.log(error);
     }
+  }
+
+  async closeExistingConnections() {
+    await getConnection(CONNECTION_NAME).close();
   }
 
   async startConnection(
@@ -114,15 +118,19 @@ export class AppConfigService {
     entities: any,
     synchronize: boolean,
   ) {
-    return await createConnection({
-      type: 'cordova',
-      name: CONNECTION_NAME,
-      database: `${dataBaseName}`,
-      location: 'default',
-      logging: ['error', 'schema', 'log', 'info'],
-      synchronize,
-      entities,
-    });
+    try {
+      await createConnection({
+        type: 'cordova',
+        name: CONNECTION_NAME,
+        database: `${dataBaseName}`,
+        location: 'default',
+        logging: ['error', 'schema', 'log', 'info'],
+        synchronize,
+        entities,
+      });
+    } catch (error) {
+      console.log(JSON.stringify({ type: 'create connection', error }));
+    }
   }
 
   getAllEntites(): any[] {

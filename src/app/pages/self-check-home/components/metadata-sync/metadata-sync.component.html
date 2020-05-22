@@ -3,8 +3,6 @@
   (cancelProgress)="onCancelLoginProcess()" [color]="" [overAllMessage]="overAllMessage" [showOverallProgressBar]="showOverallProgressBar"
   [isOnLogin]="isOnLogin" [processes]="processes">
 </app-login-metadata-sync>
-
-
 <div *ngIf="showSlides">
    <ion-slides [options]="slideOpts">
       <ion-slide *ngFor="let slide of slides">

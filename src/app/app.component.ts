@@ -58,10 +58,12 @@ export class AppComponent {
           isLogin: false,
         });
       }
-    } catch (error) {
-    } finally {
-      this.menuCtrl.toggle();
-      this.navCtrl.navigateRoot('/home');
-    }
+    } catch (error) {}
+    await this.exitChwPage();
+  }
+
+  async exitChwPage() {
+    this.menuCtrl.toggle();
+    this.navCtrl.navigateRoot('/home');
   }
 }

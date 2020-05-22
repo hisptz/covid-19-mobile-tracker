@@ -25,6 +25,7 @@
 import { Injectable } from '@angular/core';
 import { AppSetting, CurrentUser } from 'src/app/models';
 import { LocalStorageService } from './local-storage.service';
+import { DEFAULT_SETTINGS } from 'src/app/constants';
 
 @Injectable({
   providedIn: 'root',
@@ -46,12 +47,15 @@ export class SettingService {
     await this.localStorageService.setDataOnLocalStorage(data, key);
   }
   async getCurrentSettingsForTheApp(user: CurrentUser): Promise<AppSetting> {
-    const { currentDatabase } = user;
-    const key = `appSettings-${currentDatabase}`;
-    const appSettings: AppSetting = await this.localStorageService.getDataFromLocalStorage(
-      key,
-    );
-    const data: AppSetting = this.getSanitizedSettingForDisplay(appSettings);
+    let data: AppSetting = DEFAULT_SETTINGS;
+    try {
+      const { currentDatabase } = user;
+      const key = `appSettings-${currentDatabase}`;
+      const appSettings: AppSetting = await this.localStorageService.getDataFromLocalStorage(
+        key,
+      );
+      data = this.getSanitizedSettingForDisplay(appSettings);
+    } catch (error) {}
     return data;
   }
 
