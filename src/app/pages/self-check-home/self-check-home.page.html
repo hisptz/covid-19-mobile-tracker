@@ -1,3 +1,7 @@
+<div *ngIf="!currentUser">
+    <app-progress-bar [isIndeterminateProcess]="true">
+        </app-progress-bar>
+  </div>
 <ion-content *ngIf="currentUser">
   <div *ngIf="isLoading">
     <app-metadata-sync [currentUser]="currentUser" (successOnLoginAndSyncMetadata)="onSuccessLogin($event)">
